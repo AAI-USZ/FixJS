@@ -1,0 +1,3 @@
+function(error){
+                return rootThread;
+            }

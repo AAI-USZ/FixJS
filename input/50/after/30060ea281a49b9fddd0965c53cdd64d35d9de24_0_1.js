@@ -1,0 +1,1 @@
+function KJump(k) { this.k = k }

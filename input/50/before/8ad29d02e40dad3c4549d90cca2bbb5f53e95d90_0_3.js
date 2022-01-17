@@ -1,0 +1,3 @@
+function getSavedRevision() {
+    return savedRevision;
+  }

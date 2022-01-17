@@ -1,0 +1,3 @@
+function() {
+            userMove(getCellIdx($(this)));
+            }

@@ -1,0 +1,16 @@
+function(className) {
+		var title = $("#-title").val();
+		var query = server + 'ProvenanceService?action=addProcess&session='+ escape(this.sessionId);
+		if (className != null && className != "") {
+			query += "&type=" + escape(className);
+		}
+
+		$.get(query, function(data) {
+			//Trim the data.
+			data = data.replace(/^\s+|\s+$/g, '');
+			provVis.comm.displayProcess(data, title, className);
+			query = server + 'ProvenanceService?action=addTitle&session='+ escape(this.sessionId) + '&object=' + escape(data) + '&title='+ escape(title);
+			$.get(query, function(data) {
+			});
+		});
+	}

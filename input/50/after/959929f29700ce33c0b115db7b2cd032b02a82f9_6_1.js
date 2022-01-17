@@ -1,0 +1,1 @@
+function(date, allDay, jsEvent, view){ KYT.vent.trigger("calendar:"+calendarDefinition.id+":dayClick", date, allDay, jsEvent, view);}

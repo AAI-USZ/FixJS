@@ -1,0 +1,1 @@
+function(){Tr8n.SDK.Proxy.initTml()})):this.text_enabled&&(Tr8n.log("Parsing text..."),Tr8n.Utils.addEvent(window,"load",function(){Tr8n.SDK.Proxy.initText()}));return this},translate:function(a,b,c,d){

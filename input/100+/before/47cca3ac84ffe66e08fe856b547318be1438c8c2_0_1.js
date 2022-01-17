@@ -1,0 +1,1 @@
+function(a){return ka.call(a)=="[object Array]"},from:function(a){if(a instanceof Array||Array.isArray(a))return a;if(a.j)return a.j();var a=A(a,k),b=a.length>>>0,c;try{c=s.call(a)}catch(d){}if(c&&c.length===b)return c;c=[];for(var e=0;e<b;e++)e in a&&(c[e]=a[e]);return c},of:function(a){return s.call(arguments)}

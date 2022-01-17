@@ -1,0 +1,1 @@
+function(a,b){s[b]=function(a){return(a[0].validity||{})[b]||!1}}));b.defineNodeNameProperty("form","noValidate",{prop:{set:function(c){c?a.attr(this,"novalidate","novalidate"):a(this).removeAttr("novalidate")},get:function(){return null!=a.attr(this,"novalidate")}}}

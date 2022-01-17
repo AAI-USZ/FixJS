@@ -1,0 +1,1 @@
+function(d,h){var m=d,t=false;if(typeof m==="string")t=h||false;else if(m&&!m[0]&&!m.length)m=[m];return $p.core(m,t)}

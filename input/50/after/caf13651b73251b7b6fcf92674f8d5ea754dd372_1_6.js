@@ -1,0 +1,1 @@
+function() { hadError = true; }

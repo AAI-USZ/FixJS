@@ -1,0 +1,1 @@
+function () { return function () { return new N3Parser({ documentURI: 'doc/file.ttl' }); }; }

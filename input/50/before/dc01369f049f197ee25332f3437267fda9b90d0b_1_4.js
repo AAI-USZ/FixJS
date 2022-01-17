@@ -1,0 +1,1 @@
+function() {var f = (function(_hashmap){return _tail()(_hashmap);}); return function _restPairs(){return f;}}

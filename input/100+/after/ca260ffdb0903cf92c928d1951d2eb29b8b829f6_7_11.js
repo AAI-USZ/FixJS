@@ -1,0 +1,2 @@
+function(){if(!this.datasource)
+return null;return this.datasource.getProperty(this.p);},onSourceChange:function(){this.changeEvent.fire(this.getData());}});joDatabase=function(datafile,size){this.openEvent=new joSubject(this);this.closeEvent=new joSubject(this);this.errorEvent=new joSubject(this);this.datafile=datafile;this.size=size||256000;this.db=null;};joDatabase.prototype={

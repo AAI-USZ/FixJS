@@ -1,0 +1,1 @@
+function(offset, line, column, n, c, p) { return ["partial", n, c, p] }

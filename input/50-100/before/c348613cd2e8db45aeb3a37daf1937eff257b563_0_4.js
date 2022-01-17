@@ -1,0 +1,1 @@
+function unselect() { link.removeAttribute("selected"); }

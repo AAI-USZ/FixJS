@@ -1,0 +1,5 @@
+function() {
+
+					hasher.stop();
+
+				}

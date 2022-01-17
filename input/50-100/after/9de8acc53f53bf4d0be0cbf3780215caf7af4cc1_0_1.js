@@ -1,0 +1,1 @@
+function() {var f; return function _startBlocky(){return f || (f = (function(_e){return _bind()(_startPhysics)((function(){var $m; return (function(){return $m || ($m = (function(__){return _runPhysics();}))})})());}));}}

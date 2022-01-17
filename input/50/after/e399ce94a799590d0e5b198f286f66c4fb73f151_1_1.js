@@ -1,0 +1,5 @@
+function() {
+                $(document).trigger('init.addpeople.sakai', {
+                    editingGroup: true
+                });
+            }

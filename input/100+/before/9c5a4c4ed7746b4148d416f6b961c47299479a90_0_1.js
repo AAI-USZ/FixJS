@@ -1,0 +1,3 @@
+function (err) {
+          done = !err;
+        }

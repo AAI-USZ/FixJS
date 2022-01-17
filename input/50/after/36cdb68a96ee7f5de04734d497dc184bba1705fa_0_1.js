@@ -1,0 +1,4 @@
+function()
+    {
+        this.textBox.focus();
+    }

@@ -1,0 +1,3 @@
+function getFrame() {
+    return currentFrame;
+  }

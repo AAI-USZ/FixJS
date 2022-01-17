@@ -1,0 +1,1 @@
+function (evt) { return this._mouseDownOrTouchStart(evt); }

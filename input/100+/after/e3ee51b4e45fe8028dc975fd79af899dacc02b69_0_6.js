@@ -1,0 +1,2 @@
+function(c,b){var a=this.retrieve("form.request");if(!a){a=new Form.Request(this,c,b);
+}else{if(c){a.setTarget(c);}if(b){a.setOptions(b).makeRequest();}}a.send();return this;});})();var OverText=new Class({Implements:[Options,Events,Class.Occlude],Binds:["reposition","assert","focus","hide"],options:{element:"label",labelClass:"overTxtLabel",positionOptions:{position:"upperLeft",edge:"upperLeft",offset:{x:4,y:2}},poll:false,pollInterval:250,wrap:false}

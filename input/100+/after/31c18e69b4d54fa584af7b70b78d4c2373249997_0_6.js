@@ -1,0 +1,1 @@
+function(){b.setTableWidth()})},_createColumn:function(b){if(b instanceof d)return b;b.id||(b.id=e.guid("col"));return new d(b)},_createEmptyColumn:function(){return new d.Empty},_isAllowScrollLeft:function(){var b=this.get("parent");return b&&!!b.get("height")},forceFitColumns:function(){

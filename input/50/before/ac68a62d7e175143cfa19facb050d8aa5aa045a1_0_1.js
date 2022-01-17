@@ -1,0 +1,1 @@
+function (arg) { return this.each(function (i) { i.addClass(arg); }); }

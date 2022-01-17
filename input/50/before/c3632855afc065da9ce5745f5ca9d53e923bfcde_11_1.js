@@ -1,0 +1,1 @@
+function addClickListeners(){$j("#listpage #header #gear").unbind().touch(function(a){a.preventDefault();SettingsManager.show()})}

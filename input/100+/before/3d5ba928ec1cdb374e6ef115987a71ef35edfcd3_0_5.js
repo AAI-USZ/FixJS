@@ -1,0 +1,3 @@
+function (term) {
+        latestSearch = term;
+      }

@@ -1,0 +1,3 @@
+function(){return this.list.getValue();},setEvents:function(){joControl.prototype.setEvents.call(this);},onBlur:function(e){joEvent.stop(e);joDOM.removeCSSClass(this,"focus");this.close();}});joSelectTitle=function(){joExpandoTitle.apply(this,arguments);};joSelectTitle.extend(joExpandoTitle,{list:null,setList:function(list){this.list=list;},setData:function(value){if(this.list)
+joExpandoTitle.prototype.setData.call(this,this.list.getNodeData(value)||"Select...");else
+joExpandoTitle.prototype.setData.call(this,value);}});joToggle=function(data){joControl.call(this,data);};joToggle.extend(joControl,{

@@ -1,0 +1,1 @@
+function(checkbox, value) {if ($(checkbox).length) methods.checkboxSetState($(checkbox), value); else return false}

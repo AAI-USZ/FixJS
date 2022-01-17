@@ -1,0 +1,2 @@
+function(doctype,parent,in_form){this.docname='';this.doctype=doctype;this.display=0;var me=this;this.is_editable={};this.opendocs={};this.sections=[];this.grids=[];this.cscript={};this.pformat={};this.fetch_dict={};this.parent=parent;this.tinymce_id_list=[];this.setup_meta(doctype);this.in_form=in_form?true:false;var me=this;$(document).bind('rename',function(event,dt,old_name,new_name){if(dt==me.doctype)
+me.rename_notify(dt,old_name,new_name)});}

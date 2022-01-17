@@ -1,0 +1,3 @@
+function() {
+	$dialogNode.dialog("close");
+      }

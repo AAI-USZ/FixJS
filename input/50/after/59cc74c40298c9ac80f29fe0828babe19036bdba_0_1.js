@@ -1,0 +1,1 @@
+function () { $.route.hash($.route.initial); }

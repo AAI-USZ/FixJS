@@ -1,0 +1,2 @@
+function(a){a||(a={});this.app_id=a.app_id;this.logging=0<window.location.toString().indexOf("debug=1")||a.logging||this.logging;this.cookies=a.cookies||this.cookies;this.host=a.host||
+this.host;return this},postMessage:function(a,b){var c=document.location.href.split("/")[2],d=b.split("/")[2];if(c==d)top.Tr8n.onMessage(a);else parent.postMessage?parent.postMessage(a,b):alert("Failed to deliver a tr8n message: "+a+" to origin: "+b)}

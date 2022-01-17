@@ -1,0 +1,3 @@
+function(){
+					$(".message-area").empty();
+				}

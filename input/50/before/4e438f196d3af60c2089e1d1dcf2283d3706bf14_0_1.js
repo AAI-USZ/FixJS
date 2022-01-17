@@ -1,0 +1,1 @@
+function() { return 'Are you sure you want to leave? You will lose any progress you have made on the survey.'; }

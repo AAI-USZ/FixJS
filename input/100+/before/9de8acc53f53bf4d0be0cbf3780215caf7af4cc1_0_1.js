@@ -1,0 +1,1 @@
+function() {var f = (function(_e){return _eq()((function(){var $m; return (function(){return $m || ($m = (_eventType()(_e)))})})())((function(){return "keydown"}))((function(){var $m; return (function(){return $m || ($m = (_down()(_e)))})})())((function(){var $m; return (function(){return $m || ($m = (_up()(_e)))})})());}); return function _key(){return f;}}

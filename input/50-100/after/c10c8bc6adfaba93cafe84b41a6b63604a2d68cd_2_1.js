@@ -1,0 +1,1 @@
+function(fn) { return this.then(compose(succeed, fn)); }

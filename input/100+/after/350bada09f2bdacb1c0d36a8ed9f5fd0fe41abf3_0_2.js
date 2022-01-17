@@ -1,0 +1,1 @@
+function bailout () { throw new Bailout(__slice.call(arguments, 0)) }

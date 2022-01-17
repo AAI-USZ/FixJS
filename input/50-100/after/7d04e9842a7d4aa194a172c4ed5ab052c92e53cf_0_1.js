@@ -1,0 +1,13 @@
+function() {
+      var panes;
+      this.wrap.find('.padding').append(this.content);
+      this.wrap.css({
+        display: "block",
+        position: "absolute"
+      });
+      panes = this.getPanes();
+      panes.overlayMouseTarget.appendChild(this.wrap[0]);
+      this.iWidth = this.wrap.outerWidth();
+      this.iHeight = this.wrap.outerHeight();
+      return this.bindButton();
+    }

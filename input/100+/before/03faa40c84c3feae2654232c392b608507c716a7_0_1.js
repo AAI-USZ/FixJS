@@ -1,0 +1,1 @@
+function () { this.app.runRoute('get', '#search') }

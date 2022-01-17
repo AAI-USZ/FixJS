@@ -1,0 +1,3 @@
+function () {
+    cc.sharedAnimationCache = null;
+}

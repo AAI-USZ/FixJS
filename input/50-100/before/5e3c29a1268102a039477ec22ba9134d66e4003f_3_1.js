@@ -1,0 +1,23 @@
+function( source, nodes, copy, target ){
+                            if( target !== this.trackListWidget )
+                                return;
+
+                            // get the configs from the tracks being dragged in
+                            var confs = dojo.filter(
+                                dojo.map( nodes, function(n) {
+                                              return n.track && n.track.config;
+                                          }
+                                        ),
+                                function(c) {return c;}
+                            );
+
+                            // return if no confs; whatever was
+                            // dragged here probably wasn't a
+                            // track
+                            if( ! confs.length )
+                                return;
+
+                            this.dndDrop = true;
+                            dojo.publish( '/jbrowse/v1/v/tracks/hide', [confs] );
+                            this.dndDrop = false;
+                        }

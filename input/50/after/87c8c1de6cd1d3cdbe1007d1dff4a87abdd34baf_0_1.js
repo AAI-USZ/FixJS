@@ -1,0 +1,4 @@
+function()
+				{
+                    self.over = true;
+                }

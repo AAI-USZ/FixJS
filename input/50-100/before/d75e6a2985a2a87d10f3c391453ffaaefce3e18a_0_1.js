@@ -1,0 +1,3 @@
+function() {
+                    items.push(this);
+                }

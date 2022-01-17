@@ -1,0 +1,1 @@
+function($) { return $("<tbody></tbody>").addClass("block"); }

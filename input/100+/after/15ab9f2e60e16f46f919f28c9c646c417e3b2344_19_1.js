@@ -1,0 +1,2 @@
+function(c){if(!("submit"!=c.type||c.testedValidity||!c.originalEvent||!a.nodeName(c.target,"form")||a.prop(c.target,"noValidate"))){f=!0;c.testedValidity=
+!0;if(!a(c.target).checkValidity())return c.stopImmediatePropagation(),f=!1;f=!1}}};a(h).bind("invalid",a.noop);a.event.special.submit=a.event.special.submit||{setup:function(){return!1}};var x=a.event.special.submit.setup;a.extend(a.event.special.submit,{setup:function(){a.nodeName(this,"form")?a(this).bind("invalid",a.noop):a("form",this).bind("invalid",a.noop);return x.apply(this,arguments)}});b.addInputType("email",{

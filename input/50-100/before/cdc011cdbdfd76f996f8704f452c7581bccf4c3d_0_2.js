@@ -1,0 +1,1 @@
+function(from_form){if(this.df.hidden){if(this.row)this.row.hide();}else{if(this.collapsible){}}}

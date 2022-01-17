@@ -1,0 +1,1 @@
+function(url) {return "Un oggetto QuickTime desidera riprodurre\n\n" + url + "\n\nin QuickTime Player. Vuoi consentirlo?";}

@@ -1,0 +1,3 @@
+function(id){
+        addWood(id);
+    }

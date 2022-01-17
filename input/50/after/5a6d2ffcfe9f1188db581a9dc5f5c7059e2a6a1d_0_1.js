@@ -1,0 +1,1 @@
+function(e) {if(expandable){expand_chart($(this.container).parent());}}

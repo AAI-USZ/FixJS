@@ -1,0 +1,1 @@
+function Lit(val) { if (!this instanceof Lit) return new Lit(val); this.val = val }

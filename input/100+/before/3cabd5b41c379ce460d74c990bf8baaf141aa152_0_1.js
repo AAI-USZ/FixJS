@@ -1,0 +1,3 @@
+function(){
+			$('document').unbind('mousemove');
+		}

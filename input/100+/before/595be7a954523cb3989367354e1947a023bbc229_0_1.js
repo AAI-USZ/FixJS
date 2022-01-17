@@ -1,0 +1,1 @@
+function(c){ _super.createBefore.call(this, cursor = c); }

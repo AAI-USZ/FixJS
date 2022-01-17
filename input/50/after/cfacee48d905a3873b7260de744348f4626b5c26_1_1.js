@@ -1,0 +1,1 @@
+function(e){  isp = $(e.target).text(); $('#isp-dropdown-label').text(isp); map.setMenuIsp(isp); }

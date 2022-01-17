@@ -1,0 +1,2 @@
+function(txt){if(!this.intro_area){this.intro_area=$('<div class="help-box form-intro-area">').insertBefore(this.page_layout.body.firstChild);}
+if(txt){this.intro_area.html(txt);}else{this.intro_area.remove();this.intro_area=null;}}

@@ -1,0 +1,1 @@
+function xb(a,b){this.start=ra(a)?a.clone():new s;this.end=ra(b)?b.clone():new s}

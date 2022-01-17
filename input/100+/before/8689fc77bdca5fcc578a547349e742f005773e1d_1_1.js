@@ -1,0 +1,226 @@
+function() {
+
+    var namespace
+      , compact
+      , compactDebug;
+
+    beforeEach(function() {
+      compact = require('../../compact').createCompact({ srcPath: srcPath, destPath: destPath });
+      compactDebug = require('../../compact').createCompact({ srcPath: srcPath, destPath: destPath, debug: true });
+    });
+
+    it('should error without parameter', function() {
+      (function() {
+        compact.js();
+      }).should.throw('You must pass one or more arrays containing valid namespace names');
+
+    });
+
+    it('should succeed with empty array as first parameter', function() {
+      compact.js([]).should.be.a('function');
+    });
+
+    it('should not compress and concat files in debug mode', function(done) {
+
+      compactDebug.addNamespace('global')
+        .addJs('/a.js')
+        .addJs('/b.js');
+
+       var
+        req = {
+          app: {
+            helpers: function(helper) {
+              helper.compactJs().should.eql(['/a.js', '/b.js']);
+              done();
+            },
+            configure: function(fn) {
+              fn();
+            }
+          }
+        }
+        , res;
+
+      compactDebug.js(['global'])(req, res, function() {});
+    });
+
+    it('should create a helper when given valid input for a single namespace', function(done) {
+      compact.addNamespace('global')
+      .addJs('/a.js')
+      .addJs('/b.js');
+
+      var
+        req = {
+          app: {
+            helpers: function(helper) {
+              helper.compactJs().should.eql(['/global.js']);
+              done();
+            },
+            configure: function(fn) {
+              fn();
+            }
+          }
+        }
+        , res;
+
+      compact.js(['global'])(req, res, function() {});
+    });
+
+    it('should add the files to the compacted file in the correct order', function(done) {
+
+      compactDebug.addNamespace('global')
+        .addJs('/large.js')
+        .addJs('/a.js')
+        .addJs('/b.js')
+        .addJs('/c.js');
+
+      var
+        req = {
+          app: {
+            helpers: function(helper) {
+              helper.compactJs().should.eql(['/large.js', '/a.js', '/b.js', '/c.js' ]);
+            },
+            configure: function(fn) {
+              fn();
+            }
+          }
+        }
+        , res;
+
+      compactDebug.js(['global'])(req, res, function() {
+
+        fs.readFile(destPath + '/global.js', function(error, data) {
+         // data.toString().should.equal('var a=1;a=10;var b=3,c=5');
+          done();
+        });
+      });
+
+    });
+
+    it('should create the correct helpers when given valid multiple namespaces', function(done) {
+
+      compact.addNamespace('global')
+        .addJs('/a.js')
+        .addJs('/b.js');
+
+        compact.addNamespace('profile')
+        .addJs('/c.js');
+
+      var
+        req = {
+          app: {
+            helpers: function(helper) {
+              helper.compactJs().should.eql(['/global-profile.js']);
+              done();
+            },
+            configure: function(fn) {
+              fn();
+            }
+          }
+        }
+        , res;
+
+      compact.js(['global', 'profile'])(req, res, function() {});
+    });
+
+
+    it('should create the correct helpers when given valid multiple namespaces in debug mode', function(done) {
+
+      var compactDebug = require('../../compact').createCompact({ srcPath: srcPath, destPath: destPath, debug: true });
+
+
+      compactDebug.addNamespace('global')
+        .addJs('/a.js')
+        .addJs('/b.js');
+
+        compactDebug.addNamespace('profile')
+        .addJs('/c.js');
+
+      var
+        req = {
+          app: {
+            helpers: function(helper) {
+              helper.compactJs().should.eql(['/a.js', '/b.js', '/c.js']);
+              done();
+            },
+            configure: function(fn) {
+              fn();
+            }
+          }
+        }
+        , res;
+
+      compactDebug.js(['global', 'profile'])(req, res, function() {});
+    });
+
+    it('should have a correct helper when given valid input for multiple groups', function(done) {
+
+      compact.addNamespace('global')
+        .addJs('/a.js');
+
+      compact.addNamespace('blog')
+        .addJs('/b.js');
+
+        compact.addNamespace('profile')
+        .addJs('/c.js');
+
+      var
+        req = {
+          app: {
+            helpers: function(helper) {
+              helper.compactJs().should.eql(['/global-profile.js', '/blog.js']);
+              done();
+            },
+            configure: function(fn) {
+              fn();
+            }
+          }
+        }
+        , res;
+
+      compact.js(['global', 'profile'], ['blog'])(req, res, function() {});
+    });
+
+    it('should returned the correct helpers', function(done) {
+
+      compact.addNamespace('global')
+        .addJs('/a.js')
+        .addJs('/b.js')
+        .addJs('/c.js');
+
+      compact.addNamespace('profile')
+        .addJs('/b.js');
+
+      var
+        doneCount = 0,
+        app = {
+          helpers: null,
+          configure: function(fn) {
+            fn();
+          }
+        },
+        res,
+        globalReq = { app: app },
+        profileReq = { app: app };
+
+        globalReq.app.helpers = function(helper) {
+          helper.compactJs().should.eql(['/global.js']);
+          doneCount += 1;
+          if (doneCount === 2) {
+            done();
+          }
+        };
+
+      compact.js(['global'])(globalReq, res, function() {
+        profileReq.app.helpers = function(helper) {
+          helper.compactJs().should.eql(['/profile.js']);
+          doneCount += 1;
+          if (doneCount === 2) {
+            done();
+          }
+        };
+        compact.js(['profile'])(profileReq, res, function() {});
+      });
+
+
+    });
+  }

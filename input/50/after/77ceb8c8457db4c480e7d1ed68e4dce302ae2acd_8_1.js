@@ -1,0 +1,1 @@
+function(message) { window.alert(message); }

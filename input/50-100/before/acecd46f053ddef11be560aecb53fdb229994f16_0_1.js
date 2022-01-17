@@ -1,0 +1,1 @@
+function(ok) { flag = true; result = ok; }

@@ -1,0 +1,1 @@
+function() { mainDisplay.applyProver('autoprove'); }

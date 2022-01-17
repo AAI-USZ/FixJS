@@ -1,0 +1,1 @@
+function Lit(val) { this.val = val }

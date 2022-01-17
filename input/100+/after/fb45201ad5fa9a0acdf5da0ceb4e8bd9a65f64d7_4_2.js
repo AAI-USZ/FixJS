@@ -1,0 +1,1 @@
+function getContacts(a,b){listView.showBusyIndicator("Loading...");ManageUserSession.getApiClient().queryContactsViaApex(a,function(a){sobjectModel.setRecords(a.records)},errorCallback,function(c,d){listView.updateList(sobjectModel.records);listView.hideBusyIndicator();listView.refreshScroller(function(){getContacts(a)});"function"==typeof b&&b("success"==d)})}

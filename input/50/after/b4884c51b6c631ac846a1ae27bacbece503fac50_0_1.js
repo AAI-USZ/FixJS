@@ -1,0 +1,8 @@
+function(opt_precision) {
+    this.values    = [];
+    this.precision = 1;
+    this.enable3d_ = true;
+    if (this.opt_precision) {
+        this.setPrecision(/** @type {number} */ (opt_precision));
+    }
+}

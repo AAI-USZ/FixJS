@@ -1,0 +1,1 @@
+function(cm) {yankTillMark(cm,"Shift-U");}

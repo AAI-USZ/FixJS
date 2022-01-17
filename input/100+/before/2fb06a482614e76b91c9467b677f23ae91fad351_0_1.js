@@ -1,0 +1,1 @@
+function replacements(string) { return REPLACEMENTS[string] }

@@ -1,0 +1,2 @@
+function(){var o=joDOM.create(this.tagName);if(o)
+o.setAttribute("tabindex","1");return o;},enable:function(){this.container.setAttribute("tabindex","1");return joControl.prototype.enable.call(this);},disable:function(){this.container.removeAttribute("tabindex");return joControl.prototype.disable.call(this);}});joList=function(){this.setIndex=this.setValue;this.getIndex=this.getValue;joControl.apply(this,arguments);};joList.extend(joControl,{

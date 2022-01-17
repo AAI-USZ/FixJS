@@ -1,0 +1,19 @@
+function copyBlobFromIaasClient(iaasClient, sourceUri, destinationUri, options, callback) {
+  var logger = (options || {}).logger || console;
+  var errorFunc = logger.error || console.error;
+  if (typeof callback !== 'function') {
+    throw 'Callback is expected in copyBlobFromIaasClient(). Found: ' + util.inspect(callback);
+  }
+  
+  getAccountInfo(iaasClient, destinationUri, logger, function(error, primaryKey, newDestUri) {
+    if (!error) {
+      pageBlob.copyBlob(sourceUri, newDestUri, primaryKey, function(error, blob, response) {
+        callback(error, blob, response, newDestUri);
+      });
+    } else {
+      errorFunc('There was an error in getStorageAccountKeys() or getStorageAccountProperties() for ' + destinationUri);
+      errorFunc(util.inspect(error));
+      callback(error);
+    }
+  });
+}

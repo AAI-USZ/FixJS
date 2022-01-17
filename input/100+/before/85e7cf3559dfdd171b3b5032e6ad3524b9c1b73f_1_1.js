@@ -1,0 +1,2 @@
+function(a){this.initConfig(a);null!=a.value&&a.value.constructor===Object&&this.setValue(a.value);this.getEager()&&(null!=this.getValue()&&Ext.Error.raise({msg:"Error while configuring '"+this.getIdentifier()+"': a 'value' cannot be created eagerly."}),this.getSingleton()||Ext.Error.raise({msg:"Error while configuring '"+
+this.getIdentifier()+"': only singletons can be created eagerly."}));this.getSingleton()||null!=this.getValue()&&Ext.Error.raise({msg:"Error while configuring '"+this.getIdentifier()+"': a 'value' can only be configured as a singleton."});return this}

@@ -1,0 +1,3 @@
+function(){
+		scrollableView.scrollToView(resourceIcons);
+	}

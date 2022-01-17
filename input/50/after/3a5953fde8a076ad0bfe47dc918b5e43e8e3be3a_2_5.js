@@ -1,0 +1,5 @@
+function() {
+        expect(function() {
+            Matrix2.fromColumnMajorArray({});
+        }).toThrow();
+    }

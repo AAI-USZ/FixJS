@@ -1,0 +1,1 @@
+function(plugin) {return plugin ? "Restaurer " + plugin : "";}

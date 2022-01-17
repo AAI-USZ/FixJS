@@ -1,0 +1,4 @@
+function()
+	        {	
+	        	$(container).bAutoSize('resize');
+	        }

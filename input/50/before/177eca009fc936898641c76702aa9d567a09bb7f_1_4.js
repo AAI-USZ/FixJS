@@ -1,0 +1,1 @@
+function(offset, line, column, ws, t, b) { return {block: b, raw: ws + t + b.raw}; }

@@ -1,0 +1,3 @@
+function fillHomeCategoryFavorites() {
+    fillLocal('favorites');
+}

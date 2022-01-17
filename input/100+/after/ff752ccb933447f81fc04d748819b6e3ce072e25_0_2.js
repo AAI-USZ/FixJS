@@ -1,0 +1,49 @@
+function handleselectDocumentsResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "application/json") {
+		// alert(data);
+		// data=="null" heißt, es gibt keine Dokumente:
+		if (data == "null") {
+			var table2 = document.getElementById("applicationsTable");
+			table2.innerHTML = "<th>Für diese Bewerbung werden (noch) keine Dokumente benötigt.</th>";
+		} else {
+			// Erstelle Array aus JSON array:
+			var JSONarray = eval("(" + data + ")");
+			// Get the table:
+			var table2 = document.getElementById("applicationsTable");
+			// Write table – probably replaces old data!
+			table2.innerHTML = "<th>Status</th><th>Unterlage</th>";
+			for ( var i = 0; i < JSONarray.length; i++) {
+				var obj = eval("(" + JSONarray[i] + ")");
+				var isChecked;
+				if (obj.isChecked == 0)
+					isChecked = "Fehlt";
+				else
+					isChecked = "Vorhanden";
+				table2.innerHTML += "<tr><td>" + isChecked + "</td><td>"
+						+ obj.name + "</td>";
+			}
+		}
+		// Prepare mailTo button:
+		connect("/hiwi/Applicant/js/getEmail", "user=" + stupidThing, function(
+				mime, data) {
+			if (mime == "text/url") {
+				window.location = data;
+			} else if (mime == "text/error") {
+				alert(data);
+			}
+			// This is the case we want:
+			else if (mime == "text/email") {
+				var button = document.getElementById("mailToProvider");
+				// Check mail address:
+				// alert(data);
+				// Note that clickMail() is defined in the library.js!
+				button.setAttribute("onclick", "clickMail('" + data
+						+ "', '[Hiwi-Börse:"
+						+ document.getElementById("applications").innerText
+						+ "]')");
+			}
+		});
+	}
+}

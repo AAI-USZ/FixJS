@@ -1,0 +1,1 @@
+function(a){typeof b=="function"&&b(a)},f=function(){$j("#rightsection #detailpage #detail #feedscroller").css("visibility","");initiateFeedScroller();d()};"info"==a?renderContactInfo(c[0],function(a){a&&$j("#rightsection #detailpage #detail #infoscroller").css("visibility","");d(a)}

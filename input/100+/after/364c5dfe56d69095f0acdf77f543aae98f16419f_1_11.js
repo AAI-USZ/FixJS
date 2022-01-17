@@ -1,0 +1,2 @@
+function(){a.extend(this,{complete:false,map:null,base_canvas:null,overlay_canvas:null,commands:[],data:[],mapAreas:[],_xref:{},highlightId:-1,currentAreaId:-1,_tooltip_events:[],scaleInfo:null,index:-1,activeAreaEvent:null});
+};c.isActive=function(){return !this.complete||this.currentAction;}

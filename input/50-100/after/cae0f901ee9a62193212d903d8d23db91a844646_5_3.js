@@ -1,0 +1,1 @@
+function(c){LocalyticsManager.tagDetailView(a,Date.now()-d);typeof b=="function"&&b(c)},e=function(){$j("#rightsection #detailpage #detail #feedscroller").css("visibility","");initiateFeedScroller();f()};"info"==a?renderContactInfo(c[0],function(a){a&&$j("#rightsection #detailpage #detail #infoscroller").css("visibility","");f(a)}

@@ -1,0 +1,1 @@
+function () { return this; }, G = F.bind({ hello: "world" }

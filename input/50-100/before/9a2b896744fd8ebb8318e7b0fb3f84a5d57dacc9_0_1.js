@@ -1,0 +1,3 @@
+function(event, ui) { 
+            count++;
+        }

@@ -1,0 +1,10 @@
+function (tenantId,sessionId,user,pass) {
+    var cmd = {
+        sessionId           : sessionId,
+        tenantId            : tenantId,
+        swarmingName        : "login.js",
+        command             : "start",
+        commandArguments    : [sessionId, user, pass]
+    };
+    util.writeObject(this.sock,cmd);
+}

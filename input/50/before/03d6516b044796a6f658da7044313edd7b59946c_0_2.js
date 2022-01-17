@@ -1,0 +1,4 @@
+function()
+		{
+			$(this).removeAttr('disabled');
+		}

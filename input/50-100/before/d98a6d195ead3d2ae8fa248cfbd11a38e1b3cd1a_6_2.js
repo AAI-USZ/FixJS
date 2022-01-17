@@ -1,0 +1,1 @@
+function ya(a){if(!a||!a.call)throw new TypeError("Callback is not callable");}function za(a){if(a.length===0)throw new TypeError("First argument must be defined");}y(p,m,m,{isArray:function(a){return ia(a,"Array")}}

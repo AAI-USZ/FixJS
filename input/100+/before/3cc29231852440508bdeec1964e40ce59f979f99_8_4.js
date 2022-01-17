@@ -1,0 +1,322 @@
+function( eltArray ) {
+            this._selectionCtr = null;
+            var len = eltArray.length,
+                i,
+                j,
+                bounds,
+                bounds3D,
+                pt,
+                tmpPt,
+                ssMat,
+                elt;
+
+            if (len === 0)  return;
+            var context = this._drawingContext;
+            if (!context)  return;
+
+            // TODO - Get values from app settings
+            context.strokeStyle = "#46a1ff";
+            context.lineWidth = 2;
+
+            // handle the single element case
+            // TODO - Currently, the stage draws its own selection bounds for single selection case
+            if (len === 1)
+            {
+                // single selection case
+                //console.log( "single selection" );
+
+                elt = eltArray[0];
+
+                this.viewUtils.pushViewportObj( elt );
+
+                // get the element bounds in world space
+                bounds3D = this.viewUtils.getElementViewBounds3D( elt );
+                for (j=0;  j<4;  j++) {
+                    bounds3D[j] = this.viewUtils.localToGlobal( bounds3D[j],  elt );
+                }
+
+                // draw it
+                context.beginPath();
+                //VV
+                context.strokeStyle = "#46a1ff";
+                context.lineWidth = 2.0;
+
+                context.moveTo( bounds3D[3][0] ,  bounds3D[3][1] );
+                for (var v=0;  v<4;  v++) {
+                    context.lineTo( bounds3D[v][0] ,  bounds3D[v][1] );
+                }
+                context.closePath();
+                context.stroke();
+
+                this._selectionCtr = MathUtils.getCenterFromBounds(3, bounds3D);
+//              console.log("selection center, single elt case - ", this._selectionCtr);
+
+                this.viewUtils.popViewportObj();
+            }
+            else
+            {
+                // get the plane from the first element to compare against the other elements
+                var dot;
+                var flat = true;
+                var plane = this.viewUtils.getUnprojectedElementPlane( eltArray[0] );
+                for (i=1;  i<len;  i++)
+                {
+                    elt = eltArray[i];
+                    var plane2 = this.viewUtils.getUnprojectedElementPlane( elt );
+                    dot = Math.abs( MathUtils.dot3(plane,plane2) );
+                    if (MathUtils.fpCmp(dot, 1) != 0)
+                    {
+                        flat = false;
+                        break;
+                    }
+
+                    // check the offset
+                    var d = plane[3],  d2 = plane2[3];
+                    if (MathUtils.fpCmp(d,d2) != 0)
+                    {
+                        flat = false;
+                        break;
+                    }
+                }
+
+                // if all of the planes are aligned, check if they are aligned with the view direction
+                if (flat)
+                {
+                    var stage = this.application.ninja.currentDocument.model.documentRoot;
+                    var stageMat = this.viewUtils.getMatrixFromElement(stage);
+                    var viewDir = [ stageMat[8], stageMat[9], stageMat[10] ];
+                    viewDir = vecUtils.vecNormalize( 3, viewDir );
+                    dot = Math.abs( MathUtils.dot3(plane,viewDir) );
+                    if (MathUtils.fpCmp(dot, 1) != 0)
+                        flat = false;
+                }
+//              console.log( "drawSelectionBounds, flat: " + flat );
+
+                // if all the elements share the same plane, draw the 2D rectangle
+                if (flat)
+                {
+                    // make a 2D rectangle on the plane
+                    var rect;
+                    for (i=0;  i<len;  i++)
+                    {
+                        elt = eltArray[i];
+
+                        // get the element bounds in 'plane' space
+                        bounds = this.viewUtils.getElementViewBounds3D( elt );
+                        ssMat = this.viewUtils.getLocalToGlobalMatrix( elt );
+                        for (j=0;  j<4;  j++)
+                        {
+                            var localPt = bounds[j];
+                            tmpPt = this.viewUtils.localToGlobal2(localPt, ssMat);
+                            pt = tmpPt;
+
+                            if (!rect)
+                            {
+                                rect = Object.create(Rectangle, {});
+                                rect.setToPoint( pt )
+                            }
+                            else
+                            {
+                                rect.unionPoint( pt );
+                            }
+                        }
+                    }
+
+                    // draw the rectangle
+                    context.beginPath();
+
+                    pt = MathUtils.makeDimension3(rect.getPoint(3));
+
+                    bounds3D = [[0,0], [0,0], [0,0], [0,0]];
+                    this._selectionCtr = pt.slice(0);
+
+                    context.moveTo( pt[0],  pt[1] );
+                    for (i=0;  i<4;  i++)
+                    {
+                        pt = rect.getPoint(i);
+                        context.lineTo( pt[0],  pt[1] );
+                        bounds3D[i] = pt.slice(0);
+                    }
+                    context.closePath();
+                    context.stroke();
+
+                    var dir = vecUtils.vecSubtract(2, bounds3D[1], bounds3D[3]);
+                    var ctr = vecUtils.vecNormalize(2, dir, vecUtils.vecDist(2, bounds3D[1], bounds3D[3])/2);
+
+                    this._selectionCtr[0] += ctr[0] - this.application.ninja.stage.userContentLeft;
+                    this._selectionCtr[1] += ctr[1] - this.application.ninja.stage.userContentTop;
+                }
+                else
+                {
+                    var minPt,  maxPt;
+
+                    // we set the root to "the world".
+                    var saveRoot = this.viewUtils.getRootElement();
+                    this.viewUtils.setRootElement( this.viewUtils.getStageElement() );
+                    ssMat = this.viewUtils.getLocalToGlobalMatrix( this._sourceSpaceElt );
+
+                    for (i=0;  i<len;  i++)
+                    {
+                        elt = eltArray[i];
+                        bounds = this.viewUtils.getElementViewBounds3D( elt );
+                        var eltMat = this.viewUtils.getLocalToGlobalMatrix( elt );
+                        for (j=0;  j<4;  j++)
+                        {
+                            pt = this.viewUtils.localToGlobal2( bounds[j],  eltMat );
+                            var tmpPt = this.viewUtils.localToStageWorld(bounds[j], elt);
+                            tmpPt = this.viewUtils.screenToView( tmpPt[0], tmpPt[1], tmpPt[2] );
+                            if (!minPt)
+                            {
+                                minPt = pt.slice(0);
+                                maxPt = pt.slice(0);
+                            }
+                            else
+                            {
+                                var x = pt[0],  y = pt[1], z = pt[2];
+
+                                if (x < minPt[0])    minPt[0] = x;
+                                if (x > maxPt[0])    maxPt[0] = x;
+
+                                if (y < minPt[1])    minPt[1] = y;
+                                if (y > maxPt[1])    maxPt[1] = y;
+
+                                if (z < minPt[2])    minPt[2] = z;
+                                if (z > maxPt[2])    maxPt[2] = z;
+                            }
+                        }
+                    }
+
+                    // restore the root ID
+                    this.viewUtils.setRootElement (saveRoot );
+
+                    context.beginPath();
+
+                    var x0 = minPt[0],  y0 = minPt[1],  z0 = minPt[2],
+                        x1 = maxPt[0],  y1 = maxPt[1],  z1 = maxPt[2];
+
+                    this._selectionCtr = [x0, y0, z0];
+                    this._selectionCtr[0] += (x1-x0)/2;
+                    this._selectionCtr[1] += (y1-y0)/2;
+                    this._selectionCtr[2] += (z1-z0)/2;
+
+                    // get the 8 corners of the parallelpiped in world space
+                    var wc = new Array();   // wc == world cube
+                    wc.push(  this.viewUtils.localToGlobal2( [x0,y0,z1], ssMat ) );
+                    wc.push(  this.viewUtils.localToGlobal2( [x0,y1,z1], ssMat ) );
+                    wc.push(  this.viewUtils.localToGlobal2( [x1,y1,z1], ssMat ) );
+                    wc.push(  this.viewUtils.localToGlobal2( [x1,y0,z1], ssMat ) );
+                    wc.push(  this.viewUtils.localToGlobal2( [x0,y0,z0], ssMat ) );
+                    wc.push(  this.viewUtils.localToGlobal2( [x0,y1,z0], ssMat ) );
+                    wc.push(  this.viewUtils.localToGlobal2( [x1,y1,z0], ssMat ) );
+                    wc.push(  this.viewUtils.localToGlobal2( [x1,y0,z0], ssMat ) );
+
+                    // determine the signs of the normals of the faces relative to the view direction.
+                    var front   = -MathUtils.fpSign( vecUtils.vecCross(3, vecUtils.vecSubtract(3,wc[2],wc[1]), vecUtils.vecSubtract(3,wc[0],wc[1]))[2] ),
+                        right   = -MathUtils.fpSign( vecUtils.vecCross(3, vecUtils.vecSubtract(3,wc[6],wc[2]), vecUtils.vecSubtract(3,wc[3],wc[2]))[2] ),
+                        back    = -MathUtils.fpSign( vecUtils.vecCross(3, vecUtils.vecSubtract(3,wc[5],wc[6]), vecUtils.vecSubtract(3,wc[7],wc[6]))[2] ),
+                        left    = -MathUtils.fpSign( vecUtils.vecCross(3, vecUtils.vecSubtract(3,wc[1],wc[5]), vecUtils.vecSubtract(3,wc[4],wc[5]))[2] ),
+                        top     = -MathUtils.fpSign( vecUtils.vecCross(3, vecUtils.vecSubtract(3,wc[3],wc[0]), vecUtils.vecSubtract(3,wc[4],wc[0]))[2] ),
+                        bottom  = -MathUtils.fpSign( vecUtils.vecCross(3, vecUtils.vecSubtract(3,wc[5],wc[1]), vecUtils.vecSubtract(3,wc[2],wc[1]))[2] );
+
+                    // draw the side faces
+                    var p;
+
+                    //context.strokeStyle = ((front > 0) || (right > 0)) ? dark : light;  context.beginPath();
+                    if ((front > 0) || (right > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x1, y0, z1], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x1, y1, z1], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    //context.strokeStyle = ((right > 0) || (back > 0)) ? dark : light;  context.beginPath();
+                    if ((right > 0) || (back > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x1, y0, z0], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x1, y1, z0], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    //context.strokeStyle = ((back > 0) || (left > 0)) ? dark : light;  context.beginPath();
+                    if ((back > 0) || (left > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x0, y0, z0], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x0, y1, z0], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    //context.strokeStyle = ((left > 0) || (front > 0)) ? dark : light;  context.beginPath();
+                    if ((left > 0) || (front > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x0, y0, z1], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x0, y1, z1], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    // draw the top and bottom faces
+                    //context.strokeStyle = ((front > 0) || (top > 0)) ? dark : light;  context.beginPath();
+                    if ((front > 0) || (top > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x0, y0, z1], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x1, y0, z1], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    //context.strokeStyle = ((top > 0) || (back > 0)) ? dark : light;  context.beginPath();
+                    if ((top > 0) || (back > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x0, y0, z0], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x1, y0, z0], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    //context.strokeStyle = ((back > 0) || (bottom > 0)) ? dark : light;  context.beginPath();
+                    if ((back > 0) || (bottom > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x0, y1, z0], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x1, y1, z0], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    //context.strokeStyle = ((bottom > 0) || (front > 0)) ? dark : light;  context.beginPath();
+                    if ((bottom > 0) || (front > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x0, y1, z1], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x1, y1, z1], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    // and the remaining lines - varying Z
+                    if ((top > 0) || (right > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x1, y0, z0], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x1, y0, z1], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    //context.strokeStyle = ((right > 0) || (bottom > 0)) ? dark : light;  context.beginPath();
+                    if ((right > 0) || (bottom > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x1, y1, z0], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x1, y1, z1], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    //context.strokeStyle = ((bottom > 0) || (left > 0)) ? dark : light;  context.beginPath();
+                    if ((bottom > 0) || (left > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x0, y1, z0], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x0, y1, z1], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+
+                    //context.strokeStyle = ((left > 0) || (top > 0)) ? dark : light;  context.beginPath();
+                    if ((left > 0) || (top > 0)) {
+                        context.beginPath();
+                        p = this.viewUtils.localToGlobal2( [x0, y0, z0], ssMat );  context.moveTo( p[0], p[1] );
+                        p = this.viewUtils.localToGlobal2( [x0, y0, z1], ssMat );  context.lineTo( p[0], p[1] );
+                        context.closePath();  context.stroke();
+                    }
+                }
+            }
+        }

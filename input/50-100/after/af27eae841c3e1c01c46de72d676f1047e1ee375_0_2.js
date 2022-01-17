@@ -1,0 +1,16 @@
+function(message, source) {
+		var details = {
+			result: false,
+			message: message
+		};
+		var output = escapeInnerText(message);
+		if (source) {
+			details.source = source;
+			output += '<table><tr class="test-source"><th>Source: </th><td><pre>' + escapeInnerText(source) + '</pre></td></tr></table>';
+		}
+		runLoggingCallbacks( 'log', QUnit, details );
+		config.current.assertions.push({
+			result: false,
+			message: output
+		});
+	}

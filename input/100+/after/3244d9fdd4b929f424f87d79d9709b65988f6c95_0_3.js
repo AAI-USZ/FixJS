@@ -1,0 +1,69 @@
+function keratinize(schema, reservedTypeNames){
+	_.assertLength(arguments, 2);
+	_.assertArray(reservedTypeNames);
+	
+	var result = {_byCode: {}};
+	
+	var takenCodes = {};
+	var codeNames = {}
+	_.each(schema.children, function(v){
+		
+		var code = v.tokens[1];
+		var name = v.tokens[0]
+
+		if(name.indexOf('(') !== -1) return//TODO remove this coupling between minnow/shared/schema.js and keratin
+		
+		if(takenCodes[code] && codeNames[code] !== name){
+			_.errout('object ' + name + ' is using a code that is already taken: ' + code);
+		}
+		codeNames[code] = name
+		takenCodes[code] = true;
+		var obj = {
+			name: name,
+			code: parseInt(code),
+			superTypes: {},
+			subTypes: {},
+			properties: {},
+			propertiesByCode: {}
+		};
+
+		if(reservedTypeNames.indexOf(obj.name) !== -1) _.errout('invalid name, reserved: ' + obj.name);
+		
+		if(v.tokens.length > 2){
+			_.each(v.tokens.slice(2), function(t){
+				obj.superTypes[t] = true;
+			});
+		}
+		
+		parseProperties(obj, v.children, reservedTypeNames);
+		
+		if(result[obj.name]){
+			if(result[obj.name].code !== obj.code){
+				_.errout('duplicate name already taken: ' + obj.name)	
+			}else{
+				_.each(obj.properties, function(prop, name){
+					result[obj.name].properties[name] = prop
+					result[obj.name].propertiesByCode[prop.code] = prop
+				})				
+			}
+		}else{
+			result[obj.name] = obj;
+			result._byCode[obj.code] = obj;
+		}
+	});
+
+	function extendProperties(objSchema){
+		_.each(objSchema.superTypes, function(dummy, sn){
+			var st = result[sn];
+			if(st){
+				extendProperties(st);
+				_.extend(objSchema.properties, st.properties)
+				_.extend(objSchema.propertiesByCode, st.propertiesByCode)
+			}
+		})
+	}
+	_.each(result._byCode, function(objSchema){
+		extendProperties(objSchema)
+	})	
+	return result;
+}

@@ -1,0 +1,1 @@
+function(a,b){a[b]=function(c){return rb(this,b,m,c)}}

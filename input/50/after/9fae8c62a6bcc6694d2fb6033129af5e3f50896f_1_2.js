@@ -1,0 +1,3 @@
+function(){
+    TwoStateToggle.call(this);
+}

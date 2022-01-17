@@ -1,0 +1,3 @@
+function(chunk) {
+            responseBody += chunk;
+        }

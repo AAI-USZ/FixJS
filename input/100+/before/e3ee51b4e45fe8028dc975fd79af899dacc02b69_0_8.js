@@ -1,0 +1,3 @@
+function(){this.idle=true;this.fireEvent("complete",this.element);},serialize:function(){var c=Array.link(arguments,{modifier:Type.isFunction,index:function(d){return d!=null;
+}});var b=this.lists.map(function(d){return d.getChildren().map(c.modifier||function(e){return e.get("id");},this);},this);var a=c.index;if(this.lists.length==1){a=0;
+}return(a||a===0)&&a>=0&&a<this.lists.length?b[a]:b;}});Request.JSONP=new Class({

@@ -1,0 +1,1 @@
+function(cm) {mark["Shift-X"] = cm.getCursor().line;}

@@ -1,0 +1,1 @@
+function(c){var f=a("li:not(.hidden-item)",e.shadowList),j="mousedown"==c.type||"click"==c.type;e.markItem(f.index(c.currentTarget),j,f);"click"==c.type&&(e.hideList(),a(b.input).trigger("datalistselect"));return"mousedown"!=c.type}

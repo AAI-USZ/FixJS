@@ -1,0 +1,8 @@
+f				console.log('adding edit via subscription for ' + infoSyncId)
+				console.log(new Error().stack)
+				_.assertInt(editId)
+				_.assertArray(path)
+				editBuffer.add({order: ++orderIndex, typeCode: subjTypeCode, id: subjId, path: path, op: op, edit: edit, syncId: syncId, editId: editId})
+				//editBuffer.add({from: infoSyncId, typeCode: typeCode, id: id, path: path, op: op, edit: edit, syncId: syncId, editId: editId})
+				advanceOnNext()
+			})

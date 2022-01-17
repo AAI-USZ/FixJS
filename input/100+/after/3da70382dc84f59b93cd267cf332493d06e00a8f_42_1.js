@@ -1,0 +1,10 @@
+function(template) {
+        var t = template || {};
+        var ellipsoid = t.ellipsoid || Ellipsoid.WGS84;
+        var destination = t.destination || ellipsoid.cartographicToCartesian(new Cartographic(0.0, 0.0, 0.0));
+        var duration = t.duration || 4.0;
+        var complete = template.complete;
+		var flightController = new CameraFlightController(this._canvas, this._camera, ellipsoid, destination, duration, complete);
+		this._controllers.push(flightController);
+		return flightController;
+    }

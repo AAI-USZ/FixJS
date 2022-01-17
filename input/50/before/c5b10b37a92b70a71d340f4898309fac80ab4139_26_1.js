@@ -1,0 +1,5 @@
+function(){
+					if(c.has('s') && c.s.data.size() === 1){
+						done()
+					}
+				}

@@ -1,0 +1,9 @@
+function(event){
+                   event.preventDefault();
+                   this.inputView.set('uncomittedChanges',false);
+                   this.set('refreshAvailable',false);
+                   this.inputView.controlGroup().removeClass('warning');
+                   this.inputView.controlGroup().removeClass('error');
+                   this.set('isDisabled',true);
+                   this.inputView.$().val(JSON.stringify(this.item.get('value'),null,2));
+               }

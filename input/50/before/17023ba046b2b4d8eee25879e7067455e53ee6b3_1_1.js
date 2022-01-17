@@ -1,0 +1,1 @@
+function(){ms=0;fun&&fun()}

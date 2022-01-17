@@ -1,0 +1,1 @@
+function(event, ui) { $('#vcolor').css({color: stateColors[ui.value]}); $('#newstatus').text(ui.value); }

@@ -1,0 +1,1 @@
+function(){typeof b.contactListPullDownCB=="function"&&b.contactListPullDownCB()}

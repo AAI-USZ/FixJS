@@ -1,0 +1,1 @@
+function() { _.delay(dismissHandler, 250); }

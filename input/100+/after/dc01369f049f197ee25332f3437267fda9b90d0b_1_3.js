@@ -1,0 +1,1 @@
+function() {var f; return function _getPair(){return f || (f = (function(_k){return function(_hashmap){return _findIf()((function(){var $m; return (function(){return $m || ($m = (function(_x){return _eq()((function(){var $m; return (function(){return $m || ($m = (_head()(_x)))})})())(_k);}))})})())(_hashmap);};}));}}

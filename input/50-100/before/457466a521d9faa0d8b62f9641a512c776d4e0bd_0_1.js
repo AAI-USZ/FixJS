@@ -1,0 +1,1 @@
+function(e){if($this.hasClass('default')) $this.val()!='' ? $this.removeClass('default') : $this.val($this.attr('title'))}

@@ -1,0 +1,5 @@
+function(){
+
+                    that.windowFocus = false;
+
+                }

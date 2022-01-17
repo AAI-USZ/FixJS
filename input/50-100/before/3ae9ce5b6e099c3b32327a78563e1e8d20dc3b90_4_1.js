@@ -1,0 +1,1 @@
+function(){var a=G.S(arguments);I(a)};M&&b&&(m.define=M);c.amd={plugins:h,jQuery:h,da:"0.6.5"};b&&(G.b=G.I);return G.I(a)},I:function(a,b){

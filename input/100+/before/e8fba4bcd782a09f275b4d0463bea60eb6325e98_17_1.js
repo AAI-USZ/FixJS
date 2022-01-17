@@ -1,0 +1,2 @@
+function(g){var h=b.defineNodeNameProperty(g,d,{prop:{get:function(){var d=this,e="";if(!a.prop(d,"willValidate"))return e;var g=a.prop(d,"validity")||{valid:1};if(g.valid||(e=b.getContentValidationMessage(d,g)))return e;if(g.customError&&d.nodeName&&(e=Modernizr.formvalidation&&!b.bugs.bustedValidity&&h.prop._supget?h.prop._supget.call(d):b.data(d,"customvalidationMessage")))return e;a.each(g,function(a,g){if("valid"!=
+a&&g&&(e=b.createValidationMessage(d,a)))return!1});return e||""},writeable:!1}})}

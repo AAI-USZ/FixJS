@@ -1,0 +1,72 @@
+function( args, callback){
+
+	if ( args === null || args === undefined ){
+		console.log("[NotificationAction.removeNotifier] error - Args is not existent");
+		callback( null, new Array());
+		return;
+	}
+	
+	var containsAllProperties = (args.hasOwnProperty('user') &&
+	                              args.hasOwnProperty('target') &&
+		                               args.hasOwnProperty('event') &&
+		                               args.hasOwnProperty('app'));
+		                            
+	if ( !containsAllProperties ){
+		console.log("[NotificationAction.removeNotifier] error - Invalid args");
+		callback( null, new Array());
+	}
+	
+	var arg = new Object();
+	arg.user = args.user;
+	arg.target = args.target;
+	arg.event = args.event;
+	arg.app = args.app;
+	
+	NotificationListener.findNotificationListener( arg, function( error, notificationListener ){
+		if ( error ){
+			console.log("[NotificationListener.findNotificationListener] error - " + error );
+			callback( null, new Object() );
+			return;
+		}
+		if ( null === notificationListener ){
+			console.log("[NotificationListener.findNotificationListener] error - notificationListener is null");
+			callback( null, new Object());
+			return;
+		}
+		arg.notificationlistener = notificationListener;
+		NotificationListener.removeNotificationListener( arg, function( error, removedListener ){
+			if ( error ){
+				callback( error, null );
+				return;
+			}
+			if (  null === removedListener ) {
+				console.log("[NotificationListener.findNotificationListener] error - no listener was removed");
+				callback( null, new Array());
+				return;
+			}
+			arg.listener = arg.notificationlistener.uuid;
+			UserNotification.selectUserNotifications( arg, function( error, userNotifications ){
+				if ( error ){
+					console.log("[NotificationListener.selectUserNotifications] error - "+error);
+					callback( null, new Array());
+					return;
+				}
+				if ( 0 === userNotifications.length ){
+					console.log("[NotificationListener.findNotificationListener] error - no user notifications were found matching your parameters");
+					callback( null, new Array());
+					return;
+				}
+				arg.usernotifications = userNotifications;
+				UserNotification.removeUserNotifications( arg, function( error, removedUserNotifications){
+					if ( error ){
+						console.log("[NotificationListener.removeUserNotifications] error - "+error);
+						callback( null, new Array());
+						return;
+					}else {
+						callback( null, removedUserNotifications);
+					}
+				});
+			});
+		});
+	});
+}

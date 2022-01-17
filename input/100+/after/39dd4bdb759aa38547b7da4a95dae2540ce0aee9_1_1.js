@@ -1,0 +1,2 @@
+function(b){function k(){g=h.createPattern(l,i.repeat);i.load&&i.load.call(e[0],g)}var e=this,h,i=u(new x,b),l,g;(h=s(e[0]))?"function"===typeof i.source?(l=O.createElement("canvas"),l.width=i.width,l.height=i.height,b=s(l),i.source.call(l,b),k()):(b=i.source.getContext,i.source.src||
+b?l=i.source:(l=new Q,l.src=i.source),l.complete||b)?k():(l.onload=k,l.src=l.src):g=a;return g}

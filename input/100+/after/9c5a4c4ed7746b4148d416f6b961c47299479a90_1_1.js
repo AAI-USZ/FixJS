@@ -1,0 +1,3 @@
+function () {
+          callPhantom.call(this);
+        }

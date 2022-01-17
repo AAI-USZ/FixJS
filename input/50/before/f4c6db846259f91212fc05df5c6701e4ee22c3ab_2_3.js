@@ -1,0 +1,1 @@
+function(entry) { return entry.last_responsecode || 0; }

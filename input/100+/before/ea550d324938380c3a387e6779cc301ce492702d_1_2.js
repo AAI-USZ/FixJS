@@ -1,0 +1,1 @@
+function(a){a.data.unshift({x:((d-1)*this.timeInterval||1)+this.timeBase,y:0,i:d})},this)},addData:function($super,a){$super(a),this.currentSize+=1,this.currentIndex+=1;if(this.maxDataPoints!==undefined)while(this.currentSize>this.maxDataPoints)this.dropData()},dropData:function(){this.forEach(function(a){a.data.splice(0,1)}),this.currentSize-=1},getIndex:function(){

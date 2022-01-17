@@ -1,0 +1,7 @@
+function(){
+
+  raises(function(){
+    FileStream();
+  });
+
+}

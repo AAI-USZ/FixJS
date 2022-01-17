@@ -1,0 +1,1 @@
+function(x, i) { check(aState, x, isByteString, 'bytes-append', 'byte string', i+1, args); }

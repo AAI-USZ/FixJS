@@ -1,0 +1,1 @@
+function getActivities(a,c){ManageUserSession.getApiClient().fetchActivitiesViaApex([a],function(b){var a=[];0<b.tasks.totalSize&&(a=b.tasks.records);feedRenderer(a,"No activities found.");c&&c()},errorCallback,function(a,d){"function"==typeof c&&c(d)})}

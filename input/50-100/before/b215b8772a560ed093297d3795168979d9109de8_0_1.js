@@ -1,0 +1,1 @@
+function() { $('#sstatus').slider('value', selectedFeature.attributes.description); $('#vcolor').css({ color: color[$('#sstatus').slider('value')] }); $('#newstatus').text($('#sstatus').slider('value')); $('#dstatus').dialog('open'); }

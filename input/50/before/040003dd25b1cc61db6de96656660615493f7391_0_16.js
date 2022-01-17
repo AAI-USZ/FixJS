@@ -1,0 +1,1 @@
+function () { komooMap.openInfoWindow(overlay_, e.latLng) }

@@ -1,0 +1,4 @@
+function(){
+      $(this).remove();
+      updateLeaveCounter();
+    }

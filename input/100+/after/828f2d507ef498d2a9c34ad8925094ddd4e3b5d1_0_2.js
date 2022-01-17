@@ -1,0 +1,2 @@
+function(event,func){if((typeof(func)=="function")&&document.body){if(document.body.addEventListener){document.body.addEventListener(event,func.wtbind(this),true);}
+else if(document.body.attachEvent){document.body.attachEvent("on"+event,func.wtbind(this));}}}

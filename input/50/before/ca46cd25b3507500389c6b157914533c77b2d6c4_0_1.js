@@ -1,0 +1,1 @@
+function (name, cmd) { chan.registerCommand(module, name, cmd); }

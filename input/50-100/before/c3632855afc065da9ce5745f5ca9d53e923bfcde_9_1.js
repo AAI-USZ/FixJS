@@ -1,0 +1,1 @@
+function addClickListeners(){$j("#listpage #footer #gear").unbind().touch(function(a){a.preventDefault();splitView.focusOutContactList();setTimeout(SettingsManager.show,10)});$j("#listpage #footer #home").unbind().touch(function(a){a.preventDefault();splitView.focusOutContactList();showContactNews(null,!0)})}

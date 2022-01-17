@@ -1,0 +1,19 @@
+function(df) {
+		var me = this;
+		if(me.doctype && df.parent==me.doctype) {
+			var label = df.label;
+			var table = me.doctype;
+			if(df.fieldtype=='Table') me.table_fields.push(df);					
+		} else {
+			var label = df.label + ' (' + df.parent + ')';
+			var table = df.parent;
+		}
+		if(wn.model.no_value_type.indexOf(df.fieldtype)==-1 && 
+			!me.fields_by_name[df.fieldname]) {
+			this.$select.append($('<option>', {
+				value: df.fieldname,
+				table: table
+			}).text(label));
+			me.fields_by_name[df.fieldname] = df;						
+		}
+	}

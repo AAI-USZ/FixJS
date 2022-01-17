@@ -1,0 +1,3 @@
+function onerror () {
+      self.onClose();
+    }

@@ -1,0 +1,1 @@
+function(){ this.open(target); }

@@ -1,0 +1,3 @@
+function() {
+					$('.CodeMirror').hide();
+				}

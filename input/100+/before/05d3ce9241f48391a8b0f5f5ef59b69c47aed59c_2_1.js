@@ -1,0 +1,9 @@
+function (linkEl, event) {
+	  
+	  // find matching collections from data-referenceCollections
+	  
+	  // display the reference panel
+	  
+	  console.log($(linkEl).data('referenceTriggers')[event.type])
+	  
+    }

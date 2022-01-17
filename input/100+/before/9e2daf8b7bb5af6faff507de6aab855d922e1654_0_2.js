@@ -1,0 +1,3 @@
+function() {
+	$("#myAccordion").accordion(accOpts);
+}

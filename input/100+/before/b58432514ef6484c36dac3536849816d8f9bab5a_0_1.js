@@ -1,0 +1,28 @@
+function(){
+  hell.p.urlapi='http://ersh.homelinux.com:8092/api';
+  L.Icon.Default.imagePath='img';
+
+  hell.map = new L.Map('map');
+  var mapnik = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: "Map data &copy; <a href='http://osm.org'>OpenStreetMap</a> contributors"});
+  
+  var krymsk = new L.LatLng(44.915, 38.0);
+  map.setView(krymsk, 13).addLayer(mapnik);
+  map.markergroup = new L.LayerGroup();
+  map.addLayer(map.markergroup);
+  map.allmarkers = {};
+
+  // цветные маркеры
+  map.mcolors = new Array(new MarkerIcon({markerColor:'red'}), new MarkerIcon({markerColor:'yellow'}), new MarkerIcon({markerColor:'green'}));
+
+  updateMarkers(); //load markers from server
+
+  if (location.href.search("map.php")>0)
+    return;
+
+  window.osmhell = new OSMHell($('#city_select')[0], $('#street_select')[0], $('#building_select')[0]);
+  window.osmhell.loadCityes();
+  
+  hell.inittab();
+  $(window).resize(onresize);
+  onresize();
+}

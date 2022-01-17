@@ -1,0 +1,1 @@
+function(d) { return getidname("w_"+d+"_bg"); }

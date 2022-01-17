@@ -1,0 +1,3 @@
+function(){
+        z.overlay.hide();
+      }

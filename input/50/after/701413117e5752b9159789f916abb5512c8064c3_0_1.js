@@ -1,0 +1,3 @@
+function() {
+			$('#BBTagsHolder').toggle();
+		}

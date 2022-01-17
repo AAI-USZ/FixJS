@@ -1,0 +1,1 @@
+function(memo, num){ return memo + num; }

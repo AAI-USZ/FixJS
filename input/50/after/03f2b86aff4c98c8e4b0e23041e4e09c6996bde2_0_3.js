@@ -1,0 +1,5 @@
+function (enable) {
+
+            exploreEnabled = enable;
+
+        }

@@ -1,0 +1,1 @@
+function () { System.gc(); this._renderText(); }

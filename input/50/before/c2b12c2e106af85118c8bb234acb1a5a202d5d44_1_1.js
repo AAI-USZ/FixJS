@@ -1,0 +1,1 @@
+function(offset, line, column, name, value) { return { name: name ? name[0] : 'text', value: value }; }

@@ -1,0 +1,5 @@
+function(e) {
+
+				previewElement.hide();
+
+			}

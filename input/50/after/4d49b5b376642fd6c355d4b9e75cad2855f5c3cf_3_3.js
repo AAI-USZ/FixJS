@@ -1,0 +1,1 @@
+function(field) { field.hidden = show ? 0 : 1; }

@@ -1,0 +1,1 @@
+function(d,i) { return !isNaN(getY(d,i)) && getY(d,i) !== null }

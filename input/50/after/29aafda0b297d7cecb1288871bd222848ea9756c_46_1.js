@@ -1,0 +1,12 @@
+function(doc)
+    {
+        // See also issue 4529. Since the memory profiler is still a lab thing,
+        // hide the "Memory Profiler" button begin a pref.
+        // xxxHonza: removed from 1.10 (issue 5599)
+        /*if (!Options.get("memoryProfilerEnable"))
+        {
+            var button = doc.getElementById("fbToggleMemoryProfiling");
+            if (button)
+                Dom.collapse(button, true);
+        }*/
+    }

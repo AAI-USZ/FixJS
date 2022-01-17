@@ -1,0 +1,1 @@
+function () { assert_equals(value, equals, msg); }

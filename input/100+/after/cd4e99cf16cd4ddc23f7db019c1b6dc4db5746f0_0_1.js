@@ -1,0 +1,1 @@
+function ca(a){var b=a.cloneNode;delete a.cloneNode;a.cloneNode=function(a){a===j&&(a=k);return b.call(this,a)}}function da(a){(a=a.__proto__||a.constructor.prototype)&&a!==Array.prototype&&ea.forEach(function(b){a[b]||(a[b]=Array.prototype[b])})}

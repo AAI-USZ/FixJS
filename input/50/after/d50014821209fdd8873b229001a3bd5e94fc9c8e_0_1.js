@@ -1,0 +1,3 @@
+function(){
+				me.connect()
+			}

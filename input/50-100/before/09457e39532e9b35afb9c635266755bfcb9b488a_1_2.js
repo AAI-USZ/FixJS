@@ -1,0 +1,1 @@
+function(cm) {popCount(); CodeMirror.commands.goLineStart(cm); cm.replaceSelection("\n", "start"); cm.setOption("keyMap", "vim-insert"); editCursor("vim-insert");}

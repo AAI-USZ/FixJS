@@ -1,0 +1,2 @@
+function(){return this.title;},refresh:function(){if(this.container)
+this.container.innerHTML="";this.draw();this.changeEvent.fire();},draw:function(){this.push(this.data);}});joControl=function(data,value){

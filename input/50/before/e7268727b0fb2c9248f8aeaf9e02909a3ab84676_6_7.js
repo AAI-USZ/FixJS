@@ -1,0 +1,1 @@
+function(url) {return "Un objet QuickTime voudrait lancer le lecture de\n\n" + url + "\n\ndans QuickTime Player. Voulez-vous l’autoriser?";}

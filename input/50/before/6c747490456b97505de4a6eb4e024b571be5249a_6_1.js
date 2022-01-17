@@ -1,0 +1,1 @@
+function asdf(x){if(x<10)return (10+x);return asdf(x%10)*asdf(~~(x/10))}

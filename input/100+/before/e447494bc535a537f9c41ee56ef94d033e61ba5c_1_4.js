@@ -1,0 +1,3 @@
+function() {
+                  run(files.shift());
+                }

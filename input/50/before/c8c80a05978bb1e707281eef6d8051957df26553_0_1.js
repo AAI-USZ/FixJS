@@ -1,0 +1,1 @@
+function(checkbox, value) {methods.checkboxSetState(checkbox, value);}

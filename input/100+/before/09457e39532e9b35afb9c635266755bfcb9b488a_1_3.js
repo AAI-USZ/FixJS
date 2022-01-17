@@ -1,0 +1,1 @@
+function(cm) {count == "" ? cm.setCursor(cm.lineCount()) : cm.setCursor(parseInt(count)-1); popCount(); CodeMirror.commands.goLineStart(cm);}

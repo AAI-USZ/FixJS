@@ -1,0 +1,30 @@
+function cleanUpChange() {
+	if (highlighting_mode == "pair") {
+	//	$("#corr_text" + num_corr).before('<table><tr><td><div class="corrected_word">'
+		$("#allSentences").before('<table><tr><td><div class="corrected_word">'
+		+ $("#corr_div" + num_corr).text() + '</div></td>'
+		+'<td class="change"><div width="14"> changed to </div></td>'
+		+ '<td class="change"><div class="corrected_word">'
+		+ $("#inputC" + num_corr).val() + " ... "
+		+ $("#inputC" + num_corr + '_b').val() + '</div></td></tr></table>');
+//		+ '<td><div class="corrected_word">'+'</div></td></tr></table>');
+	//	+$('#chosenErr'+num_corr).text()+'</div></td></tr></table>');
+		$("#inputC" + num_corr + '_b').hide();
+		$("#corr_text" + num_corr).hide();
+		$("#C" + num_corr).hide();
+	} else {
+//		$("#corr_text" + num_corr).before('<table><tr><td><div class="corrected_word">'
+		$("#allSentences").before('<table><tr><td><div class="corrected_word">'
+		+ $("#corr_div" + num_corr).text() + '</div></td>'
+		+ '<td class="change"><div width="14"> changed to </div></td>'
+		+ '<td><div class="corrected_word">'
+		+ $("#inputC" + num_corr).val() + '</div></td></tr></table>');
+//		+ '<td><div class="corrected_word">'+'</div></td></tr></table>');
+	//	+$('#chosenErr'+num_corr).text()+'</div></td></tr></table>');
+		$("#corr_text" + num_corr).hide();
+		$("#C" + num_corr).hide();
+	}
+	$("#inputC" + num_corr).hide();
+	$("#errTypeC" + num_corr).hide();
+	$('#chosenErr'+num_corr).hide();
+}

@@ -1,0 +1,3 @@
+function(){
+			$('.imageOptions' ,this).show();
+		}

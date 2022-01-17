@@ -1,0 +1,1 @@
+function() { dispatchResponse(detail.id, 'permission-allow'); }

@@ -1,0 +1,3 @@
+function(type){
+					createNotifyFn(type);
+				}

@@ -1,0 +1,11 @@
+function (feature) {
+        var featureFound = accessObj.features.reduce(function (found, currElem) {
+                if (currElem) {
+                    return found || currElem.id === feature.id;
+                }
+            }, false);
+        
+        if (!featureFound) {
+            accessObj.features.push(feature);
+        }
+    }

@@ -1,0 +1,1 @@
+function(){return function(){this.getName=function(){return"Example"}}}

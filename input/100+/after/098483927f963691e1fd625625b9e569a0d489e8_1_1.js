@@ -1,0 +1,3 @@
+function(tile) {
+      $(tile).remove();
+    }

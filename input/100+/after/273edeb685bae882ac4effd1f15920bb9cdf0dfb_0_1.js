@@ -1,0 +1,1 @@
+function() { $('input.js-set-name').val( $.cookie('author') ) }

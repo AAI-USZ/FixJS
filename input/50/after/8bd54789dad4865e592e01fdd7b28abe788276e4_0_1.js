@@ -1,0 +1,3 @@
+function(child) {
+        child.updateModels();
+      }

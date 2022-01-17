@@ -1,0 +1,1 @@
+function() { util.error.apply(this, arguments); }

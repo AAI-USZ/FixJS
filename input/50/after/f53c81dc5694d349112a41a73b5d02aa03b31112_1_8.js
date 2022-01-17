@@ -1,0 +1,1 @@
+function(){return advance(opts,0);}

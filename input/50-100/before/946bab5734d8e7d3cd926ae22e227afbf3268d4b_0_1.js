@@ -1,0 +1,3 @@
+function PragmaHeader() {
+	this.pragmas = [''];	
+}

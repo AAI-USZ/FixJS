@@ -1,0 +1,1 @@
+function(d,i) { return color[i % color.length] }

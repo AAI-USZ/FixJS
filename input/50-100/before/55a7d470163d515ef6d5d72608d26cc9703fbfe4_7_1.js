@@ -1,0 +1,1 @@
+function yb(a,b){this.start=ea(a)?a.clone():new u;this.end=ea(b)?b.clone():new u}yb.prototype.toString=function(){return this.isValid()?this.start.full()+".."+this.end.full():"Invalid DateRange"}

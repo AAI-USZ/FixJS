@@ -1,0 +1,1 @@
+function(callback) { db.createCollection('game', {capped:true, size:100000}, callback); }

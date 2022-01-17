@@ -1,0 +1,1 @@
+function(q){q.View.preload("juristr_tweets_views_tweetentry_ejs",jQuery.EJS(function(l,I){try{with(I)with(l){l=[];l.push('<p class="feedentry"><span class="publishDate">');l.push(jQuery.EJS.clean(moment(this.created_at).fromNow()));l.push("</span>");l.push(jQuery.EJS.clean(this.text));l.push("</p>");return l.join("")}}catch(N){N.lineNumber=null;throw N;}}))}

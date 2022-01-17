@@ -1,0 +1,1 @@
+function Cb(a,b,c,d,f,g){var e=a.toFixed(20),i=e.search(/\./);e=e.search(/[1-9]/);i=i-e;if(i>0)i-=1;f=x.max(x.min((i/3).floor(),f===m?c.length:f),-d);d=c.charAt(f+d-1);if(i<-9){f=-3;b=i.abs()-9;d=c.slice(0,1)}return(a/(g?(2).pow(10*f):(10).pow(f*3))).round(b||0).format()+d.trim()}

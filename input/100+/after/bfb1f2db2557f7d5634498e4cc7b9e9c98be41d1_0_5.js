@@ -1,0 +1,1 @@
+function(key, x, y) { return '<strong>' + y + '</strong>' }

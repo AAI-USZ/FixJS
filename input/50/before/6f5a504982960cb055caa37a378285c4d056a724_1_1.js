@@ -1,0 +1,4 @@
+function() {
+      testHelpers.setup();
+      createModule();
+    }

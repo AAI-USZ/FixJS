@@ -1,0 +1,8 @@
+function() {
+                    if (listOverlay) listOverlay.hide();
+                    that.view.find('#header #searchbar').show();
+                    selecterDiv.off('webkitTransitionEnd').hide();
+                    selecterDiv.css('zIndex', '');
+                    selecterDiv.prev().css('zIndex', '');
+                    that.showingListSelector = false;
+                }

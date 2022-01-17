@@ -1,0 +1,1 @@
+function() {var f = (function(_hashmap){return _head()(_hashmap);}); return function _firstPair(){return f;}}

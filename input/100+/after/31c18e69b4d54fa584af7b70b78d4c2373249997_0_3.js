@@ -1,0 +1,1 @@
+function(e,g,d,c,b,a,j,f){g.Bar=d;g.Store=c;g.PagingBar=b;g.PagingBar.Number=a;g.Plugins=j;g.Util=f;return g},{requires:"grid/base,grid/bar,grid/store,grid/pagingbar,grid/numberpagingbar,grid/plugins,grid/util".split(",")}

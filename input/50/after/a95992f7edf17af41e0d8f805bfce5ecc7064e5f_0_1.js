@@ -1,0 +1,4 @@
+function() {
+						removeCaretContainer();
+						unmarkBogusCaretParents();
+					}

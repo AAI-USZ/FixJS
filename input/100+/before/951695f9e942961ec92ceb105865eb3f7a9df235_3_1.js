@@ -1,0 +1,1 @@
+function() { that.ajax(type, url, data, success, error, complete, true); }

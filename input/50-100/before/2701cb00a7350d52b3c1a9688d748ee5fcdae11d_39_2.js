@@ -1,0 +1,1 @@
+function(c){if(!c||!(17==c.keyCode||16==c.keyCode))b.value=a.prop(b,"value"),d.box.removeClass("placeholder-visible"),clearTimeout(o),a(b).unbind(".placeholderremove")}

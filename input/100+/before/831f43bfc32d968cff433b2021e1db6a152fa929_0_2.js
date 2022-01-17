@@ -1,0 +1,1 @@
+function() {return $(this).offset()['left']+$(this).outerWidth();}).toArray().reduce(function(x,y){return (x>y?x:y);}

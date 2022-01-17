@@ -1,0 +1,11 @@
+function(){
+                        $(this).draggable();
+                        $(this).find(".move_block").remove();
+                        $(this).find(".close_img").remove();
+                        $(this).find(".size_up").remove();
+                        $(this).find(".size_down").remove();
+                        $(this).find(".resize_block").remove();
+                        $(this).find(".real_text").removeAttr("contenteditable");
+                        $(this).removeClass("block_border");
+                        $(this).css("position","absolute");
+                    }

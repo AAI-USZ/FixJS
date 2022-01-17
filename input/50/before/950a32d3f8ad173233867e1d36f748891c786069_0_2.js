@@ -1,0 +1,3 @@
+function() {
+      return "(function(everything){\n  window.boiler={main:{}};\n  var idModuleMap={};\n  function emulateRequire(pathIdMap){\n    function require(path, opt){\n      var exports = idModuleMap[pathIdMap[path]];\n      if(typeof opt==='function'){\n        return opt(exports);\n      }else if(typeof opt==='string'){\n        return window[opt];\n      }else{\n        return exports;\n      }\n    }\n    return require;\n  }\n  function register(id,pathIdMap,factory){\n    var module={exports:{}};\n    factory.call(this,emulateRequire(pathIdMap),module.exports,module);\n    window.boiler.main=idModuleMap[id]=module.exports;\n  }\n  everything.call(this,register);\n}).call(this,function(register){\n" + this.everything + "\n});";
+    }

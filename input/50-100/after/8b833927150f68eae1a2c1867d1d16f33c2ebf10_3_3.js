@@ -1,0 +1,19 @@
+function(appType, callback){
+	var data = {
+		query: {
+			match_all:{}
+		}
+	};
+
+	switchIndex(appType);
+	switchMapping(1);
+
+	mapping.search(data, function(err, data){
+		if(data.hits.total !== 0){
+			callback(data.hits.hits);
+		}
+		else{
+			callback(undefined);
+		}
+	});
+}

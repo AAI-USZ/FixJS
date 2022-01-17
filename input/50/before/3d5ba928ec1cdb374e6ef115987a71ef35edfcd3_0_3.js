@@ -1,0 +1,3 @@
+function (selectedBucket) {
+      bucketExistsState(!!selectedBucket);
+    }

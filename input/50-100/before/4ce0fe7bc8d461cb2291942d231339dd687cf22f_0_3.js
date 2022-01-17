@@ -1,0 +1,8 @@
+function(taskLine, options) {
+        var nextDescription, selector;
+        selector = "#" + taskLine.model.id;
+        nextDescription = $(selector).prev().find(".description");
+        if (nextDescription != null) {
+          return this.moveFocus(taskLine.descriptionField, nextDescription, options);
+        }
+      }

@@ -1,0 +1,1 @@
+function(){cur_frm.amend_doc()},'icon-pencil');},show:function(){},hide:function(){},hide_close:function(){

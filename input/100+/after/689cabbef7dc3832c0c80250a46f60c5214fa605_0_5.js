@@ -1,0 +1,83 @@
+function($, undefined){
+var rCssValue = /([0-9.]+)([a-z%]+)/ig,
+	digits = /[0-9.]+/g,
+	dTest = /[0-9]/g;
+	specials = {};
+
+if( $.browser.webkit ){
+	specials.transform = "-webkit-transform";
+}
+else if( $.browser.moz ){
+	specials.transform = "MozTransform";
+}
+else if( $.browser.opera ){
+	specials.transform = "OTransform";
+}
+else if( $.browser.ie ){
+	specials.transform = "-ms-transform";
+}
+
+$.fn.animelt = function(props,a,b,c){
+	var opts = $.speed( a,b,c ),
+		//No-conflict form
+		_this = this;
+	//Shorcut for custom animations
+	if( $.isFunction(props) ){
+		$({ p:0 }).animate({ p:1 },{
+			step: props,
+			duration: opts.duration,
+			easing: opts.easing,
+			complete: opts.complete
+		});
+		return this;
+	};
+	
+	var nodecss = [];
+	this.each(function( el ){
+		var node = this, 
+			prop = { };
+		$.each(props,function( key,val ){
+			//Makes the cross-browser
+			if( key in specials )
+				key = specials[key];
+
+			//Store the origin value
+			var oldvalue = "";
+			//Tries find the @oldValue in @el.style propertie
+			if ( node.style[key] )
+				oldvalue = node.style[key];
+			//If not tries find the @oldValue in computedStyle of el
+			else if ( dTest.test( $(node).css(key) ) )
+				oldvalue = $(node).css(key);
+			//If it does not find in either the @oldValue takes value 0
+			else oldvalue = "0";
+			prop[ key ] = [ oldvalue,val ];
+		});
+		nodecss[ el ] = prop;
+	});
+
+	//Run the animation
+	$( { p:0 } ).animate({ p:1 },{
+		step: function( p ){
+			_this.each(function( i,el ){
+			 	var props = nodecss[ i ];
+				$.each(props,function(key,val){
+					var ind = 0,
+						//@old store the olds values in an array
+						old = val[0].match( digits );
+					el.style[key] = val[1].replace(rCssValue,function(exp,num,unit){
+						old[ind] = old[ind] || "0";
+						var finalvalue = Number(old[ind]) + ( Number(num) - Number(old[ind]) ) * p;							
+						ind++;
+						return finalvalue + unit;
+					});
+				});
+			});
+		},
+		duration: opts.duration,
+		easing: opts.easing,
+		complete: opts.complete
+	});
+	return this;
+};
+}

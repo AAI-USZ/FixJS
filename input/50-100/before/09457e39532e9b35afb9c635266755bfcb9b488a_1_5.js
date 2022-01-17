@@ -1,0 +1,1 @@
+function(cm) {delTillMark(cm,"Shift-P");}

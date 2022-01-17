@@ -1,0 +1,1 @@
+function() { if (tipsy.hoverState === 'in') tipsy.show(); }

@@ -1,0 +1,3 @@
+function() {
+		SM.SetStateByName("gameIntro");
+	}

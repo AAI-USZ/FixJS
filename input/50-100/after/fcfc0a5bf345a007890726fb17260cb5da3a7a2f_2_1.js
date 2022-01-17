@@ -1,0 +1,1 @@
+function(){var d;d=b._data(this).mousewheelHandler=c.bind(a,this);p(this,e,d)},tearDown:function(){var a,c=b._data(this);a=c.mousewheelHandler;m(this,e,a);delete c[a]}

@@ -1,0 +1,1 @@
+function(field) { field.disabled = enable ? 0 : 1; }

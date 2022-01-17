@@ -1,0 +1,33 @@
+function(reverse) {
+    var animation = this;
+    var isPlayMethod = reverse !== INTERNAL_IDENTIFIER_REVERSE;
+    var status = animation.status;
+    if (isPlayMethod && status != PLAYING && status != END_POINT || !isPlayMethod && status != REVERSING && status != START_POINT) {
+      // 触发事件。
+      if (isPlayMethod) {
+        animation.fire('play');
+        if (status === START_POINT) {
+          animation.fire('playstart');
+        }
+        animation.status = PLAYING;
+      } else {
+        animation.fire('reverse');
+        if (status === END_POINT) {
+          animation.fire('reversestart');
+        }
+        animation.status = REVERSING;
+      }
+      // 未挂载到引擎（执行此方法前为暂停/停止状态）。
+      if (!animation.timestamp) {
+        var timePoint = animation.timePoint;
+        var duration = animation.duration;
+        // 每次播放/反向播放时的首帧同步播放。
+        playAnimation(animation, timePoint ? timePoint : (isPlayMethod ? 0 : duration), isPlayMethod);
+        // 如果动画超出一帧，则将其挂载到动画引擎，异步播放中间帧及末帧。
+        if (duration) {
+          mountAnimation(animation);
+        }
+      }
+    }
+    return animation;
+  }

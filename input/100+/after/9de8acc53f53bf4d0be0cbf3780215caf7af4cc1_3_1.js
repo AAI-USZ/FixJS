@@ -1,0 +1,1 @@
+function() {var f; return function _identMacro(){return f || (f = (function(_list){return _tail()(_list);}));}}

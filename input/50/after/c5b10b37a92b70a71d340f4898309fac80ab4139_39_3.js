@@ -1,0 +1,3 @@
+function(updatePacket){
+						readyCb(updatePacket);
+				}

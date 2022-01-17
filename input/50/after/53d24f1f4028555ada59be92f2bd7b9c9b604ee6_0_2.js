@@ -1,0 +1,1 @@
+function(editingAccessoryType) { this._editingAccessoryType = (editingAccessoryType !== Pushpop.TableViewCell.EditingAccessoryType.None) ? editingAccessoryType : null; }

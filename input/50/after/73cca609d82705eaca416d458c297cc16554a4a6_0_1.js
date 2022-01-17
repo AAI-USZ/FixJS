@@ -1,0 +1,3 @@
+function () {
+    Meteor.subscribe("bandnames");
+  }

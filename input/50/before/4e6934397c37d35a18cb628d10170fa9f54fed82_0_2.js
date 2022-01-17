@@ -1,0 +1,1 @@
+function(k, e, newe) { return function() { return perform(k.expr, k.next, newe) } }

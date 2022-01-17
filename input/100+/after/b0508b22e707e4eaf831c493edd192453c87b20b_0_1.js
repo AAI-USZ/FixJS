@@ -1,0 +1,26 @@
+function (color3) {
+        if ((this._color.r == color3.r) && (this._color.g == color3.g) && (this._color.b == color3.b)) {
+            return;
+        }
+        this._color = this._colorUnmodified = color3;
+
+        if (this.getTexture()) {
+            if (cc.renderContextType == cc.CANVAS) {
+                var cacheTextureForColor = cc.TextureCache.sharedTextureCache().getTextureColors(this._originalTexture);
+                if (cacheTextureForColor) {
+                    var tx = this._originalTexture;
+                    var textureRect = new cc.Rect(0, 0, tx.width, tx.height);
+                    var colorTexture = cc.generateTintImage(tx, cacheTextureForColor, this._color, textureRect);
+                    var img = new Image();
+                    img.src = colorTexture.toDataURL();
+                    this.setTexture(img);
+                }
+            }
+        }
+
+        if (this._isOpacityModifyRGB) {
+            this._color.r = color3.r * this._opacity / 255;
+            this._color.g = color3.g * this._opacity / 255;
+            this._color.b = color3.b * this._opacity / 255;
+        }
+    }

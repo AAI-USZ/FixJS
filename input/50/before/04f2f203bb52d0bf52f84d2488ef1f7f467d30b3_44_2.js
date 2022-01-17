@@ -1,0 +1,1 @@
+function(value) { this._.loop = !!value; }

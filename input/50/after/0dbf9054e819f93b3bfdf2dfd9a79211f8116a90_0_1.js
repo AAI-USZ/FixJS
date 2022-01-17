@@ -1,0 +1,1 @@
+function exceptional (error) { if (error) throw error }

@@ -1,0 +1,1 @@
+function(){!1===this.config.queue?m.call(this):h.queue(this);return this},_frame:function(){var a,b=this.config,c=1,d,e,f=this._fxs;for(a in f)if(f.hasOwnProperty(a)&&!(e=f[a]).finished)b.frame&&(d=b.frame(e)),1==d||0==d?(e.finished=d,c&=d):(c&=e.frame())&&b.frame&&b.frame(e);(!1===this.fire("step")||c)&&this.stop(c)}

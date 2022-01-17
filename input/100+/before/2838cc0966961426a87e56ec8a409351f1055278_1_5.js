@@ -1,0 +1,49 @@
+function(x) {
+            var y, z, w, v;
+            var k, oldK, newId;
+
+            y = x.parent;
+            w = Mp[x.diffId];
+            if (!w) {
+                DEBUG1?console.log("case 1"):null;
+                k = findPos(x);
+                z = Mp[y.diffId]; // TODO always exists? what?
+                newId = globalIdCounter++;
+                E.push({ty:"insert", args:{x:x, y:z, k:k, newId:newId}});
+                w = EditorTree.applyIns(x, z, k, newId);
+                    if (DEBUG1){t11.sanityCheck();t21.sanityCheck();}
+                x.inOrder = true;
+                w.inOrder = true;
+                x.matched = true;
+                w.matched = true;
+                w.diffId = seed++;
+                Mp[w.diffId] = x;
+                Mp[x.diffId] = w;
+                DEBUG1?console.log(t11.toString()):null;
+            } else if (null !== y) { // !isRoot(x) and x has a partner.
+                DEBUG1?console.log("case 2"):null;
+                v = w.parent;
+                if (w.getValue() != x.getValue()) {
+                    DEBUG1?console.warn("case 2a"):null;
+                    E.push({ty:"update", args:{x:w, val:x}});
+                    EditorTree.applyUpd(w, x);
+                    if (DEBUG1){t11.sanityCheck();t21.sanityCheck();}
+                    DEBUG1?console.log(t11.toString()):null;
+                }
+                if (!doMatch(y, v)) {
+                    z = Mp[y.diffId]; // TODO always exists? what?
+                    DEBUG1?console.warn("case 2b"):null;
+                    k = findPos(x);
+                    oldK = w.parent.children.indexOf(w);
+                    if (oldK < 0)
+                        console.error("idx bad applyMov");
+                    E.push({ty:"move", args:{x:w, y:z, k:k, oldK:oldK}});
+                    EditorTree.applyMov(w, z, k, oldK);
+                    if (DEBUG1){t11.sanityCheck();t21.sanityCheck();}
+                    DEBUG1?console.log(t11.toString()):null;
+                }
+            } else {
+                DEBUG1?console.log("case 3"):null;
+            }
+            alignChildren(w, x);
+        }

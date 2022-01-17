@@ -1,0 +1,1 @@
+function(plugin) {return plugin ? "Charger " + plugin : "Charger le plugin";}

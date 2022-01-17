@@ -1,0 +1,29 @@
+function () {
+
+    IPython.page = new IPython.Page();
+
+    $('div#tabs').tabs();
+    $('div#tabs').on('tabsselect', function (event, ui) {
+        var new_url = $('body').data('baseProjectUrl') + '#' + ui.panel.id;
+        window.history.replaceState({}, '', new_url);
+    });
+    $('div#main_app').addClass('border-box-sizing ui-widget');
+    $('div#notebooks_toolbar').addClass('ui-widget ui-helper-clearfix');    
+    $('#new_notebook').button().click(function (e) {
+        window.open($('body').data('baseProjectUrl')+'new');
+    });
+
+    IPython.read_only = $('body').data('readOnly') === 'True';
+    IPython.notebook_list = new IPython.NotebookList('div#notebook_list');
+    IPython.cluster_list = new IPython.ClusterList('div#cluster_list');
+    IPython.login_widget = new IPython.LoginWidget('span#login_widget');
+
+    IPython.notebook_list.load_list();
+    IPython.cluster_list.load_list();
+    IPython.page.show();
+    
+    // bound the upload method to the on change of the file select list
+    $("#alternate_upload").change(function (event){
+        IPython.notebook_list.handelFilesUpload(event,'form');
+    });
+}

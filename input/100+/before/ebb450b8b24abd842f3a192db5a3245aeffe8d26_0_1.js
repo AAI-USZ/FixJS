@@ -1,0 +1,4 @@
+function(){
+			openEndLoopTimeout = null;
+			timedInvocationChain();
+		}

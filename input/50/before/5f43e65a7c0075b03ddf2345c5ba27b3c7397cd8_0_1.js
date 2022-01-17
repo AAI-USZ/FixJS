@@ -1,0 +1,2 @@
+function Type__ctor () {
+            }

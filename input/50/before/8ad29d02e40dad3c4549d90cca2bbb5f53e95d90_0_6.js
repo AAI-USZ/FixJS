@@ -1,0 +1,3 @@
+function () {
+      pollingPaused = false;
+    }

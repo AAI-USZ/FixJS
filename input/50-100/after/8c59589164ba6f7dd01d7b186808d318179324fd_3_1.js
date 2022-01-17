@@ -1,0 +1,1 @@
+function nextEventId() {nrOfEvents++; return nrOfEvents;}

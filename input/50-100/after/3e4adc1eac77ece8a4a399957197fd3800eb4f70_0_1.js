@@ -1,0 +1,3 @@
+function(){
+			$(".search input").keyup();
+		}

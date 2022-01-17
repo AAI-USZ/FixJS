@@ -1,0 +1,3 @@
+function() {	
+				location.hash = "#logout";
+			}

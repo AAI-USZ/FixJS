@@ -1,0 +1,3 @@
+function(){
+              textileMode.replaceSelection(editor, "");
+            }

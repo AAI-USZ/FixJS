@@ -1,0 +1,1 @@
+function(o, n, s, x) {if (!(n in o)) o[n] = new Function("x","y","return function(a,b,c,d){"+s+"}").apply(null, x||[o, n])}

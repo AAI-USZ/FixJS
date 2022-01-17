@@ -1,0 +1,3 @@
+function (port) {
+          tcpServer.closeAllSockets();
+        }

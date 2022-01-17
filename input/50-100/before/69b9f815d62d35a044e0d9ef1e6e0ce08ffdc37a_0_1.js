@@ -1,0 +1,1 @@
+function(e){that.updateOrientation(e);}

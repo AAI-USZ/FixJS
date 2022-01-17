@@ -1,0 +1,8 @@
+function () {
+  try { this.config = JSON.parse(fs.readFileSync(this.path + 'config.json')); }
+  catch(e) { // Try default config
+    console.log(this.name.yellow, 'Failed to load config, falling back to default.');
+    try { this.config = JSON.parse(fs.readFileSync(__dirname + '/default_channel_config.json')); }
+    catch(e) { console.log('Failed to load default channel config!\n%s', e.stack); process.exit(); }
+  }
+}

@@ -1,0 +1,3 @@
+function(doc) {
+	return 'SELECT DISTINCT `tabSales Taxes and Charges Master`.name FROM `tabSales Taxes and Charges Master` WHERE `tabSales Taxes and Charges Master`.company = "'+doc.company+'" AND `tabSales Taxes and Charges Master`.company is not NULL AND `tabSales Taxes and Charges Master`.docstatus != 2 AND `tabSales Taxes and Charges Master`.%(key)s LIKE "%s" ORDER BY `tabSales Taxes and Charges Master`.name LIMIT 50';
+}

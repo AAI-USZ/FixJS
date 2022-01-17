@@ -1,0 +1,1 @@
+function(offset, line, column, t0, e, t1, d) { return {raw: t0 + e.raw + t1 + d, expr: e} }

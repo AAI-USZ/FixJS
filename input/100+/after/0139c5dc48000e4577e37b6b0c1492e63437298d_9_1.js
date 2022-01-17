@@ -1,0 +1,89 @@
+function method(outputs, fn) {
+    /* Provide short-cut for single output. */
+    if (!Array.isArray(outputs)) {
+      outputs = [outputs];
+    }
+    /* The user has access to proxies, but we want the variables. */
+    outputs = outputs.map(function (proxy) {
+      ASSERT(hd.isVariable(proxy),
+        "expected variable as output of method");
+      return proxy.unwrap();
+    });
+
+    /* None of the outputs should belong to a fixed one-way constraint. */
+    var isConflict = outputs.some(function (vv) {
+      return (vv.cellType !== "interface");
+    });
+    ASSERT(!isConflict,
+      "cannot add a method that outputs to computed variable");
+
+    /* The first method makes us a one-way constraint unless some of our
+     * outputs already belong to constraint graphs. We need to find out now if
+     * we have a one-way constraint in case we need to make it multi-way
+     * later. */
+    var wasOneWayConstraint = (this.solver.constraints.length === 0);
+
+    outputs.forEach(function (ww) {
+      this.solver.merge(ww.solver);
+    }, this);
+
+    /* Create the method. */
+    var mm = factory.addMethod(outputs, fn);
+    /* This will add mm to this.cc.methods (if this.cc exists) since it shares
+     * the same methods array. */
+    this.methods.push(mm);
+
+    /* Depending on the circumstances, we incorporate this method into a
+     * constraint graph in different ways.
+     *
+     * If it does not attach to an existing constraint graph and it is alone,
+     * then we can make a one-way constraint.
+     * If later another method is added, then we have to change the constraint
+     * from one-way to multi-way.
+     * 
+     * If it attaches to any number of existing constraint graphs, then merge
+     * them. Otherwise, start a new one. */
+    if (this.methods.length === 1) {
+
+      /* If we already have a constraint graph, then this method writes to
+       * variables that can be written by another method in the graph. If we
+       * leave this as a one-way constraint, then that other method will never
+       * have a chance of being selected. This is probably unintended, so we
+       * set up a check for later. */
+       if (this.solver.constraints.length > 0) {
+         setTimeout(function () {
+           ASSERT(mm.constraint && mm.constraint.methods.length > 1,
+             "must add more than one method to constraint (" +
+             mm.constraint + ")");
+         }, 0);
+       }
+
+      factory.setOneWayConstraint(mm);
+
+    } else {
+
+      if (this.methods.length === 2) {
+        /* Undo the one-way constraint we had tentatively created, and do what
+         * we should have done. */
+        this.cc = factory.addConstraint(this.methods);
+        factory.setMultiWayConstraint(this.methods[0], this.cc);
+        this.solver.addConstraint(this.cc);
+        this.solver.addMethod(this.cc, this.methods[0]);
+        /* Now that we know we will use the solver, we can tag all the
+         * variables. */
+        this.variables.forEach(function (vv) {
+          this.solver.addVariable(this.cc, vv);
+        }, this);
+      }
+
+      ASSERT(this.cc, "expected constraint to exist");
+      ASSERT(this.solver.constraints.has(this.cc.inner),
+        "expected constraint to exist in the solver");
+
+      mm.constraint = this.cc;
+      this.solver.addMethod(this.cc, mm);
+    }
+
+    /* Allow chaining. */
+    return this;
+  }

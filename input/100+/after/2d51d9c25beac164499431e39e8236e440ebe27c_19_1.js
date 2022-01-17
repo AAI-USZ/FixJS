@@ -1,0 +1,1 @@
+function(b,c){if(-1!=b.indexOf("youtube.com/watch?")||-1!=b.indexOf("youtube.com/v/"))return"video/youtube";var b=b.split("?")[0].split("."),b=b[b.length-1],k;a.each(f.mimeTypes[c],function(a,c){if(-1!==c.indexOf(b))return k=a,!1});return k}

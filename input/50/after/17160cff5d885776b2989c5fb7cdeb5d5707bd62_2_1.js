@@ -1,0 +1,4 @@
+function(calledByError){
+	self.parent.parentNode.removeChild(self.parent);
+	self.hidden=true;
+	}

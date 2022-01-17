@@ -1,0 +1,1 @@
+function(d, i) { return obj.x(i + 1) - .5; }

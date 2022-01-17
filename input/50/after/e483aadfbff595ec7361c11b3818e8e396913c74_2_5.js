@@ -1,0 +1,1 @@
+function(str) { return str.trim() }

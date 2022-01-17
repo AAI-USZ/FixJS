@@ -1,0 +1,9 @@
+function(){
+            checkForRedirect();
+            renderMenu();
+            renderUser();
+            setCountUnreadMessages();
+            setUserName();
+            addBinding();
+            forceShowLoginUrl();
+        }

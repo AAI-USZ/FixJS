@@ -1,0 +1,1 @@
+function(value){if(this.dScaleY==value) return this;this.dScaleY=parseFloat(value);this.staticMatrix=null;this.scaleMatrix=null;this.updateMatrix();return this;}

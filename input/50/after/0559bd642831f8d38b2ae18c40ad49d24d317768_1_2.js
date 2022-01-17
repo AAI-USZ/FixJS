@@ -1,0 +1,1 @@
+function(){select_off_selectable($(this));}

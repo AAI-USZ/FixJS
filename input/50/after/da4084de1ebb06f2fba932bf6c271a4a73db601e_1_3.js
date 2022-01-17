@@ -1,0 +1,1 @@
+function(offset, line, column, text) { return createTextNode(text.join('')); }

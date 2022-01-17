@@ -1,0 +1,3 @@
+function(){
+					$.webshims.refreshCustomValidityRules(elem);
+				}

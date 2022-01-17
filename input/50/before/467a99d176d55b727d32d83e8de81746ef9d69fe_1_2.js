@@ -1,0 +1,1 @@
+function(fn){return setTimeout(fn,1000/60)}

@@ -1,0 +1,72 @@
+function(req, res) {
+  // in order to complete a user creation, one of the following must be true:
+  //
+  // 1. you are using the same browser to complete the email verification as you
+  //    used to start it
+  // 2. you have provided the password chosen by the initiator of the verification
+  //    request
+  //
+  // These protections guard against the case where an attacker can send out a bunch
+  // of verification emails, wait until a distracted internet user clicks on one,
+  // and then control a browserid account that they can use to prove they own
+  // the email address of the attacked.
+
+  // is this the same browser?
+  if (typeof req.session.pendingCreation === 'string' &&
+      req.body.token === req.session.pendingCreation) {
+    return postAuthentication();
+  }
+  // is a password provided?
+  else if (typeof req.body.pass === 'string') {
+    return db.authForVerificationSecret(req.body.token, function(err, hash) {
+      if (err) {
+        logger.warn("couldn't get password for verification secret: " + err);
+        return wsapi.databaseDown(res, err);
+      }
+
+      bcrypt.compare(req.body.pass, hash, function (err, success) {
+        if (err) {
+          logger.warn("max load hit, failing on auth request with 503: " + err);
+          return httputils.serviceUnavailable(res, "server is too busy");
+        } else if (!success) {
+          return httputils.authRequired(res, "password mismatch");
+        } else {
+          return postAuthentication();
+        }
+      });
+    });
+  } else {
+    return httputils.authRequired(res, 'Provide your password');
+  }
+
+  function postAuthentication() {
+    db.haveVerificationSecret(req.body.token, function(err, known) {
+      if (err) return wsapi.databaseDown(res, err);
+
+      if (!known) {
+        // clear the pendingCreation token from the session if we find no such
+        // token in the database
+        delete req.session.pendingCreation;
+        return res.json({ success: false} );
+      }
+
+      db.completeCreateUser(req.body.token, function(err, email, uid) {
+        if (err) {
+          logger.warn("couldn't complete email verification: " + err);
+          wsapi.databaseDown(res, err);
+        } else {
+          // clear the pendingCreation token from the session once we
+          // successfully complete user creation
+          delete req.session.pendingCreation;
+
+          // At this point, the user is either on the same browser with a token from
+          // their email address, OR they've provided their account password.  It's
+          // safe to grant them an authenticated session.
+          wsapi.authenticateSession(req.session, uid, 'password',
+                                    config.get('ephemeral_session_duration_ms'));
+          res.json({ success: true });
+        }
+      });
+    });
+  }
+}

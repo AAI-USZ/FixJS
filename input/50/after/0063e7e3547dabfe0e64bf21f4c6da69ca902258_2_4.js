@@ -1,0 +1,3 @@
+function(){
+            return collectionviewer.collectionName;
+        }

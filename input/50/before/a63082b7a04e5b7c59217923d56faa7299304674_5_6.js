@@ -1,0 +1,3 @@
+function() {
+          udpServer.toggleLog(logpath);
+        }

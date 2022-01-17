@@ -1,0 +1,3 @@
+function onPlay() {
+      elPopcorn.play();
+    }

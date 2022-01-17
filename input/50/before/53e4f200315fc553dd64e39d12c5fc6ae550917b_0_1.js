@@ -1,0 +1,3 @@
+function clear() {
+		markerGroup.clearLayers();
+	}

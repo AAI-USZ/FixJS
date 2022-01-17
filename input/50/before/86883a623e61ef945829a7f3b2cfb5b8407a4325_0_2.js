@@ -1,0 +1,1 @@
+function(from, to) {return getRange(clipPos(from), clipPos(to));}

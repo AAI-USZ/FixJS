@@ -1,0 +1,1 @@
+function(){window.location.href="./index.htm"});j=document.getElementById("PHRASES_MESSAGE");j.style.wordWrap="nowrap";for(var b=0;b<a.length;b++){var d=document.createElement("span");d.className="PHRASE_SPAN";var e=a[b].replace(/_/g,"");d.innerHTML=b===0?'"'+e+" ":b+1===a.length?e+'."':e+" ";j.appendChild(d);i.push(d)}return n};n.highlightNextPhrase=function(){

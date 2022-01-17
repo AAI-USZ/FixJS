@@ -1,0 +1,1 @@
+function() { expect(a).toBeEqualish([19, 22, 43, 50, 0, 0]); }

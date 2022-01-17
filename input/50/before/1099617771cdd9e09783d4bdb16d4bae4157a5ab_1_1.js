@@ -1,0 +1,1 @@
+function(s) { console.log(s); return s.id === stopID; }

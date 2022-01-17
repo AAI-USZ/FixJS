@@ -1,0 +1,1 @@
+function(a){var c="varying vec2 FragTexCoord"+a+";\n";c+="uniform sampler2D Texture"+a+";\n";c+="vec4 texColor"+a+";\n";return c};osg.Texture.prototype[osg.ShaderGeneratorType.FragmentMain]=function(a){var c="texColor"+a+" = texture2D( Texture"+a+", FragTexCoord"+a+".xy );\n";c+="fragColor = fragColor * texColor"+a+";\n";return c}

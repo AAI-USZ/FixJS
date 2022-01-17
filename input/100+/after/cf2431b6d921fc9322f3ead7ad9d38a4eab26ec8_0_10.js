@@ -1,0 +1,1 @@
+function(a,c){a.Matrix&&(osgDB.ObjectWrapper.serializers.osg.Node(a,c),a.Matrix&&c.setMatrix(a.Matrix))};osgDB.ObjectWrapper.serializers.osg.LightSource=function(a,c){if(a.Light){osgDB.ObjectWrapper.serializers.osg.Node(a,c);var e=osgDB.ObjectWrapper.readObject(a.Light);c.setLight(e)}}

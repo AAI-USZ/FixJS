@@ -1,0 +1,1 @@
+function(comment) { return moment(comment.time._d).utc() }

@@ -1,0 +1,46 @@
+function( $item ) {
+				
+				// shows the large image that is associated to the $item
+				
+				var $loader	= $rgGallery.find('div.rg-loading').show();
+				
+				$items.removeClass('selected');
+				$item.addClass('selected');
+					 
+				var $thumb		= $item.find('img'),
+					largesrc	= $thumb.data('large'),
+					title		= $thumb.data('title'),
+					rating      = $thumb.data('rating'),
+					description = $thumb.data('description'),
+					torrent     = $thumb.data('torrent'),
+					format      = $thumb.data('format');
+				
+				$('<img/>').load( function() {
+					
+					$rgGallery.find('div.rg-title').empty().append(title);
+					$rgGallery.find('div.rg-caption').show().children('p').empty().text( description );
+					$rgGallery.find('div.rg-image').empty().append('<img src="' + largesrc + '" />');
+					$rgGallery.find('span.rg-score').empty().append('<code>'+rating+'/10</code>');
+					$rgGallery.find('div.rg-format').empty().append('<span>Format: '+ format +'</span>');
+					$rgGallery.find('span.rg-stars').empty().raty({
+						readOnly	: true,
+						half  		: true,
+						number      : 10,
+						score		: rating
+					});
+					
+					$rgGallery.find('div.rg-torrent').empty().append('<a href="'+torrent+'"> Download Torrent</a>');
+					setYoutubeTrailer($rgGallery.find('div.rg-trailer').empty(), title + "trailer");
+					
+					$loader.hide();
+					
+					if( mode === 'carousel' ) {
+						$esCarousel.elastislide( 'reload' );
+						$esCarousel.elastislide( 'setCurrent', current );
+					}
+					
+					anim	= false;
+					
+				}).attr( 'src', largesrc );
+				
+			}

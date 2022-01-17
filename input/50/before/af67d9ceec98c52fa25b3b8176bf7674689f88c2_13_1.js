@@ -1,0 +1,8 @@
+function done(value) {
+    var expected = 24 * 200;
+    if (value == expected)
+        testPassed("done() called with " + expected);
+    else
+        testFailed("done() called with " + value + ", but expected " + expected);
+    layoutTestController.notifyDone();
+}

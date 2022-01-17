@@ -1,0 +1,5 @@
+function () {
+
+        testAppReadOnly("copyright");
+
+    }

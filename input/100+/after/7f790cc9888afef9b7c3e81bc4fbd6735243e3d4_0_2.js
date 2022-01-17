@@ -1,0 +1,1 @@
+function() { rcmail.unload = true; }

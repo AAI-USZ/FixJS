@@ -1,0 +1,3 @@
+function() {
+		QuickApps.preventDoubleSubmit(this);
+	}

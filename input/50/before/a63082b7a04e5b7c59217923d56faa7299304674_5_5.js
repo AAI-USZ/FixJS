@@ -1,0 +1,3 @@
+function() {
+          httpServer.toggleLog(logpath);
+        }

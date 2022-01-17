@@ -1,0 +1,1 @@
+function(){}),require(["css!./component!"],function(){return{component:"is here"}}),define("components/component",function(){}

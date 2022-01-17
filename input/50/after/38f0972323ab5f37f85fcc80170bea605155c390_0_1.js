@@ -1,0 +1,1 @@
+function (date) { return 'ISODate("' + date.toISOString() + '")'; }

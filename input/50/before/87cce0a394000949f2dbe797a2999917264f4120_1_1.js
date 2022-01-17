@@ -1,0 +1,1 @@
+function(){ setKickstrap(); return false;}

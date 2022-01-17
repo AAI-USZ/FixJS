@@ -1,0 +1,1 @@
+function(offset, line, column, t, members, d) { return {list: members.list, raw: t + members.raw + d}; }

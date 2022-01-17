@@ -1,0 +1,1 @@
+function(arr) { return new L.LatLng(arr[0], arr[1]); }

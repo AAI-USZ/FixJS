@@ -1,0 +1,1 @@
+function(k, e, val) { return function() { bind(e, k.name, val); return enter(k.next, VOID) } }

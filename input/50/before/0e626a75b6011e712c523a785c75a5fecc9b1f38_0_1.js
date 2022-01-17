@@ -1,0 +1,4 @@
+function(){
+	setScalingVars();
+	scroll();
+}

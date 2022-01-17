@@ -1,0 +1,1 @@
+function() { this.selected = true; }

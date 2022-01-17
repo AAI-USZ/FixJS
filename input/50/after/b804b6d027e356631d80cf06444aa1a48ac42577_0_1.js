@@ -1,0 +1,3 @@
+function(){
+            model.removeComponent(pathname);
+        }

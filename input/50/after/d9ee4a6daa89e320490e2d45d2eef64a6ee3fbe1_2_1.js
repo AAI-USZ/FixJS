@@ -1,0 +1,3 @@
+function () {
+        clearAndGetCookie($domain.val());
+    }

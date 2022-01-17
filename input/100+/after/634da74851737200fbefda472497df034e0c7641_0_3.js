@@ -1,0 +1,1 @@
+function assert(condition) { if(!condition) { debugger; }}

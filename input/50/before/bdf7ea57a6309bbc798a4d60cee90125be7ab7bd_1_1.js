@@ -1,0 +1,5 @@
+function() {
+      close({
+        type: 'otherWindows'
+      })
+    }

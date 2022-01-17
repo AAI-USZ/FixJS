@@ -1,0 +1,33 @@
+function() {
+            var element = this.element,
+                template = this._templateElement,
+                attributes = this.element.attributes,
+                attributeName,
+                value,
+                i,
+                attribute;
+
+            // TODO: get a spec for this, what attributes should we merge?
+            for (i = 0; (attribute = attributes[i]); i++) {
+                attributeName = attribute.nodeName;
+                if (attributeName === "id" || attributeName === "data-montage-id") {
+                    continue;
+                } else {
+                    value = (template.getAttribute(attributeName) || "") + (attributeName === "style" ? "; " : " ") +
+                        attribute.nodeValue;
+                }
+
+                template.setAttribute(attributeName, value);
+            }
+
+            if (element.parentNode) {
+                element.parentNode.replaceChild(template, element);
+            } else {
+                console.warn("Warning: Trying to replace element ", element," which has no parentNode");
+            }
+
+            this.eventManager.unregisterEventHandlerForElement(element);
+            this.eventManager.registerEventHandlerForElement(this, template);
+            this._element = template;
+            this._templateElement = null;
+        }

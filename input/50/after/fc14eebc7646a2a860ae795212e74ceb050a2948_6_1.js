@@ -1,0 +1,1 @@
+function(value) { this.$.top && this.$.top.set('title', value); }

@@ -1,0 +1,3 @@
+function() {
+          viewThing.slice.refresh();
+        }

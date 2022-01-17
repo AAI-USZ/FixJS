@@ -1,0 +1,1 @@
+function(t){t.executeSql(query,args,success,error);}

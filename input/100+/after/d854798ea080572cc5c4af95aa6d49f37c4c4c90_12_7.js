@@ -1,0 +1,1 @@
+function fb(a,b,c){var d={h:0,m:1,s:2},e;b=b||W;return a.replace(/{([a-z])}/g,function(g,f){var i=[],h=f==="h",l=h&&!c;if(f==="t")return b["12hr"].join("|");else{h&&i.push(":");if(e=b.timeSuffixes[d[f]])i.push(e+"\\s*");return i.length===0?"":"(?:"+i.join("|")+")"+(l?"":"?")}})}function ub(a,b){var c;c=D(a[1])?kb(a)[0]:a[0];return pb(c,a[1],b).ea}

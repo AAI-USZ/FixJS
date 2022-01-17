@@ -1,0 +1,1 @@
+function(a){typeof define=="function"&&define.amd?define(["jquery"],a):jQuery&&!jQuery.fn.qtip&&a(jQuery)}

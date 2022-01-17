@@ -1,0 +1,1 @@
+function(p){return {name: p, status: user.privileges[p], text: p + ':' + user.privileges[p]};}

@@ -1,0 +1,3 @@
+function resetDefaults() {
+	logKind = makeDefaultLogKinds();
+}

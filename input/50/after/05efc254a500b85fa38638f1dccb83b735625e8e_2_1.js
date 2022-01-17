@@ -1,0 +1,1 @@
+function(key, value) { return key == 'foo'; }

@@ -1,0 +1,3 @@
+function () {
+      $('#all-dbs').slideToggle();
+    }

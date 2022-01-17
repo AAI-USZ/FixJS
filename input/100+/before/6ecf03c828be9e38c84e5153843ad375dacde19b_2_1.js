@@ -1,0 +1,71 @@
+function(game, context) {
+            this.ticks++;
+
+            // Draw the map 
+            for(var i = 0; i < game.map.width; ++i) {
+                for(var j = 0; j < game.map.height; ++j) {
+                    switch(game.map.get(i, j)) {
+                        case game.types.GRASS:
+                            context.fillStyle = '#458B00';
+                            break;
+                        case game.types.WALL:
+                            context.fillStyle = '#bebebe';
+                            break;
+                        case game.types.BRICK:
+                            context.fillStyle = '#cecece';
+                            break;
+                    }
+
+                    context.fillRect(i * game.map.tileSize, j * game.map.tileSize, game.map.tileSize, game.map.tileSize);
+                }
+            }
+            
+            for(var i = 0; i < game.sprites.length; ++i) {
+                var sprite = game.sprites[i];
+                switch(sprite.type) {
+                    case window.Game.Sprites.EXPLOSION:
+                        context.fillStyle = 'yellow';
+                        context.fillRect(sprite.x * game.map.tileSize, sprite.y * game.map.tileSize, game.map.tileSize, game.map.tileSize);
+                        break;
+                    case window.Game.Sprites.BOMB:
+                        context.fillStyle = '#000';
+                        context.beginPath();
+                        context.arc(sprite.x * game.map.tileSize + (game.map.tileSize * 0.5), 
+                                    sprite.y * game.map.tileSize + (game.map.tileSize * 0.5), 
+                                    0.45 * game.map.tileSize, 0, 2 * Math.PI, false);
+                        context.fill();
+                        break;
+                    case window.Game.Sprites.BOMBER:
+                        var metadata = this.assetManager.getMetadata(sprite);
+                            frame = metadata.frames[sprite.direction][sprite.activeFrameIndex],
+                            x = sprite.exactX / 100,
+                            y = sprite.exactY / 100,
+                            scale = (game.map.tileSize / BASE_TILE_SIZE) * SCALE_FACTOR,
+                            width = metadata.width * scale,
+                            height = metadata.height * scale;
+
+                        
+                        // Bounding Box
+                        context.fillStyle = 'orange';
+                        context.fillRect(sprite.x * game.map.tileSize, sprite.y * game.map.tileSize, game.map.tileSize, game.map.tileSize);
+
+                        context.fillStyle = 'purple';
+                        context.fillRect(x * game.map.tileSize, y * game.map.tileSize, game.map.tileSize, game.map.tileSize);
+
+                        context.drawImage(metadata.image, 
+                                          frame.x, 
+                                          frame.y, 
+                                          metadata.width, 
+                                          metadata.height, 
+                                          x * game.map.tileSize, 
+                                          (y * game.map.tileSize) - (0.9 * game.map.tileSize), 
+                                          width, 
+                                          height);
+                        break;
+                    case window.Game.Sprites.POWERUP:
+                        context.fillStyle = 'orange';
+                        context.fillRect(sprite.x * game.map.tileSize, sprite.y * game.map.tileSize, game.map.tileSize, game.map.tileSize);
+                        break;
+                }
+            }
+        }

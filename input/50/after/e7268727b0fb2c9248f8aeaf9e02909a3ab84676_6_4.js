@@ -1,0 +1,1 @@
+function(plugin) {return plugin ? "Nascondi " + plugin : "Nascondi plugin";}

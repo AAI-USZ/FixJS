@@ -1,0 +1,16 @@
+function(target){
+      V3.sub(target,this.pos,delta);
+
+      V3.normalize(delta, deltaNorm);
+      V3.scale(deltaNorm, this.spring, deltaNorm);
+      V3.sub(delta, deltaNorm, delta);
+
+      V3.scale(delta,this.stiffness,force);
+      force[1] += this.gravity;
+      V3.scale(force,1/this.mass,accel);
+      V3.add(force,accel,this.veloc);
+      V3.scale(this.veloc,this.damping,this.veloc);
+      V3.add(this.pos,this.veloc,this.pos);
+
+    M4x4.makeLookAt(this.pos,target,localParam.camera.eye,this.lookat);
+  }

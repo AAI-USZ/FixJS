@@ -1,0 +1,1 @@
+function(c) { return c.rank; }

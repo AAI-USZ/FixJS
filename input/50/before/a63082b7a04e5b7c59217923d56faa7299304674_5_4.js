@@ -1,0 +1,3 @@
+function() {
+          tcpServer.toggleLog(logpath);
+        }

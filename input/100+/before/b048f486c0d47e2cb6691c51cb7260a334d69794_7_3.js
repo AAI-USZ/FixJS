@@ -1,0 +1,1 @@
+function jb(a,b){var c={},d,e;b.forEach(function(g,f){d=a[f+1];if(!(E(d)||d==="")){if(g==="year")c.Ha=d;e=parseFloat(d.replace(/,/,"."));c[g]=!isNaN(e)?e:d.toLowerCase()}});return c}function kb(a){a=a.trim().replace(/\.+$/,"").replace(/^now$/,"");return ib(a)}

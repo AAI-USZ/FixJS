@@ -1,0 +1,1 @@
+function(){ return func.apply(func, args); }

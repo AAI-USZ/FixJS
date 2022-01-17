@@ -1,0 +1,3 @@
+function(to) {
+			$('#mid h1, #mid h2, #mid h3, #mid h4, #mid h5, #mid h6, #mid h1 a:link, #mid h1 a:visited, #mid h1 a:active, #mid h2 a:link, #mid h2 a:visited, #mid h2 a:active, #mid h3 a:link, #mid h3 a:visited, #mid h3 a:active, #mid h4 a:link, #mid h4 a:visited, #mid h4 a:active, #mid h5 a:link, #mid h5 a:visited, #mid h5 a:active, #mid h6 a:link, #mid h6 a:visited, #mid h6 a:active').css('color', to);
+		}

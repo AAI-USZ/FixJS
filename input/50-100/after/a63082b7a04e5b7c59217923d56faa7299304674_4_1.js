@@ -1,0 +1,1 @@
+function (req, res, next){ req.params = request.params; next(); }

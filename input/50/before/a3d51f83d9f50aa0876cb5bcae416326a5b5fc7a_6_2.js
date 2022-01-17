@@ -1,0 +1,1 @@
+function() { Ember.Validators.getValidator('inexistent', {validator: null}) }

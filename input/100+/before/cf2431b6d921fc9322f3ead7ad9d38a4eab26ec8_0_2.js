@@ -1,0 +1,2 @@
+function(a,c,e){var f=this.vertexAttribMap;f._disable[a]=!1;var g=this._graphicContext,h=!1;c.isDirty()&&(c.bind(g),c.compile(g),h=!0);f[a]!==c&&(h||c.bind(g),f[a]||(g.enableVertexAttribArray(a),f[a]===void 0&&f._keys.push(a)),f[a]=c,g.vertexAttribPointer(a,
+c._itemSize,g.FLOAT,e,0,0))}};osg.StateSet=function(){osg.Object.call(this);this.id=osg.instance++;this.attributeMap={}

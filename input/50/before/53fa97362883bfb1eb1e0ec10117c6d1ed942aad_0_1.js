@@ -1,0 +1,1 @@
+function(e){mouseMove(e); theScene.onmousemove(e);}

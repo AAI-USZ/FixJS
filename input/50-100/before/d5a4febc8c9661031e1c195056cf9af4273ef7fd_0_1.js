@@ -1,0 +1,1 @@
+function(a){p&&B&&c.ok()&&("undefined"!==typeof a.flashVersion||"undefined"!==typeof a.url)&&O(o("setupLate"));ta(a);return c};this.supported=this.ok=function(){return B?p&&!l:c.useHTML5Audio&&c.hasHTML5}

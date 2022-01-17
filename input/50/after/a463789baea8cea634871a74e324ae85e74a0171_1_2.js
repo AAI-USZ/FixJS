@@ -1,0 +1,4 @@
+function(event) {
+					grade = getStuGrade();
+					
+				   }

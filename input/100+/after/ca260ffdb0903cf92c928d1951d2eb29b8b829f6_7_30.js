@@ -1,0 +1,6 @@
+function(e){if(!this.inMotion)
+return;joEvent.remove(document.body,"mousemove",this.mousemove,true);joEvent.remove(document.body,"mouseup",this.mouseup,false);this.mousemove=null;this.inMotion=false;var end=this.getMouse(e);var node=this.container.firstChild;var top=this.getTop();var left=this.getLeft();var dy=0;var dx=0;for(var i=0;i<this.points.length-1;i++){dy+=(this.points[i].y-this.points[i+1].y);dx+=(this.points[i].x-this.points[i+1].x);}
+var max=0-node.offsetHeight+this.container.offsetHeight;var maxx=0-node.offsetWidth+this.container.offsetWidth;if((Math.abs(dy)*this.vertical>4||Math.abs(dx)*this.horizontal>4)){var flick=dy*(this.velocity*(node.offsetHeight/this.container.offsetHeight));var flickx=dx*(this.velocity*(node.offsetWidth/this.container.offsetWidth));if((flick+top<max||flick+top>0)||(flickx+left<maxx||flickx+left>0)){joDOM.addCSSClass(node,"flickfast");}
+else{joDOM.addCSSClass(node,"flick");}
+this.scrollBy(flickx,flick,false);joDefer(this.snapBack,this,3000);}
+else{joDefer(this.snapBack,this,10);}},getMouse:function(e){return{x:(this.horizontal)?e.screenX:0,y:(this.vertical)?e.screenY:0};}

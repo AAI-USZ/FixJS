@@ -1,0 +1,1 @@
+function(file) {return "Dal file: " + file;}

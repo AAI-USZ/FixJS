@@ -1,0 +1,1 @@
+function() { expect(a).toBeEqualish([25, 28, 57, 64, 100, 112]); }

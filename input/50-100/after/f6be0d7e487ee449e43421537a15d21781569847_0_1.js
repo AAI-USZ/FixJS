@@ -1,0 +1,1 @@
+function(){ this.$el.isotope("insert", this.createPostView(post).render().$el) }

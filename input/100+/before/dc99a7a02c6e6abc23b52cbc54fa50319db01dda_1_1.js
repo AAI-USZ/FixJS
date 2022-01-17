@@ -1,0 +1,1 @@
+function init_attachments_sortable(){if(jQuery('div#attachments-list ul:data(sortable)').length==0&&jQuery('div#attachments-list ul li').length>0){jQuery('div#attachments-list ul').sortable({containment:'parent',stop:function(e,ui){jQuery('#attachments-list ul li').each(function(i,id){jQuery(this).find('input.attachment_order').val(i+1);});}});}}

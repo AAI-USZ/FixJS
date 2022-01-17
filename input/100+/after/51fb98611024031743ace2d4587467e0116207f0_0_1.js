@@ -1,0 +1,1 @@
+function(err){  console.log('put stream error, --stream.on');  fn(err); }

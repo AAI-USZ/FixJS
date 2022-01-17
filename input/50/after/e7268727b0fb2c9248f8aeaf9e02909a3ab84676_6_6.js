@@ -1,0 +1,1 @@
+function(site) {return "Visualizza su " + site;}

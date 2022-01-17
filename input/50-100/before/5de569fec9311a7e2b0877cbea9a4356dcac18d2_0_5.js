@@ -1,0 +1,1 @@
+function(x,y,z){this.mode=GLGE.P_EULER;this.dRotX=parseFloat(x);this.dRotY=parseFloat(y);this.dRotZ=parseFloat(z);this.staticMatrix=null;this.rotmatrix=null;this.updateMatrix();return this;}

@@ -1,0 +1,6 @@
+function (Handlebars, depth0, helpers, partials, data) {
+						             var buffer = "";
+						             var myJson = localStorage.getItem("jsonString");
+						             buffer = "<script type=\"text/javascript\">function submitForm() {$.ajax({type: 'POST',url: '/webeditor/social/json',data: { title: $(\"#Title\").val(), description: $(\"#Description\").val(), tagstring: $(\"#Tags\").val(), json:localStorage.getItem(\"jsonString\")},traditional: true});}</script> <body><form id=\"SaveAsForm\" class=\"openDialog modal in\" style=\"display: block; \"> <div class=\"modal-header\"><button class=\"close\" data-dismiss=\"modal\">?</button> <h3>Save as...</h3> </div><div class=\"modal-body\"><h4><label>Title:</label></h4> <input type=\"text\" id=\"Title\" /><br /> <h4><label>Description:</label></h4> <input type=\"text\" id=\"Description\" /><br /><h4><label>Tags:</label></h4> <input type=\"text\" id=\"Tags\" /><br /><input type=\"hidden\" id=\"Json\" value=\"\"/> </div><div class=\"modal-footer\"><a href=\"#\" class=\"btn btn-inverse ok\" onclick=\"submitForm()\">OK</a><a href=\"#\" class=\"btn\" data-dismiss=\"modal\">Cancel</a></div> </form></body>";
+						             return buffer;
+						         }

@@ -1,0 +1,1 @@
+function(evt) { self.setValue($(this).val()); }

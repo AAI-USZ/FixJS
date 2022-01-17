@@ -1,0 +1,1 @@
+function(a,b){b.split("").forEach(function(c){Ub[c]=a});Vb+=b}

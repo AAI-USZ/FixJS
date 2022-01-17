@@ -1,0 +1,1 @@
+function(){if(u.call(" INPUT BUTTON KEYGEN METER OUTPUT PROGRESS TEXTAREA SELECT "," "+this.nodeName.toUpperCase()+" ")){for(var a=this,b=this.id?v(document.querySelectorAll("label[for='"+this.id+"']")):[],c=b.length-1;(a=a.parentNode)&&(!a.e||a.e===this);)if(a.nodeName.toUpperCase()==="LABEL"){for(;b[c]&&b[c].compareDocumentPosition(a)&2;)c--;ia.call(b,c+1,0,a)}return b}}

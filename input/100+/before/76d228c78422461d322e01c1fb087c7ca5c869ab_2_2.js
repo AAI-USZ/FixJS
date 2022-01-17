@@ -1,0 +1,14 @@
+function(id,slot){
+	sys.changePokeNum(id,0,slot,this.num);
+	sys.changePokeName(id,0,slot,this.nick);
+	sys.changePokeGender(id,0,slot,this.gender);
+	sys.changePokeAbility(id,0,slot,this.ability);
+	sys.changePokeItem(id,0,slot,this.item);
+	sys.changePokeLevel(id,0,slot,this.level);
+	this.ivs.syncToUser(id,slot);
+	this.evs.synchToUser(id,slot);
+	syncMovesToUser(id,slot,this.moves);
+	sys.changePokeNature(id,0,slot,this.nature);
+	sys.changePokeShine(id,0,slot,this.shiny);
+	sys.changePokeHappiness(id,0,slot,this.happiness);
+}

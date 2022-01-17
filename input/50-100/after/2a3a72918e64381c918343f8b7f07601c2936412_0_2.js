@@ -1,0 +1,1 @@
+function() { assert.ok(ok); done(); }

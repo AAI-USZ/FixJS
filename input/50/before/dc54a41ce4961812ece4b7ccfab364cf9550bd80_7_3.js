@@ -1,0 +1,3 @@
+function (){
+                    cprint(this.message);
+                }

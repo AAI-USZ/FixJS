@@ -1,0 +1,1 @@
+function(){if(c.readyState==1)c.send("&signal=none");else{clearInterval(A.keepAlive);A.keepAlive=null}}

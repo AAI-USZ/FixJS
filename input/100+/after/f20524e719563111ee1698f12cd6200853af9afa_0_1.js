@@ -1,0 +1,1 @@
+function() { $('#help_captcha').lightbox_me({centered: true}); }

@@ -1,0 +1,15 @@
+function onLocationDetected(ok, e)
+	{
+		if (e){
+			console.log('onLocationDetected :: '+e);
+		} else{
+			return;
+			drawISPList();
+			map.setLocation( { isp : isp, status : status, lat : loc.lat, lng : loc.lng } );
+			if (!initialized) {
+				map.getMarkers();
+				mdl.setLocation(loc.city, loc.state, isps);
+				initialized = true;
+			}
+		}
+	}

@@ -1,0 +1,4 @@
+function() {
+              clearTimeout( failSafe );
+              start();
+            }

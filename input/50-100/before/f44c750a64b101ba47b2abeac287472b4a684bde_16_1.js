@@ -1,0 +1,1 @@
+function(msg){return msg.replace(/^handle/, "").replace(/^on/, "On");}

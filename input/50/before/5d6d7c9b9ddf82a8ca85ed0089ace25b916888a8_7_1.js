@@ -1,0 +1,1 @@
+function(data) { return mSiteUtils.generateEditSiteHref(data.items);}

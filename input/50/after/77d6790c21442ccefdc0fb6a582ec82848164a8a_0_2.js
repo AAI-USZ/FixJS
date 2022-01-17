@@ -1,0 +1,3 @@
+function() {
+        openJqmDialog('#bidding-page');
+    }

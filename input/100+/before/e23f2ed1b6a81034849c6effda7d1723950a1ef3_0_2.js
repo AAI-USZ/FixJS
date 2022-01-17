@@ -1,0 +1,76 @@
+function(response, status, xhr, f) {
+        var form = f?f:$('form').first();  // for version <1.4, no xhr defined, the third argv is f and no 4th argv
+		var wrapper = form.closest('.w3s-wrapper');
+		if (wrapper.length<1) {
+			wrapper = $('.w3s-wrapper').first();
+			form = wrapper.find('form').first();
+		}
+        $('.w3s-loading').remove();
+        var res;
+        if (typeof response=='string') {
+            if (response=='reload') {
+                window.location.reload();
+                return;
+            }
+            try {
+                res = jQuery.parseJSON(response);
+            } catch(e) {
+                W3S.Core.Util.print(response);
+                return;
+            }
+        } else {
+            res = response;
+        }
+
+        if (res.message) W3S.Core.Util.print(res.message, res.box);
+        if (res.success) {
+            if (res.success=='reload') {
+                if (res.target) {
+					if (res.url) {
+                        W3S.Core.Ajax.action(res.url, res.target);
+					} else {
+						W3S.Core.Ajax.refresh(res.target);
+					}
+                    return false;
+                } else {
+                    if (res.url) {
+                        window.location.href=res.url;
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            } else if (res.success=='close') {
+                wrapper.remove();
+            } else if (res.success=='reset') {
+                form[0].reset();
+            } else if (res.success=='reset&reload'&&res.target) {
+                form[0].reset();
+                W3S.Core.Ajax.refresh(res.target);
+            } else if (res.success=='close&reload'&&res.target) {
+                wrapper.remove();
+                W3S.Core.Ajax.refresh(res.target);
+            } else if (res.success=='close&trigger'&&res.target&&res.action) {
+                wrapper.remove();
+                $(W3S.Core.Util.formatId(res.target)).trigger(res.action);
+            } else if (res.success=='trigger'&&res.target&&res.action) {
+                $(W3S.Core.Util.formatId(res.target)).trigger(res.action);
+            } else if (res.success=='close&load'&&res.target&&res.url) {
+                wrapper.remove();
+                $(W3S.Core.Util.formatId(res.target)).load(res.url);
+            } else if (res.success=='re-trigger') {
+                W3S.Core.TopVar.trigger.trigger('click');
+            } else if (res.success=='load'&&res.url) {
+                if (res.target) {
+                    W3S.Core.Ajax.action(res.url, W3S.Core.Util.formatId(res.target));
+                } else {
+                    window.location.href=res.url;
+                }
+            } else if (res.success=='call'&&res.target) {
+                var data = res.data?res.data.split(','):[];
+                var fn = window[res.target];
+                if (typeof fn==='function') {
+                    fn.apply(this, data);
+                }
+            }
+        }
+    }

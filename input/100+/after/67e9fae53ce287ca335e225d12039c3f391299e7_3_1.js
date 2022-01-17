@@ -1,0 +1,1 @@
+function(i){return i+e.monthSuffix})}e.full_month=g(1,2)+"|"+fb(e.months);e.timeSuffixes.length>0&&e.addFormat(gb(Ta,e),m,Sa);e.addFormat("{day}",j);e.addFormat("{month}"+(e.monthSuffix||""));e.addFormat("{year}"+(e.yearSuffix||""));e.timeFormats.forEach(function(i){e.addFormat(i,j)});e.formats.forEach(function(i){

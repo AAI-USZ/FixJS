@@ -1,0 +1,17 @@
+function playlistitem_set_sorting() {
+    var i = 0;
+    $.each($("#playlistitem_set-group .module.table.dynamic-form div.tbody.dynamic-form"),
+        function(index, elem)
+    {
+        if ($(elem).find("[name$='video']").attr('value')) {
+            $(elem).find("[name$='sort_order']").attr('value', index);
+        } else {
+            $(elem).find("[name$='sort_order']").attr('value', '');
+        }
+        $.each($(elem).find("[name^='playlistitem_set']"), function(j, obj){
+            $(obj).attr("id", $(obj).attr("id").replace(/[0-9]+/g, i))
+            $(obj).attr("name", $(obj).attr("name").replace(/[0-9]+/g, i))
+        });
+        i++;
+    });
+}

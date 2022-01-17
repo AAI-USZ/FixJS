@@ -1,0 +1,4 @@
+function()
+			{
+                self.clicked = false
+            }

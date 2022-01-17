@@ -1,0 +1,1 @@
+function () { browse(entry.path, endpoint); }

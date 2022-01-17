@@ -1,0 +1,1 @@
+function() { heap.remove(88); }

@@ -1,0 +1,2 @@
+function(g,h){var k=new $.jGraduate.Paint(h);this.setPaintOpacity(g,k.alpha/100,true);ib[g+"_paint"]=k;switch(k.type){case "solidColor":if(k.solidColor!="none"&&k.solidColor!="#none")this.setColor(g,"#"+k.solidColor);else{this.setColor(g,
+"none");document.querySelector(g=="fill"?"#fill_color rect":"#stroke_color rect").setAttribute("fill","none")}break;case "linearGradient":case "radialGradient":b[g+"Grad"]=k[k.type];kc(g)}};this.getStrokeWidth=function(){return ib.stroke_width}

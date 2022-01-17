@@ -1,0 +1,1 @@
+function() { that.seq.shuffle(); }

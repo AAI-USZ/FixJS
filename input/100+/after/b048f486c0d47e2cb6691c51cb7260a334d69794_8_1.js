@@ -1,0 +1,1 @@
+function(){return this.isValid()?this.start.full()+".."+this.end.full():"Invalid DateRange"},isValid:function(){return this.start<this.end},duration:function(){return this.isValid()?this.end.getTime()-this.start.getTime():NaN},contains:function(a){var b=this;return(a.start&&a.end?[a.start,a.end]:[a]).all(function(c){return c>=b.start&&c<=b.end})}

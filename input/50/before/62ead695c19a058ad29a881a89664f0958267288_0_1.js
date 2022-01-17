@@ -1,0 +1,3 @@
+function() {
+			FLICKR.gallery.moveToPreviousPage();
+		}

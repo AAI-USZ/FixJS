@@ -1,0 +1,3 @@
+function () {
+	  $('#calendar').fullCalendar('render');
+	}

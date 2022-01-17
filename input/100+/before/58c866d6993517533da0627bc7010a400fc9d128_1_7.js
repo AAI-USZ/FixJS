@@ -1,0 +1,12 @@
+function() {
+          expect( 2 );
+
+          var position = [1,2,3];
+          var rotation = [4,5,6];
+          var scale = [7,8,9];
+          var transform = new Transform( position, rotation, scale );
+
+          var expectedMatrix = math.transform.fixed(position, rotation, scale);
+          ok(math.matrix4.equal( transform.localMatrix(), expectedMatrix), "local matrix is correct");
+          ok(math.matrix4.equal( transform.worldMatrix(), expectedMatrix), "world matrix is correct");
+        }

@@ -1,0 +1,1 @@
+function base() { return (this * multiplier).round(); }

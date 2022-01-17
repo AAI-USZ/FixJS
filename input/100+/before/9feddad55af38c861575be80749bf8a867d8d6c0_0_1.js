@@ -1,0 +1,1 @@
+function() {A(cb,[0]);}

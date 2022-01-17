@@ -1,0 +1,1 @@
+function(b){b.newValue||(e.detach("beforeCollapsedChange",arguments.callee),a.sync())});q.on("click",function(b){a.save(!1);b.halt()}

@@ -1,0 +1,1 @@
+function(){setTimeout(function(){a.attr("size",B);a.css(u);c.css("z-index",2);l.css({display:"inline-block"})},0)});a.on("focus.jqcombo",function(){p&&clearTimeout(p)});var p,e=function(){p=setTimeout(function(){a.attr("size",C);a.css(D);c.css("z-index","auto");l.hide();p=null},0)}

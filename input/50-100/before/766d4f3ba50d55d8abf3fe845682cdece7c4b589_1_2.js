@@ -1,0 +1,16 @@
+function(data){
+		//console.log("loginit",data,this.oldest_time);
+		if(sessionStorage){
+			if(this.socket){
+				sessionStorage.socketid=this.socket.socket.sessionid;
+			}else{
+				sessionStorage.sessionid=this.sessionId;
+			}
+		}
+		data.logs.reverse().forEach(function(line){
+			this.write(line);
+		},this);
+		if(data.logs.length){
+			this.oldest_time=data.logs.shift().time;
+		}
+	}

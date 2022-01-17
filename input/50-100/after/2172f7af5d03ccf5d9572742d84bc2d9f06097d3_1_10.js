@@ -1,0 +1,3 @@
+function() {
+            svg.remove(this);
+          }

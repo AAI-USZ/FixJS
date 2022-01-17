@@ -1,0 +1,3 @@
+function(dt, dn)  {
+	delete locals[dt][dn];
+}

@@ -1,0 +1,1 @@
+function(scene){ return scene.vars.category.boxBottom; }

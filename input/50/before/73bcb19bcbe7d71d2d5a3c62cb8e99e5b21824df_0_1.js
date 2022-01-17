@@ -1,0 +1,1 @@
+function(){ return this || (0||eval)('this'); }

@@ -1,0 +1,1 @@
+function(){save_conf($(this));}

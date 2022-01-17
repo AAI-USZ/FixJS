@@ -1,0 +1,1 @@
+function(offset, line, column, name, path) { return createDirective(name, path); }

@@ -1,0 +1,20 @@
+function(state){
+		if(this.stateful)
+		{
+			this.suspendEvents();
+			this.collapsed=state.collapsed;
+			if(this.statefulNodes)
+			{
+				this.restoreNodes(state.nodes);				
+			}
+			if(state.customHostFilters)
+			{
+				this.store.customHostFilters=state.customHostFilters;
+			}
+			if(state.customServiceFilters)
+			{
+				this.store.customServiceFilters=state.customServiceFilters;
+			}
+			this.resumeEvents();
+		}
+	}

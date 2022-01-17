@@ -1,0 +1,1 @@
+function (resp) { dljs(resp, file); }

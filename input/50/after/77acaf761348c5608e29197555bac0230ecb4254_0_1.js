@@ -1,0 +1,1 @@
+function(d){g.nodes_array.push(jQuery.extend(true, {}, d))}

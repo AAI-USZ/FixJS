@@ -1,0 +1,5 @@
+function() {
+
+  new SNAKE.Game;
+
+}

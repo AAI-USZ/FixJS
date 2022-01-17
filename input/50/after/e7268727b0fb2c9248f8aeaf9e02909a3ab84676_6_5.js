@@ -1,0 +1,1 @@
+function(plugin) {return plugin ? "Ripristina " + plugin : "Ripristina plugin";}

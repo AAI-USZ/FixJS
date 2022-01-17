@@ -1,0 +1,3 @@
+function() {
+      prettyCamel.should.throw();
+   }

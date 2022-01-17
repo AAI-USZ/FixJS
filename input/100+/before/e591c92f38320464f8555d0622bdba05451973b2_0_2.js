@@ -1,0 +1,57 @@
+function(result) {
+
+            $scope.game = result.game;
+
+            $scope.player = window.currentUserId;
+
+			
+
+            $scope.game.challenger = result.challenger;
+
+            $scope.game.opponent = result.opponent;
+
+			
+
+			var tz = new Date();
+
+			$scope.game.expires =  parseInt($scope.game.expires, 10)*1000 + (tz.getTimezoneOffset()*60)*1000;
+
+			$scope.game.created = Date.fromSqlFormat($scope.game.created);
+
+			
+
+			
+
+			
+
+            $scope.lastTurnTime = $scope.game.created;
+
+
+
+            $scope.isObservingOnly = $scope.game.challenger_id != $scope.player
+
+                && $scope.game.opponent_id != $scope.player;
+
+            console.log($scope.isObservingOnly)
+
+			
+
+			
+
+            $scope.waitingForOpponent = false;
+
+			
+
+			if(!silent) {
+
+				$timeout(triggerExpires, 1000);
+
+				checkOnline();
+
+				getTurns();
+
+			}
+
+			
+
+        }

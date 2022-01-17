@@ -1,0 +1,1 @@
+function(){g.isResizing = true; g.resizeDirection = "west";}

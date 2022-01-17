@@ -1,0 +1,1 @@
+function() { cbHelper.copyString(kTestString, document); }

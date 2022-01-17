@@ -1,0 +1,1 @@
+function(a,d){o+=d;h.push(o)})}a=h.reverse();var g={setTargeting:{inURL:a,URLIs:a[0],Domain:d.location.host},enableSingleRequest:!0,collapseEmptyDivs:"original"};"undefined"!==typeof b.setTargeting&&"undefined"!==typeof g.setTargeting&&(b.setTargeting=c.extend(b.setTargeting,g.setTargeting));g=c.extend(g,b);d.googletag.cmd.push(function(){

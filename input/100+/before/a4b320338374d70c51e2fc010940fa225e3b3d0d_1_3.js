@@ -1,0 +1,3 @@
+function() {
+            overlay.removeClass('show');
+        }

@@ -1,0 +1,1 @@
+function(site) {return "Voir la vidéo sur " + site;}

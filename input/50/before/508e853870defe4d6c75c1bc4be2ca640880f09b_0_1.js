@@ -1,0 +1,1 @@
+function getErrorLogMessagePrefix() { return 'ERROR [' + new Date().toString() + '] CacheSyncFirstThenAsync: '; }

@@ -1,0 +1,1 @@
+function() { return this._visibleHeight || this.recalculateVisibleHeight(); }

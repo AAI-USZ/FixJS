@@ -1,0 +1,94 @@
+function (e) {
+        // FIXME: REWRITE
+
+        var path;
+        if (e.overlay.getPath) {
+            path = e.overlay.getPath();
+        }
+
+        var overlay;
+        if ((komooMap.editMode == komoo.EditMode.CUTOUT || komooMap.editMode == komoo.EditMode.ADD) &&
+                    e.overlay.getPaths) {
+            // Gets the overlays path orientation.
+            var paths = komooMap.currentFeature.getGeometry().getPaths();
+            if (paths.length > 0) {
+                // Gets the paths orientations.
+                var sArea = google.maps.geometry.spherical.computeSignedArea(path);
+                var sAreaAdded = google.maps.geometry.spherical.computeSignedArea(
+                        paths.getAt(0));
+                var orientation = sArea / Math.abs(sArea);
+                var orientationAdded = sAreaAdded / Math.abs(sAreaAdded);
+                // Verify the paths orientation.
+                if ((orientation == orientationAdded && komooMap.editMode == komoo.EditMode.CUTOUT) ||
+                        orientation != orientationAdded && komooMap.editMode == komoo.EditMode.ADD) {
+                    /* Reverse path orientation to correspond to the action  */
+                    path = new google.maps.MVCArray(path.getArray().reverse());
+                }
+            }
+            paths.push(path);
+            komooMap.currentFeature.getGeometry().setPaths(paths);
+            // Remove the temporary overlay from map
+            e.overlay.setMap(null);
+            komooMap.setEditMode(komoo.EditMode.DRAW);
+        } else if (komooMap.editMode == komoo.EditMode.ADD && e.overlay.getPosition) {
+            komooMap.currentFeature.getGeometry().addMarker(e.overlay);
+            komooMap.setEditMode(komoo.EditMode.DRAW);
+        } else if (e.overlay.getPosition) {
+            overlay = new MultiMarker();
+            overlay.addMarker(e.overlay);
+            overlay.setMap(komooMap.googleMap);
+        } else if (e.overlay.getPath && !e.overlay.getPaths) {
+            overlay = new MultiPolyline();
+            overlay.addPolyline(e.overlay);
+            overlay.setMap(komooMap.googleMap);
+        } else {
+            overlay = e.overlay;
+        }
+        if (overlay) {
+            var feature = komoo.features.makeFeature({
+                'properties': {
+                    'userCanEdit': true,
+                    'type': komooMap.type,
+                    'name': 'sem nome',
+                    'alwaysVisible': true
+                },
+                'geometry': {
+                    'type': komooMap.drawingManager.getDrawingMode(),
+                }
+            });
+            var type = komooMap.featureOptions[komooMap.type];
+            if (type) {
+                feature.minZoomGeometry = type.minZoomGeometry;
+                feature.maxZoomGeometry = type.maxZoomGeometry;
+                feature.minZoomMarker = type.minZoomMarker;
+                feature.maxZoomMarker = type.maxZoomMarker;
+            }
+            var geometry = feature.getGeometry();
+            geometry.setOverlay(overlay);
+            feature.setMap(komooMap, {geometry: true});
+
+            // Sets the custom image.
+            feature.updateIcon(komooMap.googleMap.getZoom());
+
+            komooMap.features.push(feature);
+            komooMap.newFeatures.push(feature);
+            // Listen events from drawn feature.
+            komooMap._attachFeatureEvents(feature);
+            komooMap.setCurrentFeature(feature);
+            komooMap.setEditMode(komoo.EditMode.DRAW);
+        }
+        if (path) {
+            // Emit changed event when edit paths.
+            google.maps.event.addListener(path, "set_at", function() {
+                komooMap._emit_changed();
+            });
+            google.maps.event.addListener(path, "insert_at", function() {
+                komooMap._emit_changed();
+            });
+        }
+        // Switch back to non-drawing mode after drawing a shape.
+        komooMap.drawingManager.setDrawingMode(null);
+
+        komooMap._emit_changed();
+        return true;
+    }

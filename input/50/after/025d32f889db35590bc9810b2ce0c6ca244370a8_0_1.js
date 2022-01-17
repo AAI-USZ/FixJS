@@ -1,0 +1,1 @@
+function () { console.log("WARNING: Error during MULTI command of Multi/Exec") }

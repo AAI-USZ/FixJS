@@ -1,0 +1,3 @@
+function(){
+					els.removeClass("hasMenu");
+				}

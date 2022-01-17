@@ -1,0 +1,3 @@
+function(t){t.executeSql(query,args,success,error);});return this;}};joFileSource=function(url,timeout){this.changeEvent=new joSubject(this);this.errorEvent=new joSubject(this);if(timeout)
+this.setTimeout(timeout);if(url)
+this.setQuery(url);};joFileSource.extend(joDataSource,{baseurl:'',query:'',load:function(){var get=this.baseurl+this.query;joFile(get,this.callBack,this);return this;},callBack:function(data,error){

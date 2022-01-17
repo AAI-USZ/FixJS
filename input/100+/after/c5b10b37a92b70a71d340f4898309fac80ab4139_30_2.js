@@ -1,0 +1,1 @@
+function poll(f){var ci=setInterval(wf,10);function wf(){if(f()){clearInterval(ci)}}}

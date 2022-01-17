@@ -1,0 +1,47 @@
+function (req, res) {
+// could be only edit, not change username else 404
+		if ((req.session.info.role === "admin") || (req.body.name == req.session.info.name)) {
+			var validator = new Validator();   
+			validator.check(req.body.name, 'name').notEmpty();
+			validator.check(req.body.email, 'email').isEmail();
+			validator.check(req.body.password, 'password').notEmpty();
+			var errors = validator.getErrors();
+			if (errors.length)
+			{
+				var message = {
+					action: 'error', 
+					reference: 'required',
+					value: errors
+				};
+				var data = { 
+					name: req.body.name,
+					email: req.body.email
+				};
+				utils.rendering(req.headers.host, 'user', data, req.session.info, req.session.lang, message, function callback(layout) {
+					res.end(layout);
+				});
+			} else {
+				var user_edit = new ModelsUser(req.headers.host);
+				var value = {
+					name: req.body.name, 
+					email: req.body.email, 
+					password: req.body.password
+				};
+				user_edit.update(value, function callbacks(results) {
+					var data = {data_user: results};
+					utils.rendering(req.headers.host, 'user', data, req.session.info, req.session.lang, {}, function callback(layout) {
+						res.end(layout);
+					});
+				});
+			}
+		} else {
+			var message = {
+				action: 'error', 
+				reference: 'notchange',
+				value: ''
+			};
+			utils.rendering(req.headers.host, '404', {}, req.session.info, req.session.lang, {}, function callback(layout) {
+				res.end(layout);
+			});
+		}
+	}

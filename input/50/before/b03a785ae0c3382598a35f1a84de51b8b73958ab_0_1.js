@@ -1,0 +1,1 @@
+function(node) { return node.data.mothertime <= $('#time').val(); }

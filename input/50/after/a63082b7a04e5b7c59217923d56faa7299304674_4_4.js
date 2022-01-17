@@ -1,0 +1,3 @@
+function currentStatus() {
+    return socketOpen;
+  }

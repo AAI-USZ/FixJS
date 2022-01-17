@@ -1,0 +1,1 @@
+function(){this.get("el").attr("role","separator")}},{xclass:"bar-item-separator",priority:2}),j=g.extend({},{ATTRS:{width:{value:2}}},{xclass:"bar-item-spacer",priority:2}),f=g.extend({_uiSetText:function(a){this.get("el").html(a)}},{ATTRS:{text:{value:""}}},{xclass:"bar-item-text",priority:2});g.types={

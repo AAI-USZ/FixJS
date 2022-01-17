@@ -1,0 +1,1 @@
+function(){this.container=node;return this;};var o;if(typeof jo.tagMap[tag]==="function"){o=jo.tagMap[tag];}

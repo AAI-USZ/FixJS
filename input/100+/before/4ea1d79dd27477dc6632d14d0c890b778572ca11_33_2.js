@@ -1,0 +1,1 @@
+function(dc) {return (dc.record && !dc.record.get("confirmed"));}

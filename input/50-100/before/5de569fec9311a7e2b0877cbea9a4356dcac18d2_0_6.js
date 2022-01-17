@@ -1,0 +1,1 @@
+function(x,y,z){if(!y){y=x;z=x}; this.scaleX=parseFloat(x);this.scaleY=parseFloat(y);this.scaleZ=parseFloat(z);this.staticMatrix=null;this.scaleMatrix=null;this.updateMatrix();return this;}

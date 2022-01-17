@@ -1,0 +1,5 @@
+function() {
+
+		validateFax($(this).val());
+
+	}

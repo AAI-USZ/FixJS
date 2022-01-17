@@ -1,0 +1,1 @@
+function(){},endPath:function(){},getContour:function(){},updatePath:function(){},applyAsPath:function(){},transform:function(){},drawHandle:function(a,b,c){a.beginPath();a.arc(b,c,CAAT.Curve.prototype.HANDLE_SIZE/2,0,2*Math.PI,false);a.fill()}

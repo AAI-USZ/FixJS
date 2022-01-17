@@ -1,0 +1,4 @@
+function()
+    {
+        Stage.prototype.Center();
+    }

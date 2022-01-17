@@ -1,0 +1,1 @@
+function(e) { new Event(e).stop(); }

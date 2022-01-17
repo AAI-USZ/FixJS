@@ -1,0 +1,1 @@
+function(c,d,g,j,f){c.each([{name:"mouseenter",fix:"mouseover"},{name:"mouseleave",fix:"mouseout"}],function(c){f[c.name]={onFix:c.fix,delegateFix:c.fix,handle:function(b,c,a){var e=b.currentTarget,f=b.relatedTarget;return!f||f!==e&&!g.contains(e,f)?[c.fn.call(c.scope||e,b,a)]:[]}}});return d},{requires:["./base","dom","ua","./special"]}

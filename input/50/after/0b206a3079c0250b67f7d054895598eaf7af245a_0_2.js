@@ -1,0 +1,1 @@
+function(m) { this.remove(m); }

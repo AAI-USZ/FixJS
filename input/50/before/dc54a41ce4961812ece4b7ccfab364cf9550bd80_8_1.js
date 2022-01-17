@@ -1,0 +1,3 @@
+function (){
+            cprint(J(this));
+        }

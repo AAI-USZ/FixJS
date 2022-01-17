@@ -1,0 +1,1 @@
+function yb(a,b,c,d,e){if(!a.fa)a.fa=[];M(b)||(b=0);a.fa.push(setTimeout(function(){a.fa.splice(g,1);c.apply(d,e||[])},b));var g=a.fa.length}

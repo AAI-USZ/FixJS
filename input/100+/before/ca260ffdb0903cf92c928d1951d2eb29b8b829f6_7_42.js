@@ -1,0 +1,3 @@
+function(){this.showEvent.fire();},onHide:function(){this.detach();this.hideEvent.fire();}});joSound=function(filename,repeat){this.endedEvent=new joSubject(this);this.errorEvent=new joSubject(this);if(typeof Audio=='undefined')
+return;this.filename=filename;this.audio=new Audio();this.audio.autoplay=false;if(!this.audio)
+return;joDefer(function(){this.audio.src=filename;this.audio.load();},this,5);this.setRepeatCount(repeat);joEvent.on(this.audio,"ended",this.onEnded,this);};joSound.prototype={

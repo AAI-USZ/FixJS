@@ -1,0 +1,16 @@
+function(){
+                this.tabContainer.set("disabled",true);
+                this.regionSelect.set("disabled",true);
+                this.pluginGrid.set("disabled",true);
+                this.nameText.set("disabled",true);
+                this.descriptionText.set("disabled",true);
+                this.typeSelect.set("disabled",true);
+                this.formRegionSelect.set("disabled",true);
+                this.weightText.set("disabled",true);
+                this.disabledCheckBox.set("disabled",true);
+                this.saveButton.set("disabled",true);
+                this.customEditButton.set("disabled",true);
+                this.removeButton.set("disabled",true);
+                this.addButton.set("disabled",true);
+                this.disabledCheckBox.set("disabled",true);
+            }

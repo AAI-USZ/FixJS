@@ -1,0 +1,1 @@
+function(seg){ return this.toVTT(); }

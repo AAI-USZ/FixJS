@@ -1,0 +1,3 @@
+function(){
+                        fluxProcessor.dispatchEvent(parentId);
+                    }

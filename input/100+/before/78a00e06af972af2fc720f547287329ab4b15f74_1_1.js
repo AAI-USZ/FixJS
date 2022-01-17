@@ -1,0 +1,3 @@
+function(){
+				Docs.toggleEndpointListForResource(id)		
+			}

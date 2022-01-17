@@ -1,0 +1,1 @@
+function returning(x) { return function() { return x; } }

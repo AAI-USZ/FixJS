@@ -1,0 +1,56 @@
+function(){
+        
+        var tidyships = jQuery.extend(true, {}, gamedata.ships);
+        
+        for (var i in tidyships){
+            var ship = tidyships[i];
+            ship.htmlContainer = null;
+            ship.shipclickableContainer = null;
+            ship.shipStatusWindow = null;
+            for (var a = ship.movement.length-1; a>=0; a--){
+                var move = ship.movement[a];
+                if (move.turn < gamedata.turn){
+                    ship.movement.splice(a,1);
+                }
+            }
+            for (var a = ship.fireOrders.length-1; a>=0; a--){
+                var fire = ship.fireOrders[a];
+                if (fire.turn < gamedata.turn){
+                    ship.fireOrders.splice(a,1);
+                }
+            }
+            for (var a = ship.EW.length-1; a>=0; a--){
+                var ew = ship.EW[a];
+                if (ew.turn < gamedata.turn){
+                    ship.EW.splice(a,1);
+                }
+            }
+            var systems = Array();
+            
+            for (var a in ship.systems){
+                var system = ship.systems[a];
+                for (var b = system.power.length-1; b>=0; b--){
+                    var power = system.power[b];
+                    if (power.turn < gamedata.turn){
+                        system.power.splice(b,1);
+                    }
+                }
+                
+                systems[a] = {'id': system.id, 'power':system.power};
+            }
+            
+            ship.systems = systems;
+            
+        }
+       
+        var gd = {
+            turn: gamedata.turn,
+            phase: gamedata.gamephase,
+            activeship: gamedata.activeship,
+            gameid: gamedata.gameid,
+            playerid: gamedata.thisplayer,
+            ships: JSON.stringify(tidyships)
+        };
+  
+        return gd;
+    }

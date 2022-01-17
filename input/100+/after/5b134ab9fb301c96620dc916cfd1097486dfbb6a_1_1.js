@@ -1,0 +1,26 @@
+function(axis){
+            var ctx = axis.canvas.getContext("2d");
+            ctx.clearRect(0,0,axis.canvas.width,axis.canvas.height);//clear drawing area
+
+            ctx.fillStyle="black";
+
+            var min = axis.getMin();
+            var max = axis.getMax();
+
+            var rounding = 1;
+            var changePerIncrement = (max - min) / 10;
+            if (changePerIncrement >= 10000)
+                rounding = 10;
+            else if (changePerIncrement >= 1000)
+                rounding = 1000;
+            else if (changePerIncrement >= 100)
+                rounding = 100;
+            else if (changePerIncrement >= 10)
+                rounding = 10;
+
+            for (var i = 0; i < 10; i++){//draw 10 numbers;
+                var value = min + (changePerIncrement * i);
+                var y = axis.canvas.height - axis.canvas.height * i / 10;
+                ctx.fillText(Math.round(value / rounding) * rounding,0,y);
+            }
+        }

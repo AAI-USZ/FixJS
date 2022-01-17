@@ -1,0 +1,1 @@
+function (arg) { return array.add(this, arg); }

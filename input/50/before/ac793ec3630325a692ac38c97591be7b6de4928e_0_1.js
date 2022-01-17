@@ -1,0 +1,1 @@
+function(span) { return span.className == ""; }

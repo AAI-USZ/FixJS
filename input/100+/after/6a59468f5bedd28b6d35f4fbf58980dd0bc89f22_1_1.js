@@ -1,0 +1,1 @@
+function(a){null==a&&(a={});a.view&&this.controlView(a.view);return this.initConfig(a)}

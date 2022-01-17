@@ -1,0 +1,3 @@
+function ArrayArgument() {
+  this.args = [];
+}

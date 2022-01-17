@@ -1,0 +1,1 @@
+function() {var f = (function(_cons){return _tail()(_cons);}); return function _value(){return f;}}

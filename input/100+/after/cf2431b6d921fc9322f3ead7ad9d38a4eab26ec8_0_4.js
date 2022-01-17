@@ -1,0 +1,1 @@
+function(a){var c=a.getStateSet();c&&this.pushStateSet(c);a.light&&this.addPositionedAttribute(a.light);a.traverse&&this.traverse(a);c&&this.popStateSet()};osg.CullVisitor.prototype[osg.LightSource.prototype.objectType]=function(a){var c=a.getStateSet();c&&this.pushStateSet(c);var e=a.getLight();e&&this.addPositionedAttribute(e);this.traverse(a);c&&this.popStateSet()}

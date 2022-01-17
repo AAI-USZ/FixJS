@@ -1,0 +1,1 @@
+function (val) { $(self).text(val).addClass('editable'); }

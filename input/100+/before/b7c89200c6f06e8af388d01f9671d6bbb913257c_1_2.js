@@ -1,0 +1,77 @@
+function() {
+
+			// check for behaviour setting of the floating menu
+		    if (Aloha.settings.floatingmenu) {
+		    	
+		    	if (typeof Aloha.settings.floatingmenu.draggable === 'boolean') {
+		    		this.draggable = Aloha.settings.floatingmenu.draggable;
+		    	}
+				if (typeof Aloha.settings.floatingmenu.behaviour === 'string') {
+					this.behaviour = Aloha.settings.floatingmenu.behaviour;
+				}
+				if (typeof Aloha.settings.floatingmenu.topalignOffset !== 'undefined') {
+					this.topalignOffset = Aloha.settings.floatingmenu.topalignOffset;
+				}
+				if (typeof Aloha.settings.floatingmenu.horizontalOffset !== 'undefined') {
+					this.horizontalOffset = Aloha.settings.floatingmenu.horizontalOffset;
+				}
+				if (typeof Aloha.settings.floatingmenu.marginTop === 'number') {
+				    this.marginTop = Aloha.settings.floatingmenu.marginTop;
+				}
+				//We just check for undefined
+				if (typeof Aloha.settings.floatingmenu.width !== 'undefined') {
+					//Try to pars it
+					try {
+						var parsed = parseInt(Aloha.settings.floatingmenu.width);
+						this.width = Aloha.settings.floatingmenu.width;
+					} catch(e) {
+						//do nothing.
+					}
+				}
+		    }
+
+			jQuery.storage = new jQuery.store();
+			this.currentScope = 'Aloha.global';
+			var that = this;
+			this.window.unload(function () {
+				// store fm position if the panel is pinned to be able to restore it next time
+				if (that.pinned) {
+					jQuery.storage.set('Aloha.FloatingMenu.pinned', 'true');
+					jQuery.storage.set('Aloha.FloatingMenu.top', that.top);
+					jQuery.storage.set('Aloha.FloatingMenu.left', that.left);
+					if (Aloha.Log.isInfoEnabled()) {
+						Aloha.Log.info(this, 'stored FloatingMenu pinned position {' + that.left
+								+ ', ' + that.top + '}');
+					}
+				} else {
+					// delete old localStorages
+					jQuery.storage.del('Aloha.FloatingMenu.pinned');
+					jQuery.storage.del('Aloha.FloatingMenu.top');
+					jQuery.storage.del('Aloha.FloatingMenu.left');
+				}
+				if (that.userActivatedTab) {
+					jQuery.storage.set('Aloha.FloatingMenu.activeTab', that.userActivatedTab);
+				}
+			}).resize(function () {
+				if (that.behaviour === 'float') {
+					if (that.pinned) {
+						that.fixPinnedPosition();
+						that.refreshShadow();
+						that.extTabPanel.setPosition(that.left, that.top);
+					} else {
+						var target = that.calcFloatTarget(Aloha.Selection.getRangeObject());
+						if (target) {
+							that.floatTo(target);
+						}
+					}
+				}
+			});
+			Aloha.bind('aloha-ready', function() {
+				that.generateComponent();
+				that.initialized = true;
+			});
+			
+			if (typeof Aloha.settings.toolbar === 'object') {
+				this.fromConfig = true;				
+			}
+		}

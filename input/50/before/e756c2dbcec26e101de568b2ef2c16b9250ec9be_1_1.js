@@ -1,0 +1,1 @@
+function () { global.gc(); this._renderText(); }

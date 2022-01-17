@@ -1,0 +1,7 @@
+function() {
+            if (sakai.config.enableCategories) {
+                sakai.api.Util.TemplateRenderer($("#explore_categories_template"), {}, $("#explore_categories"));
+            }
+
+            sakai.api.Util.TemplateRenderer($("#explore_content_template"), sakai.config.explore, $("#explore_content"));
+        }

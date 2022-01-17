@@ -1,0 +1,1 @@
+function () { log( function () { alert("hello"); }, (2+2===5), new Date() ); }

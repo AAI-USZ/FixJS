@@ -1,0 +1,10 @@
+function(base64File1){
+					//console.log("__getSina(id)_id?"+id);
+					//console.log("__getSina(id)_base64File1?"+base64File1);
+					__saveToCache(id,base64File1).then(function(){
+						//console.log("__saveToCache(id)id?"+id);
+						deferred.resolve(base64File1);
+					},function(){
+						deferred.reject();
+					});
+				}

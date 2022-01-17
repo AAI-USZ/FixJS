@@ -1,0 +1,8 @@
+function() {
+        var selectedUsers = this._getSelectedUsers();
+        if(this.confirmBeforeRemove) {
+            this._confirmRemove(selectedUsers);
+        } else {
+            this._removeUsers(selectedUsers);
+        }
+    }

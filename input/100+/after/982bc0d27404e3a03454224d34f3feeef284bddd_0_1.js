@@ -1,0 +1,11 @@
+function genDispatchDefault(lsrName, name, func, args) {
+    var ast, code, originalAst, v;
+    originalAst = funcAst(func);
+    v = getNargs(originalAst, args.length);
+    ast = getNthBody(originalAst, args.length);
+    code = gen(ast, 0, ast, new Code().setGlobal(cons(lsrName, global.leisureFuncNames)), originalAst.lits, v, true, '', "Parse.", true, true);
+    if (code.err) throw new Error(code.err);
+    code = code.main;
+    code = "(function (" + ((collectArgs(originalAst, args.length - 1)).join(', ')) + "){return (" + code + ")})";
+    return eval(code);
+  }

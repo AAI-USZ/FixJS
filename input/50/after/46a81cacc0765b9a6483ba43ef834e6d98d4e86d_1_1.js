@@ -1,0 +1,3 @@
+function() {
+        compact.middleware();
+      }

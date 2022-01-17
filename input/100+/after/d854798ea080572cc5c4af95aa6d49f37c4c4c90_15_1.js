@@ -1,0 +1,1 @@
+function(){ Object.isEmpty((function(){ return this; }).call('wasabi')); }

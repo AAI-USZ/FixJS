@@ -1,0 +1,1 @@
+function(value){this.locX=parseFloat(value); this.translateMatrix=null;this.staticMatrix=null;this.updateMatrix();return this;}

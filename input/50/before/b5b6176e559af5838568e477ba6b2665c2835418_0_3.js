@@ -1,0 +1,3 @@
+function(markView) {
+                markView.remove();
+            }

@@ -1,0 +1,2 @@
+function(){var a=this.retrieve("spinner");if(!a){a=new Spinner(this,this.retrieve("spinner:options"));this.store("spinner",a);}return a;}};Element.implement({spin:function(a){if(a){this.set("spinner",a);
+}this.get("spinner").show();return this;},unspin:function(){this.get("spinner").hide();return this;}});if(!window.Form){window.Form={};}(function(){

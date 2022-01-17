@@ -1,0 +1,5 @@
+function() {
+    var n;
+    n = count_constraints();
+    return $('div#group_constraints').append("      <div id = 'c" + n + "_constraint' class = 'constraint'>        <select name = 'c" + n + "_criteria'>          <option>Short name</option>          <option>Fullname</option>          <option>Course ID #</option>          <option>Category</option>        </select>        <select name = 'c" + n + "_operator'>          <option>is</option>          <option>is not</option>          <option>contains</option>          <option>does not contain</option>        </select>        <span id = 'c" + n + "_search_term_0'>          <input name = 'c" + n + "_search_term_0' type = 'text'/>          <input id = 'c" + n + "_st_num' value = '1' type = 'hidden'/>          <img src = 'images/add.png' class = 'add_search_term'/>        </span>      </div>    ");
+  }

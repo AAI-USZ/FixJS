@@ -1,0 +1,1 @@
+function(){x.detach(c,"submit",b.sync,b)});b.on("docReady",a);b.on("blur",function(){b.get("el").removeClass(d+"editor-focused")});b.on("focus",function(){b.get("el").addClass(d+"editor-focused")})},syncUI:function(){var a=this.get("height");a&&this._uiSetHeight(a)},_uiSetHeight:function(a){

@@ -1,0 +1,47 @@
+function check_required(dt, dn, parent_dt) {
+	var doc = locals[dt][dn];
+	if(doc.docstatus>1)return true;
+	var fl = wn.meta.docfield_list[dt];
+	
+	if(!fl)return true; // no doctype loaded
+	
+	var all_clear = true;
+	var errfld = [];
+	for(var i=0;i<fl.length;i++) {
+		var key = fl[i].fieldname;
+		
+		var df = wn.meta.get_docfield(dt, key, dn);
+		var has_value = wn.model.has_value(dt, dn, key);
+		
+
+		if(df.reqd && !has_value) {
+			errfld[errfld.length] = df.label;
+			
+			// Bring to front "Section"
+			if(cur_frm) {
+				// show as red
+				var f = cur_frm.fields_dict[df.fieldname];
+				if(f) {
+					// in form
+					f.df.has_error = true;
+					f.refresh_label_icon();
+					
+					if(all_clear) {
+						$(document).scrollTop($(f.wrapper).offset().top - 100);
+					}
+					
+					if(f.df.hidden) {
+						msgprint('Oops, field "'+ f.df.label+'" is both hidden and mandatory. \
+							Please contact your admin for help.');
+					}
+				}
+			}
+						
+			if(all_clear)all_clear = false;
+		}
+	}
+	if(errfld.length)msgprint('<b>Mandatory fields required in '+
+	 	(doc.parenttype ? (wn.meta.docfield_map[doc.parenttype][doc.parentfield].label + ' (Table)') : 
+			doc.doctype) + ':</b>\n' + errfld.join('\n'));
+	return all_clear;
+}

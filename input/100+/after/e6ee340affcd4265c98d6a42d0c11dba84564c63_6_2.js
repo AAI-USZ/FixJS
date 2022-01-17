@@ -1,0 +1,1 @@
+function"){if(!(l instanceof e)){k=new YUITest.UnexpectedError(l);h=true;}}else{if(typeof e=="object"&&e!==null){if(!(l instanceof e.constructor)||l.message!=e.message){k=new YUITest.UnexpectedError(l);h=true;}}}

@@ -1,0 +1,1 @@
+function(input){ return parseInt( $(input).val() ) }

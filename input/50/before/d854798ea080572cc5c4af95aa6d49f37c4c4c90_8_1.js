@@ -1,0 +1,1 @@
+function(a,b){b.split("").forEach(function(c){Rb[c]=a});Sb+=b}

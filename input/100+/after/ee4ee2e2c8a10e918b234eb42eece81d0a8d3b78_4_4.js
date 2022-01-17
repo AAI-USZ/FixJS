@@ -1,0 +1,11 @@
+function(){
+                this.set("form",{
+                    pluginId:"",
+                    name:"",
+                    description:"",
+                    type:"",
+                    region:"",
+                    weight:0,
+                    enabled:false
+                });
+            }

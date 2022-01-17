@@ -1,0 +1,1 @@
+function() { that.getContactDetailsViaApex(contactId, recordTypeId, success, error, complete, true); }

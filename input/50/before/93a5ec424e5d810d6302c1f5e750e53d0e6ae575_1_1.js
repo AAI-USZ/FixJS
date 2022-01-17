@@ -1,0 +1,3 @@
+function(fieldname) {
+        return '.' + fieldname;
+    }

@@ -1,0 +1,1 @@
+function(x,y,z){this.dScaleX=parseFloat(x);this.dScaleY=parseFloat(y);this.dScaleZ=parseFloat(z);this.staticMatrix==null;this.scaleMatrix=null;this.updateMatrix();return this;}

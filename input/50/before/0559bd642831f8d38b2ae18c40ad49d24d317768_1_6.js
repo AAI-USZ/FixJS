@@ -1,0 +1,1 @@
+function(xhr){show_error_dialog(xhr.responseText);}

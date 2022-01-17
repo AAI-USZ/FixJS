@@ -1,0 +1,1 @@
+function (xhr, type) { console.log(type + " " + xhr.statusText + "!"); }

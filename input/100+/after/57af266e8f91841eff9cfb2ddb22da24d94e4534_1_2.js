@@ -1,0 +1,1 @@
+function (callback) {checkGithubToken('OK', callback); }

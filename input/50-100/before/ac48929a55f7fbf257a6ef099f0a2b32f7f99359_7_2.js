@@ -1,0 +1,1 @@
+function(a){var b=t("^["+a.source+"\\s]+$"),c=t("["+a.source+"]");a.ca.forEach(function(d){fa(v.prototype,"is"+d,function(){return b.test(this.trim())});fa(v.prototype,"has"+d,function(){return c.test(this)})})}

@@ -1,0 +1,1 @@
+function(){setPref('adap',null);}

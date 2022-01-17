@@ -1,0 +1,3 @@
+function() {
+  return this.name + ':' + this.message
+}

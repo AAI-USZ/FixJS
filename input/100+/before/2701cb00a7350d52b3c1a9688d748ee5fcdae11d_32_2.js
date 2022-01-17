@@ -1,0 +1,1 @@
+function(a){q=a}});Modernizr.input.list&&!(a("<datalist><select><option></option></select></datalist>").prop("options")||[]).length&&c.defineNodeNameProperty("datalist","options",{prop:{writeable:!1,get:function(){var c=this.options||[];if(!c.length){var e=a("select",this);if(e[0]&&e[0].options&&e[0].options.length)c=e[0].options}return c}}});h.forEach(function(e){

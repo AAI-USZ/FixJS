@@ -1,0 +1,1 @@
+function(index, element) { new Pushpop.NavigationBar(element); }

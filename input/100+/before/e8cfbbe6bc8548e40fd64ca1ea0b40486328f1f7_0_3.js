@@ -1,0 +1,2 @@
+function(a){this.x=a.clientX;this.y=a.clientY;this.dragging=true;this.button=a.button;this.dstep=Math.max(this.camera.position[0],this.camera.position[1],this.camera.position[2])/100};vxlTrackerInteractor.prototype.onMouseMove=function(c){this.lastX=this.x;this.lastY=this.y;this.x=c.clientX;this.y=c.clientY;if(!this.dragging){return}this.ctrlPressed=c.ctrlKey;this.altPressed=c.altKey;var b=this.x-this.lastX;var a=this.y-this.lastY;if(this.button==0){if(this.altPressed){this.dolly(a)
+}else{this.rotate(b,a)}}this.lastX=this.x;this.lastY=this.y}

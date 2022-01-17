@@ -1,0 +1,3 @@
+function(){
+					tags.pager();
+				}

@@ -1,0 +1,30 @@
+function(error, user){
+		if(user){
+			if(user.type === 1){
+				data.isInstructor = 'true';
+			}else{
+				data.isInstructor = 'false';
+			}
+
+			document.set(data, function(err, req, esResult){
+				if(esResult){
+					console.log('Added question to ES');
+					organizationAction.addResourceToSection(args, function(err, orgResult){
+						console.log('Added question resource to section');
+						notification.createNewQuestion({app:appType, user:data.user, target:questionUuid}, function(err, result){
+							if(result){
+								console.log('Added question notification');
+								callback(null, esResult);
+							}else{
+								callback(undefined);
+							}
+						});
+					});
+				}else{
+					callback(undefined);
+				}
+			})
+		}else{
+			callback(undefined);
+		}
+	}

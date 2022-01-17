@@ -1,0 +1,1 @@
+function(b,c){var f=b,k=!1;"string"===typeof f?k=c||!1:f&&(!f[0]&&!f.length)&&(f=[f]);return $p.core(f,k)}

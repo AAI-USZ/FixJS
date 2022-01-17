@@ -1,0 +1,1 @@
+function(ctor){ return ctor; }

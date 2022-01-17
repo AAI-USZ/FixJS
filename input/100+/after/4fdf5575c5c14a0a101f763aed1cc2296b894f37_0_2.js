@@ -1,0 +1,3 @@
+function hidePushPopMenu() {
+        pushPopUi.hideMenu();
+    }

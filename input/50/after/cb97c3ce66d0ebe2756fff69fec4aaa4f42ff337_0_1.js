@@ -1,0 +1,1 @@
+function() { this.element.removeData("datepicker").off(".Datepicker"); this.picker.remove() }

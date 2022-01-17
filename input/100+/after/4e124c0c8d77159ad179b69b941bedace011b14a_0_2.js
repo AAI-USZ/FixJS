@@ -1,0 +1,1 @@
+function(){if('function'==typeof autosave)autosave();}

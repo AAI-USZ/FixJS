@@ -1,0 +1,1 @@
+function toTuple(a) { return ["Tuple" + a.length].concat(a); }

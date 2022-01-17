@@ -1,0 +1,1 @@
+function(){ $(this).addClass('hidden'); $('#save-preset form')[0].reset(); }

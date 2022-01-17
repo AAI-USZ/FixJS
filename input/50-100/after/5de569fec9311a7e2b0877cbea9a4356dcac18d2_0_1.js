@@ -1,0 +1,1 @@
+function(x,y,z){this.locX=x;this.locY=y;this.locZ=z; this.translateMatrix=null;this.staticMatrix=null;this.updateMatrix();return this;}

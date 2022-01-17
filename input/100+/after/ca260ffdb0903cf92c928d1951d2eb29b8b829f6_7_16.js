@@ -1,0 +1,2 @@
+function(){return joDOM.create(this);},clear:function(){this.data="";if(this.container)
+this.container.innerHTML="";this.changeEvent.fire();return this;},setData:function(data){this.data=data;this.refresh();return this;},getData:function(){return this.data;}

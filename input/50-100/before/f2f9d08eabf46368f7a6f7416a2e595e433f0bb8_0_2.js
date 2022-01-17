@@ -1,0 +1,14 @@
+function() { 
+					var 
+						wrapper = $(this).closest('div.pgn-source-wrapper'),
+						currentGame = wrapper.data('currentGame');
+					flip ^= 1;
+					var rotation = flip ? 'rotate(180deg)' : 'rotate(0deg)';
+					$(this).css({
+						'-webkit-transform': rotation,
+						'-moz-transform': rotation,
+						'-ms-transform': rotation,
+						'-o-transform': rotation,
+						'transform': rotation})
+					currentGame.gotoBoard(currentGame.index);
+				}

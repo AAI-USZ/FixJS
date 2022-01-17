@@ -1,0 +1,1 @@
+function(x,y,z,w){this.mode=GLGE.P_QUAT;this.quatX=parseFloat(x);this.quatY=parseFloat(y);this.quatZ=parseFloat(z);this.quatW=parseFloat(w);this.staticMatrix=null;this.rotmatrix=null;this.updateMatrix();return this;}

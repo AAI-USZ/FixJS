@@ -1,0 +1,1 @@
+function instantiate() { new FileAppender('info', layout, {}); }

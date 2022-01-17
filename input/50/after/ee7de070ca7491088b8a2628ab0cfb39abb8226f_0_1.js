@@ -1,0 +1,1 @@
+function() { alert("PAGE Generetor: ERROR!"); }

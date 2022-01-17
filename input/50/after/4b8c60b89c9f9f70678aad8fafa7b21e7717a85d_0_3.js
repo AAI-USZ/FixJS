@@ -1,0 +1,1 @@
+function() { methods[settings.direction].apply($this); }

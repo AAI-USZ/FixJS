@@ -1,0 +1,1 @@
+function( search, reset ){console.log('searchdatabase:',search,reset); this.itemCollection.search(search,reset) }

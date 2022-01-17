@@ -1,0 +1,1 @@
+function () { log( "Here's a string" , 3.14, {"three":false} ); }

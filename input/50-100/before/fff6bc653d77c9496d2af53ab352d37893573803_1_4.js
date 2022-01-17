@@ -1,0 +1,1 @@
+function () { ok(true, 'Deferred error callback was called'); start(); }

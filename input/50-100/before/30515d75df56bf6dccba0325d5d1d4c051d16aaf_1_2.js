@@ -1,0 +1,6 @@
+function importSlice() {
+        var cgroup = contacts.slice(pointer,pointer + chunkSize);
+          persistContactGroup(cgroup,function() {
+            pointer += chunkSize; this.pending -= chunkSize;
+            this.onsuccess(); }.bind(this) );
+      }

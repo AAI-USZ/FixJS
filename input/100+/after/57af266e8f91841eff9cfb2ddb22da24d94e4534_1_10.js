@@ -1,0 +1,13 @@
+function (error, stdout, stderr) {
+              if (error !== null) {
+                self.log.warn('switchBranch::2: ' + settings.forkedRepo.blue.bold + ' ERROR DETECTED!'.red.bold);
+                console.dir(error);
+                console.dir(stdout);
+                console.dir(stderr);
+                //return cb(error);
+                return cb(null, 'DONE');
+              } else {
+                self.log.info(settings.forkedRepo.blue.bold + '@' + settings.repoLocation.yellow.bold + ':clean branch ' + 'checked out'.green.bold);
+                return cb(null, 'OK');
+              }
+            }

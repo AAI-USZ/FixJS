@@ -1,0 +1,1 @@
+function(node) { return node.data.time <= $('#time').val(); }

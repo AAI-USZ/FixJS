@@ -1,0 +1,3 @@
+function() {
+    game.removeClient(socket);
+  }

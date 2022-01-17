@@ -1,0 +1,1 @@
+function applyFunc(listener){listener.apply(undefined, args);}

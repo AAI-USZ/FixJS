@@ -1,0 +1,11 @@
+function(path){
+
+		path = _verifyAndResolveDirectory(path);
+
+		var fileList = []
+			, modules = [];
+
+		var files = _fs.readdirSync(path);
+
+		return _importFiles(path, files);
+	}

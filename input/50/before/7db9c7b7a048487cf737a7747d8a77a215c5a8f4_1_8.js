@@ -1,0 +1,1 @@
+function (tab) {emit(callback, tab, url);}

@@ -1,0 +1,24 @@
+function findAt(fd, size, pos, lastPos, adjustment, searchKey, callback, lastKey) {
+  if (lastPos == pos || pos >= size) {
+    miss(callback);
+  } else {
+    readLine(fd, pos, function(line) {
+      var tokens = line.split(/\s+/);
+      var key = tokens[0];
+
+    if(key == searchKey) {
+        callback({status: 'hit', key: key, 'line': line, tokens: tokens});
+      } else if(adjustment == 1 || key == lastKey)  {
+        miss(callback);
+      } else {
+        adjustment = Math.ceil(adjustment * 0.5);
+
+        if (key < searchKey) {
+          findAt(fd, size, pos + adjustment, pos, adjustment, searchKey, callback, key);
+        } else {
+          findAt(fd, size, pos - adjustment, pos, adjustment, searchKey, callback, key);
+        }
+      }
+    });
+  }
+}

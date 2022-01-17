@@ -1,0 +1,1 @@
+function (i) { if (typeof args.data[i] === "object") delete args.data[i]; }

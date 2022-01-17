@@ -1,0 +1,1 @@
+function(objectref, event){}

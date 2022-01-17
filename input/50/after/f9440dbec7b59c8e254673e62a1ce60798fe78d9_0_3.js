@@ -1,0 +1,1 @@
+function(){auto_expand_click($(this));}

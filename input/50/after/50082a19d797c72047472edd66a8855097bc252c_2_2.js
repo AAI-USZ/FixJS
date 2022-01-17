@@ -1,0 +1,1 @@
+function(objects, sync, fn) { objects.doc2 = new lXapian.Document(); fn(null); }

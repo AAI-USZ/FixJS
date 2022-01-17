@@ -1,0 +1,1 @@
+function() { getAlerts(service, filter, refresh); }

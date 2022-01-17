@@ -1,0 +1,1 @@
+function(el, i){ return fn.call(el, i, el) }

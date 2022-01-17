@@ -1,0 +1,51 @@
+function () {
+        var s = cc.Director.sharedDirector().getWinSize();
+
+        for (var i = 0; i < 3; i++) {
+            var cache = cc.SpriteFrameCache.sharedSpriteFrameCache();
+            cache.addSpriteFramesWithFile(s_grossiniPlist);
+            cache.addSpriteFramesWithFile(s_grossini_grayPlist, s_grossini_gray);
+
+            //
+            // Animation using Sprite BatchNode
+            //
+            var sprite = cc.Sprite.createWithSpriteFrame(cc.SpriteFrameCache.sharedSpriteFrameCache().spriteFrameByName("grossini_dance_01.png"));
+            sprite.setPosition(cc.ccp(s.width / 4 * (i + 1), s.height / 2));
+
+            var point = cc.Sprite.create(s_pathR1);
+            point.setScale(0.25);
+            point.setPosition(sprite.getPosition());
+            this.addChild(point, 200);
+
+            switch (i) {
+                case 0:
+                    sprite.setAnchorPoint(cc.PointZero());
+                    break;
+                case 1:
+                    sprite.setAnchorPoint(cc.ccp(0.5, 0.5));
+                    break;
+                case 2:
+                    sprite.setAnchorPoint(cc.ccp(1, 1));
+                    break;
+            }
+
+            point.setPosition(sprite.getPosition());
+
+            var spritebatch = cc.SpriteBatchNode.create(s_grossini);
+            this.addChild(spritebatch);
+
+            var animFrames = [];
+            var str = "";
+            for (var k = 1; k < 15; k++) {
+                str = "grossini_dance_" + (k < 10 ? ("0" + k) : k) + ".png";
+                var frame = cache.spriteFrameByName(str);
+                animFrames.push(frame);
+            }
+
+            var animation = cc.Animation.createWithSpriteFrames(animFrames,0.3);
+            sprite.runAction(cc.RepeatForever.create(cc.Animate.create(animation)));
+            sprite.runAction(cc.RepeatForever.create(cc.RotateBy.create(10, 360)));
+
+            spritebatch.addChild(sprite, i);
+        }
+    }

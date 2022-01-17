@@ -1,0 +1,3 @@
+function fillHomeCategorySeen() {
+    fillLocal('seen');
+}

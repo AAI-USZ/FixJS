@@ -1,0 +1,28 @@
+function(event, ui) {
+    if (! Panoptic.appInitRan) {
+        Panoptic.appInit();
+        Panoptic.appInitRan = true;
+    }
+    
+    // clear current page timers
+    if (Panoptic.pageTimers) {
+        for (var i in Panoptic.pageTimers) {
+            var timer = Panoptic.pageTimers[i];
+            window.clearInterval(timer);
+        }
+    }
+    
+    // page initialization handlers go here
+    var pageInitHandlers = {
+        'camera_list_page': Panoptic.cameraListInit,
+        'edit_camera_dialog': Panoptic.editCameraInit,
+        'camera_view_page': Panoptic.cameraViewInit
+    };
+    if (event.target.id)
+        debug(event.target.id);
+    if (event.target && event.target.id) {
+        var handler = pageInitHandlers[event.target.id];
+        if (handler)
+            handler();
+    }
+}

@@ -1,0 +1,77 @@
+function(challengeId, resultsFolderId, resultsType) {
+    $('.validateResultsFolder').hide();   
+    $('#midas_challenge_competitor_matchedItems_Info').hide();
+  ajaxWebApi.ajax(
+    {
+    method: 'midas.challenge.competitor.validate.results',  
+    args: 'challengeId=' + challengeId + '&resultsFolderId=' + resultsFolderId  + '&resultsType=' + resultsType,
+    success: function(results) {
+      var validationInfo = '';
+      var matchedItemsInfo = '';
+      
+      if( $.isArray(results.data.truthWithoutResults) ) {
+          //  it is either an empty array (initialarray), or an object collection
+          if($.isArray(results.data.matchedTruthResults) &&
+             results.data.matchedTruthResults.length === 0 &&
+             results.data.truthWithoutResults.length === 0) {
+              // there are no truths to match
+              $('#validateResultsFolder_NoneMatched').show();
+              midas.challenge.competitor.disableScoring();
+          }
+          else {
+              $('#validateResultsFolder_AllMatched').show(); 
+              $('#midas_challenge_competitor_matchedItems_Info').show();
+              midas.challenge.competitor.enableScoring();
+          }
+      }
+      else 
+        {
+        if($.isArray(results.data.matchedTruthResults)) {
+            $('#validateResultsFolder_NoneMatched').show();
+            midas.challenge.competitor.disableScoring();
+        }
+        else {
+            $('#validateResultsFolder_SomeMatched').show();
+            $('#midas_challenge_competitor_matchedItems_Info').show();
+            midas.challenge.competitor.enableScoring();
+        }
+        validationInfo = '<br/> <b>Mismatched items: </b> <br/> </br>';
+        validationInfo += '<table id="validationInfo" class="validation">';
+        validationInfo += '<tr> <th>What is required by the challenge</th> <th>What is in your results folder</th></tr>';
+        for (var idx in results.data.truthWithoutResults)
+          {
+          validationInfo += '<tr> <td> <span>' + results.data.truthWithoutResults[idx]+ '</span> </td>';
+          validationInfo += '<td><img src="' + json.global.webroot + '/core/public/images/icons/nok.png"> </td> </tr>'; 
+          }
+        for (var idx in results.data.resultsWithoutTruth)
+          {
+          validationInfo += '<tr> <td><img src="' + json.global.webroot + '/core/public/images/icons/nok.png"> </td>';
+          validationInfo += '<td> <span>' + results.data.resultsWithoutTruth[idx] + '</span> </td> </tr>';
+          }
+        validationInfo += '</table>';
+        }
+      $('div#midas_challenge_competitor_validatedResultsFolder_Info').html(validationInfo);
+      
+      if( !$.isArray(results.data.matchedTruthResults) ) // it is either an empty array (initialarray), or an object collectionn
+        {
+        matchedItemsInfo = '<br/> <b>Matched items: </b> <br/> </br>';
+        matchedItemsInfo += '<table id="matchedItemsInfo" class="validation">';
+        matchedItemsInfo += '<tr> <th>What is required by the challenge</th> <th>If it is in your results folder</th></tr>';
+        for (var idx in results.data.matchedTruthResults)
+          {
+          matchedItemsInfo += '<tr> <td> <span>' + results.data.matchedTruthResults[idx]+ '</span> </td>';
+          matchedItemsInfo += '<td><img src="' + json.global.webroot + '/core/public/images/icons/ok.png"> </td> </tr>'; 
+          }
+        matchedItemsInfo += '</table>';
+        }
+        $('div#midas_challenge_competitor_matchedItems_Info').html(matchedItemsInfo);
+      },
+    error: function(XMLHttpRequest, textStatus, errorThrown){
+      $('#validateResultsFolder_Error').show();
+      var validationInfo = '';
+      validationInfo = '<br/> <b>Reason: </b>' + XMLHttpRequest.message + '<br/> </br>';
+      $('div#midas_challenge_competitor_validatedResultsFolder_Info').html(validationInfo);
+      }  
+    });
+    return;
+}

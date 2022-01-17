@@ -1,0 +1,3 @@
+function(method,arg,table_field,doc,dt,dn,allow_edit,call_back){if(!allow_edit)freeze('Fetching Data...');$c('runserverobj',args={'method':method,'docs':compress_doclist(make_doclist(doc.doctype,doc.name)),'arg':arg},function(r,rt){if(r.message){var d=locals[dt][dn];var field_dict=r.message;for(var key in field_dict){d[key]=field_dict[key];if(table_field)refresh_field(key,d.name,table_field);else refresh_field(key);}}
+if(call_back){doc=locals[doc.doctype][doc.name];call_back(doc,dt,dn);}
+if(!allow_edit)unfreeze();});}

@@ -1,0 +1,1 @@
+function(b){var c=r.createElement("source");"string"==typeof b&&(b={src:b});c.setAttribute("src",b.src);b.type&&c.setAttribute("type",b.type);b.media&&c.setAttribute("media",b.media);a.append(c)});else{var b=[],d=a[0].nodeName.toLowerCase(),f=w(a,d);f.src?b.push(f):c("source",a).each(function(){f=w(this,d);f.src&&b.push(f)});return b}};c.fn.loadMediaSrc=function(a,b){

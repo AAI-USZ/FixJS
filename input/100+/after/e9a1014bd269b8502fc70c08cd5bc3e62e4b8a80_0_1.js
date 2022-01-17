@@ -1,0 +1,3 @@
+function (line) {
+            return !!line;
+        }

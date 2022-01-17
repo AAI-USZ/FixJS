@@ -1,0 +1,1 @@
+function() {self._edit();}

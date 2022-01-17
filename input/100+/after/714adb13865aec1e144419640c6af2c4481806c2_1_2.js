@@ -1,0 +1,1 @@
+function(a,b){o=o+b;q.push(o)})}h=q.reverse();var f={setTargeting:{inURL:h,URLIs:h[0],Domain:b.location.host},enableSingleRequest:true,collapseEmptyDivs:"original"};if(typeof c.setTargeting!=="undefined"&&typeof f.setTargeting!=="undefined")c.setTargeting=a.extend(c.setTargeting,f.setTargeting);f=a.extend(f,c);a(j).each(function(){

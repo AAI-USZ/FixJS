@@ -1,0 +1,1 @@
+function (rpcHandler, connector) { return new GeolocationFeature.GeolocationFeature(rpcHandler, connector) }

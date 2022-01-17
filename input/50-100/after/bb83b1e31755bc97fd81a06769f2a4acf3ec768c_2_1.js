@@ -1,0 +1,8 @@
+function capture(doCapture, events) {
+		var method = doCapture ? window.addEventListener : window.removeEventListener;
+		self.isCapturing = doCapture;
+		self.captureEvents = events || self.captureEvents;
+		self.captureEvents.forEach(function (type) { 
+			method(type, genericEventHandler, false);
+		} );
+	}

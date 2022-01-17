@@ -1,0 +1,1 @@
+function (resp) { tiers.install(resp, sys.name(src), command[1]); }

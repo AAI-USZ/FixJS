@@ -1,0 +1,1 @@
+function KDef(next, name) { this.next = next; this.name = name }

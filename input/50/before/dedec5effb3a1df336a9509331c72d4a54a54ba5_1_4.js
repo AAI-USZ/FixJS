@@ -1,0 +1,1 @@
+function() { expect(a).toBeEqualish([4, 7, 2, 6, 0, 0]); }

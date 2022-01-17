@@ -1,0 +1,6 @@
+function(stage) {
+      var _ref9;
+      return "<div id=\"" + stage.name + "\">\n    <table class=\"ui-widget-content\"><tr><td style=\"vertical-align: top;padding: 1em;\">\n        <div>\n            <img width=\"200\" class=\"stage-image " + ((_ref9 = stage.image) != null ? _ref9 : {
+        '': 'hidden'
+      }) + "\" alt=\"Wizard Bild\" src=\"" + stage.image + "\" />\n        </div>\n    </td><td>\n        <div style=\"padding: 5px 15px;\">\n            <span class=\"stage-content tts\" lang=\"de\">" + stage.html + "</span>\n        </div>\n        <div class=\"buttons\">\n            <button class=\"prevButton\" alt=\"Zurück\">\n                <i class=\"icon-arrow-left\"></i>\n                Zurück\n            </button>\n            <button class=\"nextButton\" alt=\"Weiter\">\n                Weiter\n                <i class=\"icon-arrow-right\"/>\n            </button>\n        </div>\n    </td></tr></table>\n</div>";
+    }

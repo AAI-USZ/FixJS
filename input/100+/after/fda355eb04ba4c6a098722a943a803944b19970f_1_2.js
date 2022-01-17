@@ -1,0 +1,14 @@
+function(link, label, attrs) {
+    var d = this.contentDocument;
+    var anchor = d.createElement("a");
+    for (var name in attrs) {
+        var value = attrs[name];
+        anchor.setAttribute(name, value);
+    }
+    anchor.href = link;
+    anchor.title = link;
+    anchor.setAttribute("data-wysiwyg-link", link);
+    anchor.setAttribute("onclick", "return false;");
+    anchor.appendChild(d.createTextNode(label));
+    return anchor;
+}

@@ -1,0 +1,1 @@
+function (c) { return  new Card(c.rank, c.suit); }

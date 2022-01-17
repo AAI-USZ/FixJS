@@ -1,0 +1,1 @@
+function got( obj, key ) { return arguments.length > 2 ? hasSome( got, obj, Array.coerce( arguments, 1 ) ) : key in Object( obj ); }

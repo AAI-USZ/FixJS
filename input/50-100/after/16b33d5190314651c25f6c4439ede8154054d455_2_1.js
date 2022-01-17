@@ -1,0 +1,10 @@
+function(){
+    $(".nano").nanoScroller();
+    $(".nano").nanoScroller();
+    $(".nano").nanoScroller();
+    $(".nano").nanoScroller();
+    $(".nano").nanoScroller();
+    $(".nano").nanoScroller();
+    $(".nano").nanoScroller();
+    $(".nano").nanoScroller();
+  }

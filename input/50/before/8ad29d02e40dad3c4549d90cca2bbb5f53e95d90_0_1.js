@@ -1,0 +1,3 @@
+function getDocumentId() {
+    return documentId;
+  }

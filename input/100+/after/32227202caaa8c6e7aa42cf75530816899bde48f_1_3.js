@@ -1,0 +1,2 @@
+function(a){a.prototype.constructor=Ext.Function.createSequence(a.prototype.constructor,function(){var a,b,d,e;null==this.controller&&Ext.Error.raise({msg:"Error initializing Controllable instance: `controller` was not specified."});b=Ext.isArray(this.controller)?this.controller:[this.controller];d=0;for(e=b.length;d<e;d++){a=b[d];try{Ext.create(a,{view:this})}catch(g){Ext.Error.raise({msg:"Error initializing Controllable instance: an error occurred while creating an instance of the specified controller: '"+
+this.controller+"'."})}}})}

@@ -1,0 +1,1 @@
+function () { komooMap.openInfoWindow({feature: feature_, position: e.latLng}) }

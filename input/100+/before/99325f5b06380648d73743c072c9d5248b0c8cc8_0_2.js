@@ -1,0 +1,1 @@
+function(data){alert(data);}

@@ -1,0 +1,1 @@
+function D(s){D.on && console.log(s);}

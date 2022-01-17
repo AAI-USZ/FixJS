@@ -1,0 +1,238 @@
+function()
+{
+  var self = this;
+  var id_count = 1;
+
+  var ids = [];
+
+  var getId = function()
+  {
+    return 'view-' + (id_count++).toString();
+  }
+  
+  var filter = function(view, filters)
+  {
+    var filter = '', i = 0;
+    for( ; (filter = filters[i]) && !view[filter]; i++ );
+    return filter && true || false; 
+  }
+
+  this.getSingleViews = function(filters)
+  {
+    var 
+      id = '', 
+      i = 0,
+      ret = [];
+    for( ; id = ids[i]; i++)
+    {
+      if(views[id].type == 'single-view' && ( !filters || !filter(views[id], filters) ) )
+      {
+        ret[ret.length] = id;
+      }
+    }
+    return ret;
+  }
+
+  this._delete = function(id)
+  {
+    var 
+    _id = '', 
+    i = 0;
+    for( ; ( _id = ids[i] ) && _id != id; i++);
+    if(_id)
+    {
+      ids.splice(i, 1);
+      return true;
+    }
+    return false;
+  }
+
+  this.init = function(id, name, container_class, html, default_handler, edit_handler)
+  {
+    this.id = id || getId();
+    this.name = name;
+    this.container_class = container_class;
+    this.inner = html;  // only for testing;
+    this.container_ids = [];
+    this.type = this.type || 'single-view';
+    this.default_handler = default_handler || '';
+    this.edit_handler = edit_handler || '';
+    this.requires_view || ( this.requires_view = '' );
+    if(!window.views)
+    {
+      window.views = {};
+    }
+    window.views[id] = this;
+    if (ids.indexOf(this.id) == -1)
+    {
+      ids[ids.length] = this.id;
+    }
+    messages.post('view-initialized', {'view_id': this.id});
+  }
+
+  this.addContainerId = function(id)
+  {
+    this.container_ids[this.container_ids.length] = id;
+  }
+
+  this.removeContainerId = function(id)
+  {
+    var id_c = '', i = 0;
+    for( ; ( id_c = this.container_ids[i] ) && id_c != id; i++);
+    if( id_c )
+    {
+      this.container_ids.splice(i, 1);
+    }
+  }
+
+  this.createView = function(container)
+  {
+    container.innerHTML = this.inner;
+  }
+
+  this.ondestroy = function()
+  {
+
+  }
+
+  this.update = function(ele) // for testing
+  {
+    if( ele )
+    {
+      this.createView(ele);
+    }
+    else
+    {
+      var id = '', i = 0, container = null;
+      
+      for( ; id = this.container_ids[i]; i++)
+      {
+        container = document.getElementById(id);
+        if (container)
+        {
+          this.createView(container);
+          messages.post('view-created', {id: this.id, container: container});
+        }
+        // if actions[this.id] actions[this.id].onViewUpdate(cotainer)
+      }
+
+
+    }
+  }
+
+  this.applyToContainers = function(fn) // for testing
+  {
+
+    var id = '', i = 0, container = null;
+    
+    for( ; id = this.container_ids[i]; i++)
+    {
+      container = document.getElementById(id);
+      if( container )
+      {
+        fn(container);
+      }
+    }
+    
+  }
+
+  this.isvisible = function() 
+  {
+    var id = '', i = 0;
+    for( ; id = this.container_ids[i]; i++)
+    {
+      if( document.getElementById(id) )
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  this.getAllContainers = function() 
+  {
+    var id = '', i = 0, c = null, ret = [];
+    for( ; id = this.container_ids[i]; i++)
+    {
+      if( c = document.getElementById(id) )
+      {
+        ret[ret.length] = c;
+      }
+    }
+    return ret;
+  }
+  /* returns the first container, if there is any, otherwise null */
+  this.get_container = function() 
+  {
+    return (this.container_ids[0] && 
+            document.getElementById(this.container_ids[0] ) || null);
+  }
+
+  this.getToolbarControl = function( container, handler, handler_name) 
+  {
+    handler_name = handler_name || 'handler';
+    var toolbar = document.getElementById(container.id.replace(/container/,'toolbar'));
+    if(toolbar)
+    {
+      var all = toolbar.getElementsByTagName('*'), control = null, i = 0;
+      for( ; control = all[i]; i++)
+      {
+        if( control.getAttribute(handler_name)  == handler )
+        {
+          return control;
+        }
+      }
+    }
+    return null;
+  }
+
+ 
+  this.clearAllContainers = function() 
+  {
+    var id = '', i = 0, c = null, ret = [];
+    for( ; id = this.container_ids[i]; i++)
+    {
+      if( c = document.getElementById(id) )
+      {
+        c.innerHTML = "";
+      }
+    }
+  }
+  
+  this.reset_containers = function() 
+  {
+    this.container_ids = [];
+  };
+
+  this.has_container_id = function(id)
+  {
+    return this.container_ids.indexOf(id) > -1;
+  }
+
+  this.reset_containers = function() 
+  {
+    if (this.container_ids.length)
+    {
+      window.messages.post('hide-view', {id: this.id});
+    }
+    this.container_ids = [];
+  };
+
+  this.onresize = function(container)
+  {
+
+  }
+
+  var onHideView = function(msg)
+  {
+    var view = window.views[msg.id];
+    if(view)
+    {
+      view.ondestroy();
+      messages.post('view-destroyed', {id: msg.id});
+    }
+  }
+
+  messages.addListener('hide-view', onHideView);
+
+}

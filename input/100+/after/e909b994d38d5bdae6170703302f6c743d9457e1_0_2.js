@@ -1,0 +1,16 @@
+function drawPowerup(xpos, ypos, type){
+    var index = ((type == 'powerup_bomb') ? 11 : 10);
+    var canvas, image, context, width, height, x = 0, y = 0, frameSize = 16;
+    var mul = 30;
+    if(!powerupsSheet){
+        powerupsSheet = new Image();
+        powerupsSheet.src = "./powerups.png";
+    }
+    image = powerupsSheet;
+        width = image.width;
+        height = image.height;
+        canvas = document.getElementById("obstacles");
+        x = index*mul;
+        context = canvas.getContext("2d");
+        context.drawImage(image, x, y, frameSize, frameSize, xpos*mul+7, ypos*mul+7, frameSize, frameSize);
+}

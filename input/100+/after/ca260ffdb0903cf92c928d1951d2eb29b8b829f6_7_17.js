@@ -1,0 +1,3 @@
+function(parent){if(!this.container)
+return this;var node=joDOM.get(parent)||document.body;if(this.container&&this.container.parentNode===node)
+node.removeChild(this.container);return this;},setEvents:function(){}};joContainer=function(data){joView.apply(this,arguments);this.title=null;};joContainer.extend(joView,{tagName:"jocontainer",getContent:function(){return this.container.childNodes;},setTitle:function(title){this.title=title;return this;},setData:function(data){this.data=data;return this.refresh();},activate:function(){},deactivate:function(){}

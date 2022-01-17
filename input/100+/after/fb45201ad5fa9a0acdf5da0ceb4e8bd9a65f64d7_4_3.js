@@ -1,0 +1,1 @@
+function(a){this.sessionHeader=null;this.SESSION_HEADER="App-Session";this.retryHandler=function(b,c){return function(d,e){switch(d.status){case 401:if("function"==typeof a){a(b);break}default:c(d,e)}}}}

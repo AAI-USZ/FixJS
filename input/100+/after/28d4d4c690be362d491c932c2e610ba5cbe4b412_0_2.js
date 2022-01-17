@@ -1,0 +1,1 @@
+function(){ return { time: obj.t, values: empty}}

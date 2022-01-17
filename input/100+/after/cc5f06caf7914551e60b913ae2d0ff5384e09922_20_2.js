@@ -1,0 +1,1 @@
+function (item) { return item.id === streamItem.id; }

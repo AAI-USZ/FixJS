@@ -1,0 +1,1 @@
+function() {var f; return function _true(){return f || (f = (Parse.setType(function(_a){return function(_b){return _a();};}, 'true')));}}

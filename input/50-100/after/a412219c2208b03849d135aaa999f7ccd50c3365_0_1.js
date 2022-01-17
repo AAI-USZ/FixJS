@@ -1,0 +1,5 @@
+function checkEmail()
+{
+	return ValidateAltEmail();
+	 
+}

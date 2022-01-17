@@ -1,0 +1,1 @@
+function(){ debugger; console.warn('hey'); this.remove() }

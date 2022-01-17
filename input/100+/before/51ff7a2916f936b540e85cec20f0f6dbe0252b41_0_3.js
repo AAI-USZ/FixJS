@@ -1,0 +1,3 @@
+function(e) {
+				this.redraw();
+			}

@@ -1,0 +1,3 @@
+function () {
+                    systemEvent.deviceBatteryStateChange(null);
+                }

@@ -1,0 +1,215 @@
+function(contentHTML, size, options) {
+
+    
+
+    var w, h;
+
+    
+
+    // create temp container div with restricted size
+
+    var container = document.createElement("div");
+
+    container.style.visibility = "hidden";
+
+        
+
+    var containerElement = (options && options.containerElement) 
+
+    	? options.containerElement : document.body;
+
+
+
+    //fix a dimension, if specified.
+
+    if (size) {
+
+        if (size.w) {
+
+            w = size.w;
+
+            container.style.width = w + "px";
+
+        } else if (size.h) {
+
+            h = size.h;
+
+            container.style.height = h + "px";
+
+        }
+
+        container.style.overflow = "hidden";
+
+    }
+
+
+
+    //add css classes, if specified
+
+    if (options && options.displayClass) {
+
+        container.className = options.displayClass;
+
+    }
+
+    
+
+    // create temp content div and assign content
+
+    var content = document.createElement("div");
+
+    var noMargin = '<div style="margin:0px; clear:both; padding:0; height:1px"></div>';
+
+    content.innerHTML = noMargin + contentHTML + noMargin; 
+
+    
+
+    // we need overflow visible when calculating the size
+
+    content.style.overflow = "visible";
+
+    if (content.childNodes) {
+
+        for (var i=0, l=content.childNodes.length; i<l; i++) {
+
+            if (!content.childNodes[i].style) continue;
+
+            content.childNodes[i].style.overflow = "visible";
+
+        }
+
+    }
+
+    
+
+    // add content to restricted container 
+
+    container.appendChild(content);
+
+    
+
+    // append container to body for rendering
+
+    containerElement.appendChild(container);
+
+    
+
+    // Opera and IE7 can't handle a node with position:aboslute if it inherits
+
+    // position:absolute from a parent.
+
+    var parentHasPositionAbsolute = false;
+
+    var parent = container.parentNode;
+
+    while (parent && parent.tagName.toLowerCase()!="body") {
+
+        var parentPosition = OpenLayers.Element.getStyle(parent, "position");
+
+        if(parentPosition == "absolute") {
+
+            parentHasPositionAbsolute = true;
+
+            break;
+
+        } else if (parentPosition && parentPosition != "static") {
+
+            break;
+
+        }
+
+        parent = parent.parentNode;
+
+    }
+
+
+
+    if(!parentHasPositionAbsolute) {
+
+        container.style.position = "absolute";
+
+    }
+
+    
+
+    // fix img dimensions: chrome bug
+
+    var images = content.getElementsByTagName("img");
+
+    for (var i = 0, len = images.length; i < len; i++) {
+
+        var img = images[i],
+
+            aux;
+
+        if (img.naturalWidth && img.naturalHeight && (!img.width || !img.height)) {
+
+            if (!img.width && !img.height) {
+
+                img.height = img.naturalHeight;
+
+                img.width = img.naturalWidth;
+
+            } else if (img.width) {
+
+                img.height = Math.round(img.naturalHeight*(parseInt(img.width,10)/img.naturalWidth));
+
+            } else if (img.height) {
+
+                img.width = Math.round(img.naturalWidth*(parseInt(img.height,10)/img.naturalHeight));
+
+            }
+
+        }
+
+    }
+
+    
+
+    // calculate scroll width of content and add corners and shadow width
+
+    if (!w) {
+
+        w = Math.ceil(parseFloat(OpenLayers.Element.getStyle(content,"width")));
+
+        if (!w) {
+
+            w = parseInt(content.scrollWidth);
+
+        }
+
+        // update container width to allow height to adjust
+
+        container.style.width = w + "px";
+
+    }        
+
+    // capture height and add shadow and corner image widths
+
+    if (!h) {
+
+        h = Math.ceil(parseFloat(OpenLayers.Element.getStyle(content,"height")));
+
+        if (!h){
+
+            h = parseInt(content.scrollHeight);
+
+        }
+
+        h -= 2; // Remove 1px * 2 of noMargin
+
+    }
+
+
+
+    // remove elements
+
+    container.removeChild(content);
+
+    containerElement.removeChild(container);
+
+    
+
+    return new OpenLayers.Size(w, h);
+
+}

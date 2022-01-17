@@ -1,0 +1,2 @@
+function(){a.jumpToPage(1)});a._bindButtonItemEvent("prev",function(){a.jumpToPage(a.get("curPage")-1)});a._bindButtonItemEvent("next",function(){a.jumpToPage(a.get("curPage")+1)});a._bindButtonItemEvent("last",function(){a.jumpToPage(a.get("totalPage"))});a._bindButtonItemEvent("skip",function(){b()});a.getItem("curPage").get("el").on("keyup",function(a){a.stopPropagation();13===a.keyCode&&b()})},_bindButtonItemEvent:function(b,a){var c=this.getItem(b);if(c)c.get("el").on("click",
+a)},onLoad:function(b){this._afterStoreLoad(this.get("store"),b)},_getItems:function(){

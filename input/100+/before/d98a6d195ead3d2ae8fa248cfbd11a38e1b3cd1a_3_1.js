@@ -1,0 +1,1 @@
+function aa(a){return function(){return a}}var o=Object,p=Array,r=RegExp,s=Date,t=String,u=Number,w=Math,ba=typeof global!=="undefined"?global:this,ca=o.defineProperty&&o.defineProperties;function y(a,b,c,d){var e=b?a.prototype:a,g;da(a);z(d,function(f,i){g=e[f];if(typeof c==="function")i=ea(e[f],i,c);if(c!==m||!e[f])fa(e,f,i);a.SugarMethods[f]={Aa:b,method:i,Ha:g}})}

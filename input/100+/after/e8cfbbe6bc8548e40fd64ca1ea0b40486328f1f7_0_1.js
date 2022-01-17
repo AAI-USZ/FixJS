@@ -1,0 +1,2 @@
+function(){vxl.c.view.renderer.render();
+this.timid=window.requestAnimFrame(vxl.go.render)},cancelRender:function(){window.cancelRequestAnimFrame(this.timid)},slowRendering:function(){},normalRendering:function(){},console:function(a,b){if(this.debug==true||b){console.info(a)}}},c:{scene:undefined,view:undefined,camera:undefined,actor:undefined,animation:undefined},util:{

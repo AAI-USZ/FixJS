@@ -1,0 +1,1 @@
+function(){ return count < (( tripCount > 30 ) ? 30 : tripCount) }

@@ -1,0 +1,1 @@
+function(objects, sync, fn) { objects.doc3 = new xapian.Document(); fn(null); }

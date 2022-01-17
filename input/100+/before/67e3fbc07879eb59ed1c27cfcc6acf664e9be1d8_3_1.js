@@ -1,0 +1,1 @@
+function() { return useAlternateImageLoadingFunctions_; }

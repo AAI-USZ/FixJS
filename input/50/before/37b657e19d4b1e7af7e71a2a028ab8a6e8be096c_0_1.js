@@ -1,0 +1,1 @@
+function(e, value) {jQuery(this).html(value);}

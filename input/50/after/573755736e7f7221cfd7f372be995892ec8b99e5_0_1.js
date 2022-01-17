@@ -1,0 +1,1 @@
+function (level, message, conn, isError) { return this.server._logIf(level, message, conn, isError); }

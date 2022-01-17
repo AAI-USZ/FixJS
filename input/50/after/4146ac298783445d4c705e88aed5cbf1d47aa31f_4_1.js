@@ -1,0 +1,1 @@
+function(){this.returnValue = false; this["defaultPrevented"] = true}

@@ -1,0 +1,1 @@
+function(el) { return friends.indexOf(el.fb) === -1; } ).sort(function() {return 0.5 - Math.random()}

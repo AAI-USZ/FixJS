@@ -1,0 +1,1 @@
+function computeLeaf(node, index) { return { result: 0, pos: 0 }; }

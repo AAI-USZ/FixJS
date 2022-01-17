@@ -1,0 +1,1 @@
+function() { result = mat2d.inverse(a = [4, 7, 2, 6, 1, 3], dest); }

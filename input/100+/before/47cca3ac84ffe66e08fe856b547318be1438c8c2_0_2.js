@@ -1,0 +1,1 @@
+function(a){return typeof a==="number"&&n.g(a)},isInteger:function(a){return Number.isFinite(a)&&a>=-9007199254740992&&a<=9007199254740992&&Math.floor(a)===a},isNaN:function(a){return Object.is(a,NaN)},toInteger:function(a){a=+a;return Number.isNaN(a)?0:a===0||!n.g(a)?a:(a<0?-1:1)*Math.floor(Math.abs(a))}});F=function(a,b){var c=document.createEvent("Events"),b=b||{}

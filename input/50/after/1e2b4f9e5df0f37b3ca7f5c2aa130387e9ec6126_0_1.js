@@ -1,0 +1,1 @@
+function() { self.removeTokens(count, callback); }

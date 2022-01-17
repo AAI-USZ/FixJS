@@ -1,0 +1,3 @@
+function(){
+    $('[data-draw]').draw();
+  }

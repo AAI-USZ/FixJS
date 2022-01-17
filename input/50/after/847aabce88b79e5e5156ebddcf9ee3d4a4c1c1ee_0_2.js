@@ -1,0 +1,5 @@
+function( event )
+{
+	init();
+    resizeContent();
+}

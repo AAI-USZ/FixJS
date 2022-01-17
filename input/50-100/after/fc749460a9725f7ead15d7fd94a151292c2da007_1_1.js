@@ -1,0 +1,1 @@
+function(M,N,F,L){if(N==JavaScriptPrototype){M=F.indexOf(".prototype");_$_WT_CLASS_$_[F.substr(0,M)].prototype[F.substr(M+11)]=L}else _$_WT_CLASS_$_[F]=N==JavaScriptFunction?function(){L.apply(_$_WT_CLASS_$_,arguments)}:L}

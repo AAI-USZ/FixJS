@@ -1,0 +1,3 @@
+function() {
+		self.leave( this );
+	}

@@ -1,0 +1,1 @@
+function initiateInfoScroller(){void 0===infopagescroll?(infopagescroll=createScroller("infoscroller"),$j(window).orientationChange(initiateInfoScroller)):infopagescroll.refresh();destroyFeedScroller()}

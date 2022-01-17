@@ -1,0 +1,1 @@
+function() { return !!this.getHealthFn_ ? this.getHealthFn_() : -1; }

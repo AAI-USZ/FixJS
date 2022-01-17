@@ -1,0 +1,1 @@
+function(d,i) { return 'translate(' + (x(getX(d,i)) - x(.5)) + ',0)'; }

@@ -1,0 +1,10 @@
+function(data) {
+            if (confirm(data)) {
+                $.post(adminPanel_extension_path + "processor.php", {axAction: "deleteUser", axValue: 1, id: id }, 
+                    function() { 
+                      adminPanel_extension_refreshSubtab('users');
+                      adminPanel_extension_refreshSubtab('groups');
+                      hook_users_changed(); }
+                );
+            }
+        }

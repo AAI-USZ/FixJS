@@ -1,0 +1,682 @@
+function(){
+
+Slick.uidOf(window);
+Slick.uidOf(document);
+
+Document.implement({
+
+	newTextNode: function(text){
+		return this.createTextNode(text);
+	},
+
+	getDocument: function(){
+		return this;
+	},
+
+	getWindow: function(){
+		return this.window;
+	},
+
+	id: (function(){
+
+		var types = {
+
+			string: function(id, nocash, doc){
+				id = Slick.find(doc, '#' + id.replace(/(\W)/g, '\\$1'));
+				return (id) ? types.element(id, nocash) : null;
+			},
+
+			element: function(el, nocash){
+				Slick.uidOf(el);
+				if (!nocash && !el.$family && !(/^(?:object|embed)$/i).test(el.tagName)){
+					el._fireEvent = el.fireEvent;
+					Object.append(el, Element.Prototype);
+				}
+				return el;
+			},
+
+			object: function(obj, nocash, doc){
+				if (obj.toElement) return types.element(obj.toElement(doc), nocash);
+				return null;
+			}
+
+		};
+
+		types.textnode = types.whitespace = types.window = types.document = function(zero){
+			return zero;
+		};
+
+		return function(el, nocash, doc){
+			if (el && el.$family && el.uniqueNumber) return el;
+			var type = typeOf(el);
+			return (types[type]) ? types[type](el, nocash, doc || document) : null;
+		};
+
+	})()
+
+});
+
+if (window.$ == null) Window.implement('$', function(el, nc){
+	return document.id(el, nc, this.document);
+});
+
+Window.implement({
+
+	getDocument: function(){
+		return this.document;
+	},
+
+	getWindow: function(){
+		return this;
+	}
+
+});
+
+[Document, Element].invoke('implement', {
+
+	getElements: function(expression){
+		return Slick.search(this, expression, new Elements);
+	},
+
+	getElement: function(expression){
+		return document.id(Slick.find(this, expression));
+	}
+
+});
+
+var contains = {contains: function(element){
+	return Slick.contains(this, element);
+}};
+
+if (!document.contains) Document.implement(contains);
+if (!document.createElement('div').contains) Element.implement(contains);
+
+
+
+// tree walking
+
+var injectCombinator = function(expression, combinator){
+	if (!expression) return combinator;
+
+	expression = Object.clone(Slick.parse(expression));
+
+	var expressions = expression.expressions;
+	for (var i = expressions.length; i--;)
+		expressions[i][0].combinator = combinator;
+
+	return expression;
+};
+
+Object.forEach({
+	getNext: '~',
+	getPrevious: '!~',
+	getParent: '!'
+}, function(combinator, method){
+	Element.implement(method, function(expression){
+		return this.getElement(injectCombinator(expression, combinator));
+	});
+});
+
+Object.forEach({
+	getAllNext: '~',
+	getAllPrevious: '!~',
+	getSiblings: '~~',
+	getChildren: '>',
+	getParents: '!'
+}, function(combinator, method){
+	Element.implement(method, function(expression){
+		return this.getElements(injectCombinator(expression, combinator));
+	});
+});
+
+Element.implement({
+
+	getFirst: function(expression){
+		return document.id(Slick.search(this, injectCombinator(expression, '>'))[0]);
+	},
+
+	getLast: function(expression){
+		return document.id(Slick.search(this, injectCombinator(expression, '>')).getLast());
+	},
+
+	getWindow: function(){
+		return this.ownerDocument.window;
+	},
+
+	getDocument: function(){
+		return this.ownerDocument;
+	},
+
+	getElementById: function(id){
+		return document.id(Slick.find(this, '#' + ('' + id).replace(/(\W)/g, '\\$1')));
+	},
+
+	match: function(expression){
+		return !expression || Slick.match(this, expression);
+	}
+
+});
+
+
+
+if (window.$$ == null) Window.implement('$$', function(selector){
+	if (arguments.length == 1){
+		if (typeof selector == 'string') return Slick.search(this.document, selector, new Elements);
+		else if (Type.isEnumerable(selector)) return new Elements(selector);
+	}
+	return new Elements(arguments);
+});
+
+// Inserters
+
+var inserters = {
+
+	before: function(context, element){
+		var parent = element.parentNode;
+		if (parent) parent.insertBefore(context, element);
+	},
+
+	after: function(context, element){
+		var parent = element.parentNode;
+		if (parent) parent.insertBefore(context, element.nextSibling);
+	},
+
+	bottom: function(context, element){
+		element.appendChild(context);
+	},
+
+	top: function(context, element){
+		element.insertBefore(context, element.firstChild);
+	}
+
+};
+
+inserters.inside = inserters.bottom;
+
+
+
+// getProperty / setProperty
+
+var propertyGetters = {}, propertySetters = {};
+
+// properties
+
+var properties = {};
+Array.forEach([
+	'type', 'value', 'defaultValue', 'accessKey', 'cellPadding', 'cellSpacing', 'colSpan',
+	'frameBorder', 'rowSpan', 'tabIndex', 'useMap'
+], function(property){
+	properties[property.toLowerCase()] = property;
+});
+
+Object.append(properties, {
+	'html': 'innerHTML',
+	'text': (function(){
+		var temp = document.createElement('div');
+		return (temp.textContent == null) ? 'innerText': 'textContent';
+	})()
+});
+
+Object.forEach(properties, function(real, key){
+	propertySetters[key] = function(node, value){
+		node[real] = value;
+	};
+	propertyGetters[key] = function(node){
+		return node[real];
+	};
+});
+
+// Booleans
+
+var bools = [
+	'compact', 'nowrap', 'ismap', 'declare', 'noshade', 'checked',
+	'disabled', 'readOnly', 'multiple', 'selected', 'noresize',
+	'defer', 'defaultChecked', 'autofocus', 'controls', 'autoplay',
+	'loop'
+];
+
+var booleans = {};
+Array.forEach(bools, function(bool){
+	var lower = bool.toLowerCase();
+	booleans[lower] = bool;
+	propertySetters[lower] = function(node, value){
+		node[bool] = !!value;
+	};
+	propertyGetters[lower] = function(node){
+		return !!node[bool];
+	};
+});
+
+// Special cases
+
+Object.append(propertySetters, {
+
+	'class': function(node, value){
+		('className' in node) ? node.className = (value || '') : node.setAttribute('class', value);
+	},
+
+	'for': function(node, value){
+		('htmlFor' in node) ? node.htmlFor = value : node.setAttribute('for', value);
+	},
+
+	'style': function(node, value){
+		(node.style) ? node.style.cssText = value : node.setAttribute('style', value);
+	},
+
+	'value': function(node, value){
+		node.value = value || '';
+	}
+
+});
+
+propertyGetters['class'] = function(node){
+	return ('className' in node) ? node.className || null : node.getAttribute('class');
+};
+
+/* <webkit> */
+var el = document.createElement('button');
+// IE sets type as readonly and throws
+try { el.type = 'button'; } catch(e){}
+if (el.type != 'button') propertySetters.type = function(node, value){
+	node.setAttribute('type', value);
+};
+/* </webkit> */
+
+/* getProperty, setProperty */
+
+Element.implement({
+
+	setProperty: function(name, value){
+		var setter = propertySetters[name.toLowerCase()];
+		if (setter){
+			setter(this, value);
+		} else {
+			if (value == null) this.removeAttribute(name);
+			else this.setAttribute(name, value);
+		}
+		return this;
+	},
+
+	setProperties: function(attributes){
+		for (var attribute in attributes) this.setProperty(attribute, attributes[attribute]);
+		return this;
+	},
+
+	getProperty: function(name){
+		var getter = propertyGetters[name.toLowerCase()];
+		if (getter) return getter(this);
+		var result = Slick.getAttribute(this, name);
+		return (!result && !Slick.hasAttribute(this, name)) ? null : result;
+	},
+
+	getProperties: function(){
+		var args = Array.from(arguments);
+		return args.map(this.getProperty, this).associate(args);
+	},
+
+	removeProperty: function(name){
+		return this.setProperty(name, null);
+	},
+
+	removeProperties: function(){
+		Array.each(arguments, this.removeProperty, this);
+		return this;
+	},
+
+	set: function(prop, value){
+		var property = Element.Properties[prop];
+		(property && property.set) ? property.set.call(this, value) : this.setProperty(prop, value);
+	}.overloadSetter(),
+
+	get: function(prop){
+		var property = Element.Properties[prop];
+		return (property && property.get) ? property.get.apply(this) : this.getProperty(prop);
+	}.overloadGetter(),
+
+	erase: function(prop){
+		var property = Element.Properties[prop];
+		(property && property.erase) ? property.erase.apply(this) : this.removeProperty(prop);
+		return this;
+	},
+
+	hasClass: function(className){
+		return this.className.clean().contains(className, ' ');
+	},
+
+	addClass: function(className){
+		if (!this.hasClass(className)) this.className = (this.className + ' ' + className).clean();
+		return this;
+	},
+
+	removeClass: function(className){
+		this.className = this.className.replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)'), '$1');
+		return this;
+	},
+
+	toggleClass: function(className, force){
+		if (force == null) force = !this.hasClass(className);
+		return (force) ? this.addClass(className) : this.removeClass(className);
+	},
+
+	adopt: function(){
+		var parent = this, fragment, elements = Array.flatten(arguments), length = elements.length;
+		if (length > 1) parent = fragment = document.createDocumentFragment();
+
+		for (var i = 0; i < length; i++){
+			var element = document.id(elements[i], true);
+			if (element) parent.appendChild(element);
+		}
+
+		if (fragment) this.appendChild(fragment);
+
+		return this;
+	},
+
+	appendText: function(text, where){
+		return this.grab(this.getDocument().newTextNode(text), where);
+	},
+
+	grab: function(el, where){
+		inserters[where || 'bottom'](document.id(el, true), this);
+		return this;
+	},
+
+	inject: function(el, where){
+		inserters[where || 'bottom'](this, document.id(el, true));
+		return this;
+	},
+
+	replaces: function(el){
+		el = document.id(el, true);
+		el.parentNode.replaceChild(this, el);
+		return this;
+	},
+
+	wraps: function(el, where){
+		el = document.id(el, true);
+		return this.replaces(el).grab(el, where);
+	},
+
+	getSelected: function(){
+		this.selectedIndex; // Safari 3.2.1
+		return new Elements(Array.from(this.options).filter(function(option){
+			return option.selected;
+		}));
+	},
+
+	toQueryString: function(){
+		var queryString = [];
+		this.getElements('input, select, textarea').each(function(el){
+			var type = el.type;
+			if (!el.name || el.disabled || type == 'submit' || type == 'reset' || type == 'file' || type == 'image') return;
+
+			var value = (el.get('tag') == 'select') ? el.getSelected().map(function(opt){
+				// IE
+				return document.id(opt).get('value');
+			}) : ((type == 'radio' || type == 'checkbox') && !el.checked) ? null : el.get('value');
+
+			Array.from(value).each(function(val){
+				if (typeof val != 'undefined') queryString.push(encodeURIComponent(el.name) + '=' + encodeURIComponent(val));
+			});
+		});
+		return queryString.join('&');
+	}
+
+});
+
+var collected = {}, storage = {};
+
+var get = function(uid){
+	return (storage[uid] || (storage[uid] = {}));
+};
+
+var clean = function(item){
+	var uid = item.uid;
+	if (item.removeEvents) item.removeEvents();
+	if (item.clearAttributes) item.clearAttributes();
+	if (uid != null){
+		delete collected[uid];
+		delete storage[uid];
+	}
+	return item;
+};
+
+var formProps = {input: 'checked', option: 'selected', textarea: 'value'};
+
+Element.implement({
+
+	destroy: function(){
+		var children = clean(this).getElementsByTagName('*');
+		Array.each(children, clean);
+		Element.dispose(this);
+		return null;
+	},
+
+	empty: function(){
+		Array.from(this.childNodes).each(Element.dispose);
+		return this;
+	},
+
+	dispose: function(){
+		return (this.parentNode) ? this.parentNode.removeChild(this) : this;
+	},
+
+	clone: function(contents, keepid){
+		contents = contents !== false;
+		var clone = this.cloneNode(contents), ce = [clone], te = [this], i;
+
+		if (contents){
+			ce.append(Array.from(clone.getElementsByTagName('*')));
+			te.append(Array.from(this.getElementsByTagName('*')));
+		}
+
+		for (i = ce.length; i--;){
+			var node = ce[i], element = te[i];
+			if (!keepid) node.removeAttribute('id');
+			/*<ltIE9>*/
+			if (node.clearAttributes){
+				node.clearAttributes();
+				node.mergeAttributes(element);
+				node.removeAttribute('uid');
+				if (node.options){
+					var no = node.options, eo = element.options;
+					for (var j = no.length; j--;) no[j].selected = eo[j].selected;
+				}
+			}
+			/*</ltIE9>*/
+			var prop = formProps[element.tagName.toLowerCase()];
+			if (prop && element[prop]) node[prop] = element[prop];
+		}
+
+		/*<ltIE9>*/
+		if (Browser.ie){
+			var co = clone.getElementsByTagName('object'), to = this.getElementsByTagName('object');
+			for (i = co.length; i--;) co[i].outerHTML = to[i].outerHTML;
+		}
+		/*</ltIE9>*/
+		return document.id(clone);
+	}
+
+});
+
+[Element, Window, Document].invoke('implement', {
+
+	addListener: function(type, fn){
+		if (type == 'unload'){
+			var old = fn, self = this;
+			fn = function(){
+				self.removeListener('unload', fn);
+				old();
+			};
+		} else {
+			collected[Slick.uidOf(this)] = this;
+		}
+		if (this.addEventListener) this.addEventListener(type, fn, !!arguments[2]);
+		else this.attachEvent('on' + type, fn);
+		return this;
+	},
+
+	removeListener: function(type, fn){
+		if (this.removeEventListener) this.removeEventListener(type, fn, !!arguments[2]);
+		else this.detachEvent('on' + type, fn);
+		return this;
+	},
+
+	retrieve: function(property, dflt){
+		var storage = get(Slick.uidOf(this)), prop = storage[property];
+		if (dflt != null && prop == null) prop = storage[property] = dflt;
+		return prop != null ? prop : null;
+	},
+
+	store: function(property, value){
+		var storage = get(Slick.uidOf(this));
+		storage[property] = value;
+		return this;
+	},
+
+	eliminate: function(property){
+		var storage = get(Slick.uidOf(this));
+		delete storage[property];
+		return this;
+	}
+
+});
+
+/*<ltIE9>*/
+if (window.attachEvent && !window.addEventListener) window.addListener('unload', function(){
+	Object.each(collected, clean);
+	if (window.CollectGarbage) CollectGarbage();
+});
+/*</ltIE9>*/
+
+Element.Properties = {};
+
+
+
+Element.Properties.style = {
+
+	set: function(style){
+		this.style.cssText = style;
+	},
+
+	get: function(){
+		return this.style.cssText;
+	},
+
+	erase: function(){
+		this.style.cssText = '';
+	}
+
+};
+
+Element.Properties.tag = {
+
+	get: function(){
+		return this.tagName.toLowerCase();
+	}
+
+};
+
+/*<!webkit>*/
+Element.Properties.html = (function(){
+
+	var tableTest = Function.attempt(function(){
+		var table = document.createElement('table');
+		table.innerHTML = '<tr><td></td></tr>';
+	});
+
+	var wrapper = document.createElement('div');
+
+	var translations = {
+		table: [1, '<table>', '</table>'],
+		select: [1, '<select>', '</select>'],
+		tbody: [2, '<table><tbody>', '</tbody></table>'],
+		tr: [3, '<table><tbody><tr>', '</tr></tbody></table>']
+	};
+	translations.thead = translations.tfoot = translations.tbody;
+
+	/*<ltIE9>*/
+	// technique by jdbarlett - http://jdbartlett.com/innershiv/
+	wrapper.innerHTML = '<nav></nav>';
+	var HTML5Test = wrapper.childNodes.length == 1;
+	if (!HTML5Test){
+		var tags = 'abbr article aside audio canvas datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video'.split(' '),
+			fragment = document.createDocumentFragment(), l = tags.length;
+		while (l--) fragment.createElement(tags[l]);
+		fragment.appendChild(wrapper);
+	}
+	/*</ltIE9>*/
+
+	var html = {
+		set: function(html){
+			if (typeOf(html) == 'array') html = html.join('');
+
+			var wrap = (!tableTest && translations[this.get('tag')]);
+			/*<ltIE9>*/
+			if (!wrap && !HTML5Test) wrap = [0, '', ''];
+			/*</ltIE9>*/
+			if (wrap){
+				var first = wrapper;
+				first.innerHTML = wrap[1] + html + wrap[2];
+				for (var i = wrap[0]; i--;) first = first.firstChild;
+				this.empty().adopt(first.childNodes);
+			} else {
+				this.innerHTML = html;
+			}
+		}
+	};
+
+	html.erase = html.set;
+
+	return html;
+})();
+/*</!webkit>*/
+
+/*<ltIE9>*/
+var testForm = document.createElement('form');
+testForm.innerHTML = '<select><option>s</option></select>';
+
+if (testForm.firstChild.value != 's') Element.Properties.value = {
+
+	set: function(value){
+		var tag = this.get('tag');
+		if (tag != 'select') return this.setProperty('value', value);
+		var options = this.getElements('option');
+		for (var i = 0; i < options.length; i++){
+			var option = options[i],
+				attr = option.getAttributeNode('value'),
+				optionValue = (attr && attr.specified) ? option.value : option.get('text');
+			if (optionValue == value) return option.selected = true;
+		}
+	},
+
+	get: function(){
+		var option = this, tag = option.get('tag');
+
+		if (tag != 'select' && tag != 'option') return this.getProperty('value');
+
+		if (tag == 'select' && !(option = option.getSelected()[0])) return '';
+
+		var attr = option.getAttributeNode('value');
+		return (attr && attr.specified) ? option.value : option.get('text');
+	}
+
+};
+/*</ltIE9>*/
+
+/*<IE>*/
+var el = document.createElement('div');
+if (el.getAttributeNode('id')) Element.Properties.id = {
+	set: function(id){
+		this.id = this.getAttributeNode('id').value = id;
+	},
+	get: function(){
+		return this.id || null;
+	},
+	erase: function(){
+		this.id = this.getAttributeNode('id').value = '';
+	}
+};
+/*</IE>*/
+
+}

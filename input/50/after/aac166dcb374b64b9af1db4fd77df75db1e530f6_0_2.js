@@ -1,0 +1,1 @@
+function(datum) { things_view.collection.add(datum); }

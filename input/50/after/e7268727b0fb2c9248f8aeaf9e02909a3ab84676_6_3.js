@@ -1,0 +1,1 @@
+function(plugin) {return plugin ? "Carica " + plugin : "Carica plugin";}

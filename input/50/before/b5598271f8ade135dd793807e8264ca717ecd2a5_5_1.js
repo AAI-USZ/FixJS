@@ -1,0 +1,1 @@
+function () { return rules !== null; }

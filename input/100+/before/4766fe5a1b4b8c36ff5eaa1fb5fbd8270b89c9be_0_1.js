@@ -1,0 +1,172 @@
+function (require, exports, module) {
+    "use strict";
+
+    // Load dependent modules
+    var DocumentManager     = require("document/DocumentManager"),
+        CommandManager      = require("command/CommandManager"),
+        EditorManager       = require("editor/EditorManager"),
+        PerfUtils           = require("utils/PerfUtils"),
+        Commands            = require("command/Commands");
+
+    /** 
+     * Tracks whether a "currentDocumentChange" notification occured due to a call to 
+     * openAndSelectDocument.
+     * @see FileviewController.openAndSelectDocument
+     * @private 
+     */
+    var _curDocChangedDueToMe = false;
+    var WORKING_SET_VIEW = "WorkingSetView";
+    var PROJECT_MANAGER = "ProjectManager";
+
+    /**
+     * @private
+     * @see FileViewController.getFileSelectionFocus()
+     */
+    var _fileSelectionFocus = PROJECT_MANAGER;
+    
+    /** 
+     * Change the doc selection to the working set when ever a new file is added to the working set
+     */
+    $(DocumentManager).on("workingSetAdd", function (event, addedFile) {
+        _fileSelectionFocus = WORKING_SET_VIEW;
+        $(exports).triggerHandler("documentSelectionFocusChange");
+    });
+
+    /** 
+      * Update the file selection focus when ever the current document changes
+      */
+    $(DocumentManager).on("currentDocumentChange", function (event) {
+        var perfTimerName;
+        // The the cause of the doc change was not openAndSelectDocument, so pick the best fileSelectionFocus
+        if (!_curDocChangedDueToMe) {
+            var curDoc = DocumentManager.getCurrentDocument();
+            perfTimerName = PerfUtils.markStart("FileViewController._onCurrentDocumentChange():\t" + (!curDoc || curDoc.file.fullPath));
+            if (curDoc && DocumentManager.findInWorkingSet(curDoc.file.fullPath) !== -1) {
+                _fileSelectionFocus = WORKING_SET_VIEW;
+            } else {
+                _fileSelectionFocus = PROJECT_MANAGER;
+            }
+        }
+
+        $(exports).triggerHandler("documentSelectionFocusChange");
+
+        if (!_curDocChangedDueToMe) {
+            PerfUtils.addMeasurement(perfTimerName);
+        }
+    });
+    
+    /** 
+     * @private
+     * @returns {$.Promise}
+     */
+    function _selectCurrentDocument() {
+        // If fullPath corresonds to the current doc being viewed then opening the file won't
+        // trigger a currentDocumentChanged event, so we need to trigger a documentSelectionFocusChange 
+        // in this case to signify the selection focus has changed even though the current document has not.
+        $(exports).triggerHandler("documentSelectionFocusChange");
+        
+        // Ensure the editor has focus even though we didn't open a new file.
+        EditorManager.focusEditor();
+    }
+
+    /**
+     * Modifies the selection focus in the project side bar. A file can either be selected
+     * in the working set (the open files) or in the file tree, but not both.
+     * @param {String} fileSelectionFocus - either PROJECT_MANAGER or WORKING_SET_VIEW
+     */
+    function setFileSelectionFocus(fileSelectionFocus) {
+        if (fileSelectionFocus !== PROJECT_MANAGER && fileSelectionFocus !== WORKING_SET_VIEW) {
+            throw new Error("Bad parameter passed to FileViewController.setFileSelectionFocus");
+        }
+
+        _fileSelectionFocus = fileSelectionFocus;
+        $(exports).triggerHandler("documentSelectionFocusChange");
+    }
+
+    /** 
+     * Opens a document if it's not open and selects the file in the UI corresponding to
+     * fileSelectionFocus
+     * @param {!fullPath}
+     * @param {string} - must be either WORKING_SET_VIEW or PROJECT_MANAGER
+     * @returns {$.Promise}
+     */
+    function openAndSelectDocument(fullPath, fileSelectionFocus) {
+        var result;
+
+        if (fileSelectionFocus !== PROJECT_MANAGER && fileSelectionFocus !== WORKING_SET_VIEW) {
+            throw new Error("Bad parameter passed to FileViewController.openAndSelectDocument");
+        }
+
+        // Opening files are asynchronous and we want to know when this function caused a file
+        // to open so that _fileSelectionFocus is set appropriatly. _curDocChangedDueToMe is set here
+        // and checked in the currentDocumentChange handler
+        _curDocChangedDueToMe = true;
+
+        _fileSelectionFocus = fileSelectionFocus;
+
+        // If fullPath corresonds to the current doc being viewed then opening the file won't
+        // trigger a currentDocumentChanged event, so we need to trigger a documentSelectionFocusChange 
+        // in this case to signify the selection focus has changed even though the current document has not.
+        var curDoc = DocumentManager.getCurrentDocument();
+        if (curDoc && curDoc.file.fullPath === fullPath) {
+            _selectCurrentDocument();
+            result = (new $.Deferred()).resolve().promise();
+        } else {
+            result = CommandManager.execute(Commands.FILE_OPEN, {fullPath: fullPath});
+        }
+        
+        // clear after notification is done
+        result.always(function () {
+            _curDocChangedDueToMe = false;
+        });
+        
+        return result;
+    }
+
+    /** 
+     * Opens the specified document if it's not already open, adds it to the working set,
+     * and selects it in the WorkingSetView
+     * @param {!fullPath}
+     * @param {?String} selectIn - specify either WORING_SET_VIEW or PROJECT_MANAGER.
+     *      Default is WORING_SET_VIEW.
+     * @return {!$.Promise}
+     */
+    function addToWorkingSetAndSelect(fullPath, selectIn) {
+        var result = new $.Deferred(),
+            promise = CommandManager.execute(Commands.FILE_ADD_TO_WORKING_SET, {fullPath: fullPath});
+
+        // This properly handles sending the right nofications in cases where the document
+        // is already the current one. In that case we will want to notify with
+        // documentSelectionFocusChange so the views change their selection
+        promise.done(function (doc) {
+            // FILE_ADD_TO_WORKING_SET command sets the current document. Update the 
+            // selection focus and trigger documentSelectionFocusChange event
+            _fileSelectionFocus = selectIn ? selectIn : WORKING_SET_VIEW;
+            _selectCurrentDocument();
+            
+            result.resolve(doc);
+        }).fail(function (err) {
+            result.reject(err);
+        });
+
+        return result.promise();
+    }
+
+    /**
+     * returns either WORKING_SET_VIEW or PROJECT_MANAGER
+     * @return {!String}
+     */
+    function getFileSelectionFocus() {
+        return _fileSelectionFocus;
+    }
+
+
+
+    // Define public API
+    exports.getFileSelectionFocus = getFileSelectionFocus;
+    exports.openAndSelectDocument = openAndSelectDocument;
+    exports.addToWorkingSetAndSelect = addToWorkingSetAndSelect;
+    exports.setFileSelectionFocus = setFileSelectionFocus;
+    exports.WORKING_SET_VIEW = WORKING_SET_VIEW;
+    exports.PROJECT_MANAGER = PROJECT_MANAGER;
+}

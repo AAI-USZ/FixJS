@@ -1,0 +1,1 @@
+function(){return this.content.get('english').length > 0}

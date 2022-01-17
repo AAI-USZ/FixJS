@@ -1,0 +1,1 @@
+function(emp){return emp.id;}

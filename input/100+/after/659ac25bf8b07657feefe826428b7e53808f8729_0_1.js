@@ -1,0 +1,11 @@
+function(){
+					Notification.sync().success(function(){
+						CourseMember.sync().success(function(){
+							UserNotification.sync().success(function(){
+								if(callback){
+									callback();
+								}
+							});
+						});
+					});
+				}

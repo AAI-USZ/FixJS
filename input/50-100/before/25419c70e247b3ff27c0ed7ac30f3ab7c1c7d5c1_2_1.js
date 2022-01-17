@@ -1,0 +1,1 @@
+function(instance) { return (-1 === responseNames.indexOf(instance.response[questionName])); }

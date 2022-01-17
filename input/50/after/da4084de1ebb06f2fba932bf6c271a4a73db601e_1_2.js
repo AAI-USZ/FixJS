@@ -1,0 +1,1 @@
+function(offset, line, column, depth, s) { return { indent: depth, item: s, num: line }; }

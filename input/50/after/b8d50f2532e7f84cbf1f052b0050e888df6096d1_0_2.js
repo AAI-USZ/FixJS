@@ -1,0 +1,1 @@
+function() { loadVideo( Number($(this).attr('rel')) ); }

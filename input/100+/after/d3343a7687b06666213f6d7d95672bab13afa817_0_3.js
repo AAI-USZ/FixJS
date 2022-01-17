@@ -1,0 +1,1 @@
+function (a,b) {return a.pos[2] - b.pos[2];}

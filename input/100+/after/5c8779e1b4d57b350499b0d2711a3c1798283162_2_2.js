@@ -1,0 +1,69 @@
+function() {
+      var choice, _i, _j, _len, _len1, _ref1, _ref2,
+        _this = this;
+      this.updateProgress();
+      if (this.sequence.length) {
+        this.question = this.sequence.shift();
+        switch (this.question.type) {
+          case 's2w':
+            this.questionArea.html("<img class='question' src='" + this.options.rootPrefix + this.question.question + "' style='height:" + this.options.symbolSize + "px;padding:1em;'/>");
+            this.answerArea.html('');
+            _ref1 = this._shuffle(this.question.choices);
+            for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+              choice = _ref1[_i];
+              this.answerArea.append("<button value='" + choice + "' width='" + this.options.symbolSize + " height='" + this.options.symbolSize + "' style='margin:1ex;'>" + choice + "</button>");
+            }
+            this.currentResultContainer = this.results.symbol2word;
+            break;
+          case 'w2s':
+            this.questionArea.html("<h1 style='padding: 2ex;'>" + this.question.question + "</h1>");
+            jQuery('h1', this.questionArea).css({
+              "text-align": "center",
+              "font-size": "140%"
+            });
+            this.answerArea.html('');
+            _ref2 = this._shuffle(this.question.choices);
+            for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+              choice = _ref2[_j];
+              this.answerArea.append("<button value='" + choice + "' width='" + this.options.symbolSize + " height='" + this.options.symbolSize + "' style='margin: 1ex;'>\n  <img class='choice' src='" + this.options.rootPrefix + choice + "' style='height:" + this.options.symbolSize + "px;'/>\n</button>");
+            }
+            this.currentResultContainer = this.results.word2symbol;
+        }
+        this.buttonsDisabled = false;
+        this.playArea.find('button').button().css({
+          minWidth: this.options.symbolSize,
+          minHeight: this.options.symbolSize
+        }).click(function(e) {
+          var attempt;
+          if (!_this.buttonsDisabled) {
+            _this.buttonsDisabled = true;
+            attempt = jQuery(e.currentTarget).attr('value');
+            if (attempt === _this.question.correct) {
+              _this.currentResultContainer.times.add(_this.timer.end());
+              _this.currentResultContainer.correct++;
+              jQuery(e.currentTarget).css({
+                'border': 'lightgreen 5px solid'
+              });
+              return _this.message('Korrekt!', function() {
+                _this.buttonsDisabled = false;
+                return _this._renderNext();
+              });
+            } else {
+              _this.currentResultContainer.wrong++;
+              jQuery(e.currentTarget).css({
+                'border': 'red 5px solid'
+              });
+              return _this.message("Leider falsch.. Versuch's noch einmal!", function() {
+                _this.buttonsDisabled = false;
+                return jQuery(e.currentTarget).css({
+                  'border': ''
+                });
+              });
+            }
+          }
+        });
+        return this.timer.start();
+      } else {
+        return this.finish();
+      }
+    }

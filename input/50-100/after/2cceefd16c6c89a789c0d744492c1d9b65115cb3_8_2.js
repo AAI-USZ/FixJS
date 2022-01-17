@@ -1,0 +1,6 @@
+function () {
+            req.params.ext = "app";
+            req.params.method = "NotAMethod";
+            bridge.exec(req, succ, fail, args);
+            expect(fail).toHaveBeenCalledWith(-1, jasmine.any(String), 404);
+        }

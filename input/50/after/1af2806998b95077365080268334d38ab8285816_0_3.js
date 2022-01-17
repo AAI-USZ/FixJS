@@ -1,0 +1,1 @@
+function(t){return this.cue.endTime = t;}

@@ -1,0 +1,1 @@
+function(freq) 	{ _frequency = freq; }

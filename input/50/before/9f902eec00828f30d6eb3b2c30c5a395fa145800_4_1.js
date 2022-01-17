@@ -1,0 +1,1 @@
+function(d) { return x((d.getTimestamp()-min)/1000); }

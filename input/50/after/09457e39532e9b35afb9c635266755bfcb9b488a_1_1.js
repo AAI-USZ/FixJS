@@ -1,0 +1,1 @@
+function(cm) { cm.setCursor(moveToWord(cm, word, -1, 1, "start"));}

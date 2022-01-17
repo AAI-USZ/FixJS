@@ -1,0 +1,1 @@
+function measureText(text) { return textCtx.measureText(text); }

@@ -1,0 +1,1 @@
+function () { location.hash = $.route.default; }

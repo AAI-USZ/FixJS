@@ -1,0 +1,2 @@
+function(a){this.decoration_tokens=[];this.decoration_tokens=this.decoration_tokens.concat(Tr8n.SDK.Tokens.DecorationToken.parse(a,{}))},substituteTokens:function(a,b,c){this.registerDataTokens(a);if(!this.data_tokens)return this.decorateLabel(a,c);for(var d=0;d<this.data_tokens.length;d++)a=this.data_tokens[d].substitute(a,b||{});this.registerDecorationTokens(a);if(!this.decoration_tokens)return a;
+for(d=0;d<this.decoration_tokens.length;d++)a=this.decoration_tokens[d].substitute(a,b||{});return this.decorateLabel(a,c)}

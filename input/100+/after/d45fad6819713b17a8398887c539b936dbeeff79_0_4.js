@@ -1,0 +1,3 @@
+function(){
+        expect(closeSpy).toHaveBeenCalled();
+      }

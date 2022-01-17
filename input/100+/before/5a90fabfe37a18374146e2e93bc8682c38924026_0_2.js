@@ -1,0 +1,3 @@
+function(options){_.bindAll(this,'fail','uploading','done');options=options||{};this.url=options.url||'/upload';this.data=options.data||{};this._name=options.name||'files[]';this._multiple=options.multiple||true;this._enabled=options.enabled||true;return this;},tagName:'input',events:{'change':'change'},render:function(){this.$el.attr('type','file').attr('name',this._name);if(this._multiple){this.$el.attr('multiple',true);}
+if(!this._enabled){this.$el.attr('disabled','disabled');}
+this.$input=this.$el;return this;}

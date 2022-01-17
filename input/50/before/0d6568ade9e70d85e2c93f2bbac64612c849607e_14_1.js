@@ -1,0 +1,1 @@
+function () { return savedText !== null; }

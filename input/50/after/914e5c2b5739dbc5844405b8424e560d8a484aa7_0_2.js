@@ -1,0 +1,3 @@
+function handlePaste() {
+      popText(pasteCallback);
+    }

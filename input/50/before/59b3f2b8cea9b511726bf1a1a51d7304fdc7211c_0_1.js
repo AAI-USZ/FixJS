@@ -1,0 +1,1 @@
+function () {Uize.Build.Util.runUnitTests ('Uize.Test.Uize.Services.FileSystem')}

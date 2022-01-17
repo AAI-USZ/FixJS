@@ -1,0 +1,3 @@
+function(self){
+      self.remove();
+    }

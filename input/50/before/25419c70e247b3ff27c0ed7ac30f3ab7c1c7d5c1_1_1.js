@@ -1,0 +1,1 @@
+function fixlat(n) { return (n < 0 ? 90 - n : n); }

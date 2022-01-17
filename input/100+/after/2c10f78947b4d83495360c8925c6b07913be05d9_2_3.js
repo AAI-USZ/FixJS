@@ -1,0 +1,1 @@
+function(a,b){b&&(a=a.slice(0),a.unshift(a[a.length-1]),a.push(a[1]),a.push(a[2]));for(var c=1;c<a.length-2;c++){var d=(new CAAT.CurvePath).setColor("#000").setParent(this),e=(new CAAT.CatmullRom).setCurve(a[c-1],a[c],a[c+1],a[c+2]);d.curve=e;this.pathSegments.push(d)}return this},addSegment:function(a){a.setParent(this);this.pathSegments.push(a);return this}

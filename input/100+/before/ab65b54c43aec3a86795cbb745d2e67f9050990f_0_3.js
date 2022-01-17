@@ -1,0 +1,5 @@
+function(){this.page_layout=new wn.PageLayout({parent:this.wrapper,main_width:this.meta.in_dialog?'100%':'75%',sidebar_width:this.meta.in_dialog?'0%':'25%'})
+this.meta.section_style='Simple';this.layout=new Layout(this.page_layout.body,'100%');if(this.meta.in_dialog){$(this.page_layout.wrapper).removeClass('layout-wrapper-background');$(this.page_layout.main).removeClass('layout-main-section');$(this.page_layout.sidebar_area).toggle(false);}else{this.setup_sidebar();}
+this.setup_footer();if(!(this.meta.istable||user=='Guest'||this.meta.in_dialog))
+this.frm_head=new _f.FrmHeader(this.page_layout.head,this);if(this.meta.colour)
+this.layout.wrapper.style.backgroundColor='#'+this.meta.colour.split(':')[1];this.setup_fields_std();}

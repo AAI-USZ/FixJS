@@ -1,0 +1,13 @@
+function (info) {
+			return [ { ele: 'tr', 'class': info.$row.prop('class') }
+			        ,    [ { ele: 'td', 'class': 'imageRow', colspan: info.cols }
+				         ,    [ INNERCONTEXT.UI.$makeAddDropboxButton().hide()
+					          , { ele: 'img', 'class': 'throbberImage', src: INNERCONTEXT.CONSTANTS.THROBBER, hide: true }
+					          , { ele: 'div', 'class': 'loadingDiv', text: $.l('loading'), hide: true }
+					          , $.make('div', { 'class' : 'caaDiv' })
+					          ,    [ INNERCONTEXT.UI.$makeLoadDataButton().data('entity', info.MBID)
+						           ]
+					          ]
+				         ]
+			        ];
+	}

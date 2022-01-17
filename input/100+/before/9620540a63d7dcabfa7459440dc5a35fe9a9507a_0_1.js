@@ -1,0 +1,1 @@
+function(xhr, s) { if (!formdata && xhr.sendAsBinary) xhr.send = xhr.sendAsBinary; }

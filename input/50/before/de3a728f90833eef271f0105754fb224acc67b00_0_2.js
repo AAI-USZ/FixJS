@@ -1,0 +1,1 @@
+function (index) {return index % 2 == 0;}

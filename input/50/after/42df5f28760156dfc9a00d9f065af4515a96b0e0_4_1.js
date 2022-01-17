@@ -1,0 +1,3 @@
+function(err) {
+    throw err;
+  }

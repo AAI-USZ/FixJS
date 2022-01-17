@@ -1,0 +1,3 @@
+function contactsResize(evt) {
+  sizeScrollableToContent();
+}

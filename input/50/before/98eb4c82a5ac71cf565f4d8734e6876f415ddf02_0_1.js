@@ -1,0 +1,3 @@
+function () {
+        $('#msg').append('foo');
+    }

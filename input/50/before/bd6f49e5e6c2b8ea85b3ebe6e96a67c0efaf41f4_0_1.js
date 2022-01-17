@@ -1,0 +1,3 @@
+function() { 
+      getAlerts(service, filter + fromDate, refresh);
+    }

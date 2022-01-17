@@ -1,0 +1,1 @@
+function(){CAAT.enableBox2DDebug=function(b,a,c){if(b){b=new Box2D.Dynamics.b2DebugDraw;try{b.m_sprite.graphics.clear=function(){}}catch(d){}c.SetDebugDraw(b);b.SetSprite(a.ctx);b.SetDrawScale(CAAT.PMR);b.SetFillAlpha(0.5);b.SetLineThickness(1);b.SetFlags(3)}else c.SetDebugDraw(null)}}

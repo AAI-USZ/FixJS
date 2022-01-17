@@ -1,0 +1,5 @@
+function(){
+
+					$(this).trigger("selectIt");
+
+				}

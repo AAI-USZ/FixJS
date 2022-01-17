@@ -1,0 +1,3 @@
+function(buffer) {
+      self.resume();
+  }

@@ -1,0 +1,2 @@
+function(b,a,c){this.root=b;this.data=THREE.AnimationHandler.get(a);this.hierarchy=THREE.AnimationHandler.parse(b);this.currentTime=0;this.timeScale=0.001;this.isPlaying=false;this.loop=this.isPaused=true;this.JITCompile=c!==void 0?c:true;b=0;for(a=this.hierarchy.length;b<a;b++){var c=this.data.hierarchy[b].sids,d=this.hierarchy[b];if(this.data.hierarchy[b].keys.length&&c){for(var e=0;e<c.length;e++){var f=c[e],g=this.getNextKeyWith(f,b,0);g&&g.apply(f)}d.matrixAutoUpdate=
+false;this.data.hierarchy[b].node.updateMatrix();d.matrixWorldNeedsUpdate=true}}}

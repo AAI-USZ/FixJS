@@ -1,0 +1,1 @@
+function(channel, user, mask, match) { this.tryGuess(channel, user, mask, match[1]); }

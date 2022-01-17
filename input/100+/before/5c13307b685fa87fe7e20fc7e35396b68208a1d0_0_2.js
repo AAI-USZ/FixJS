@@ -1,0 +1,58 @@
+function handleLocationResponse(xml) {
+        var table = $(xml).find('Table1'),
+            data = {},
+            smd2002, smd2012, query;
+        table.children().each(function (i, node) {
+            data[node.tagName] = node.textContent;
+        });
+        if (data.FULLADDRESS) {
+            $('#info .canonical-address').text(data.FULLADDRESS);
+            $('#address-found').show();
+        }
+        else {
+            $('#address-not-found').show();
+        }
+        if (!data.SMD_2002 || !data.SMD_2002.match(/^(SMD )?[1-8][A-M][01]\d$/)) {
+            $.error("Can't find current SMD");
+            return;
+        }
+        smd2002 = data.SMD_2002.replace('SMD ', '');
+        $('#info .smd-2002').text(smd2002);
+        $('#current-smd').show();
+        if (!data.SMD_2012) {
+            smd2012 = smd2002;
+            $('#smd-not-available').show();
+        }
+        else {
+            smd2012 = data.SMD_2012.replace('SMD ', '');
+            if (smd2002 == smd2012) {
+                $('#smd-not-changing').show();
+            }
+            else {
+                $('#smd-changing').show();
+            }
+        }
+        $('#info .smd-2012').text(smd2012);
+        query = "SELECT * FROM swdata WHERE smd = '" + smd2002 + "'";
+        $.ajax({
+            url: 'https://api.scraperwiki.com/api/1.0/datastore/sqlite',
+            data: {
+                format: 'jsondict',
+                name: 'dc_ancs',
+                query: query
+            },
+            dataType: 'jsonp',
+            success: handleCommissionerResponse
+        });
+        query = "SELECT * FROM swdata WHERE smd = '" + smd2012 + "'";
+        $.ajax({
+            url: 'https://api.scraperwiki.com/api/1.0/datastore/sqlite',
+            data: {
+                format: 'jsondict',
+                name: 'dc_anc_candidates',
+                query: query
+            },
+            dataType: 'jsonp',
+            success: handleCandidatesResponse
+        });
+    }

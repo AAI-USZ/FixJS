@@ -1,0 +1,1 @@
+function () { chart.tooltip.tick(); }

@@ -1,0 +1,1 @@
+function(){return parseFloat(this.locY);}

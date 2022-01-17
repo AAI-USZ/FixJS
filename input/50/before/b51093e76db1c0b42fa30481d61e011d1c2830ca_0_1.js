@@ -1,0 +1,1 @@
+function addNew(e){ $('a[href*="add"] button').trigger("click"); }

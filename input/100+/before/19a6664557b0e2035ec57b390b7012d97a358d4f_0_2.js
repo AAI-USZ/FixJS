@@ -1,0 +1,40 @@
+function (observable) {
+        var i = 0,
+            rule, // the rule validator to execute
+            ctx, // the current Rule Context for the loop
+            ruleContexts = observable.rules(), //cache for iterator
+            len = ruleContexts.length; //cache for iterator  
+
+        for (; i < len; i++) {
+
+            //get the Rule Context info to give to the core Rule
+            ctx = ruleContexts[i];
+
+            //get the core Rule to use for validation
+            rule = ko.validation.rules[ctx.rule];
+
+            if (rule['async'] || ctx['async']) {
+                //run async validation
+                validateAsync(observable, rule, ctx);
+
+            } else {
+                //run normal sync validation
+                var originalRule = observable.errorRule;
+                
+                // if the original rule is valid then we should set the error to be null and observable to be valid
+    			var validated = validateSync(observable, rule, ctx);
+				if (rule == originalRule && validated) {
+					// the rule that had caused the error is valid
+					observable.error = null;
+					observable.__valid__(true);
+				}
+                else if (!validated) {
+                    return false; //break out of the loop
+                }
+            }
+        }
+        //finally if we got this far, make the observable valid again!
+        observable.error = null;
+        observable.__valid__(true);
+        return true;
+    }

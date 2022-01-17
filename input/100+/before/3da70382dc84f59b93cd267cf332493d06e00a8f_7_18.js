@@ -1,0 +1,34 @@
+function() {
+            var polygon = new Cesium.Polygon(undefined);
+            polygon.setPositions(ellipsoid.cartographicDegreesToCartesians([
+                new Cesium.Cartographic2(-80.0, 30.0),
+                new Cesium.Cartographic2(-70.0, 30.0),
+                new Cesium.Cartographic2(-70.0, 40.0),
+                new Cesium.Cartographic2(-80.0, 40.0)
+            ]));
+
+            polygon.material = new Cesium.Material({
+                'context' : scene.getContext(),
+                'template' : {
+                    'id' : 'GrassMaterial',
+                    'uniforms' : {
+                        'u_grassColor' : {
+                            'red' : 0.25,
+                            'green' : 0.4,
+                            'blue' : 0.1,
+                            'alpha' : 1.0
+                        },
+                        'u_dirtColor' : {
+                            'red' : 0.1,
+                            'green' : 0.1,
+                            'blue' : 0.1,
+                            'alpha' : 1.0
+                        },
+                        'u_patchiness' : 1.5
+                    },
+                    'sourcePath' : 'GrassMaterial'
+                }
+            });
+
+            primitives.add(polygon);
+        }

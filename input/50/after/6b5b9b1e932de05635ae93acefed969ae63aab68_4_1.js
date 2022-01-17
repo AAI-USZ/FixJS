@@ -1,0 +1,1 @@
+function(offset, line, column, s, n, c, p) { var key = (s ===">")? "partial" : s; return [key, n, c, p] }

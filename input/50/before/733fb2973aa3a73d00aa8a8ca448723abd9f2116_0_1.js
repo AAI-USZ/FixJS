@@ -1,0 +1,3 @@
+function() {
+            $('#' + divPrecarga).html(imgCarga)
+        }

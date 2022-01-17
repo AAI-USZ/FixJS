@@ -1,0 +1,20 @@
+function(newBuffer) {
+  // If resume() is called, we don't pass a buffer to write()
+  if (!newBuffer) {
+    return;
+  }
+
+  var oldBuffer = this._buffer;
+  var bytesRemaining = this._bytesRemaining();
+  var newLength = bytesRemaining + newBuffer.length;
+
+  var combinedBuffer = (this._offset > newLength)
+    ? oldBuffer.slice(0, newLength)
+    : new Buffer(newLength);
+
+  oldBuffer.copy(combinedBuffer, 0, this._offset);
+  newBuffer.copy(combinedBuffer, bytesRemaining);
+
+  this._buffer = combinedBuffer;
+  this._offset = 0;
+}

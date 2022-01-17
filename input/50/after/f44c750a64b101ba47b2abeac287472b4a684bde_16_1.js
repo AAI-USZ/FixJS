@@ -1,0 +1,1 @@
+function(msg){return /^handle/.test(msg);}

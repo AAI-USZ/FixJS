@@ -1,0 +1,1 @@
+function(b,c){if(c.type&&u[f].prop._supvalue.call(a[0],c.type))return d=c,!1})}return d};j.setError=function(a,b){b||(b="can't play sources");c(a).pause().data("mediaerror",b);e.warn("mediaelementError: "+b);setTimeout(function(){c(a).data("mediaerror")&&c(a).trigger("mediaerror")},1)};var y=function(){var a;return function(b,c,f){

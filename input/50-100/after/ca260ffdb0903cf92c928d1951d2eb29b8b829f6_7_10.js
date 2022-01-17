@@ -1,0 +1,1 @@
+function(data){joList.apply(this,arguments);}return tr;},getNode:function(index){var row=this.getRow(index);var col=this.getCol(index);return this.container.childNodes[row].childNodes[col];},getRow:function(index){if(typeof index==="undefined")

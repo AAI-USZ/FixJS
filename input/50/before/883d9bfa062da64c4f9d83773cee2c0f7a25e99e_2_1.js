@@ -1,0 +1,3 @@
+function() {
+        isCollectionLoaded = false;
+      }

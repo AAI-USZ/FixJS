@@ -1,0 +1,12 @@
+function(config) {
+	config = $.extend({
+		"liveUpdatesTimeout": 5,
+		"onData": function() {},
+		"skipInitialRequest": false,
+		"onError": function() {},
+		"submissionProxyURL": "apps.echoenabled.com/v2/esp/activity"
+	}, config);
+	config = this._wrapTransportEventHandlers(config);
+	this.requestType = "initial"; // initial | secondary
+	Echo.StreamServer.API.Request.parent.constructor.call(this, config);
+}

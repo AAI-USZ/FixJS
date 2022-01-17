@@ -1,0 +1,3 @@
+function(s) {
+		speed = s;
+	}

@@ -1,0 +1,21 @@
+function(err, bytesRead, buffer) {
+                            if(err) {
+                                traceIf(0, "Error reading chunk", self);
+                                self.server.emit("error", err);
+                                return;
+                            }
+                            if (bytesRead > 0) {
+                                self.totsize += bytesRead;
+                                if(self.pasvconn.readyState == "open") self.pasvconn.write(self.buffer.slice(0, bytesRead));
+                                readChunk();
+                            }
+                            else {
+                                logIf(0, "DATA file " + self.filename + " closed", self);
+                                self.pasvconn.end();
+                                wwenc(self.socket, "226 Closing data connection, sent " + self.totsize + " bytes\r\n");
+                                self.fs.close(fd, function (err) {
+                                    if (err) self.server.emit("error", err);
+                                    self.totsize = 0;
+                                });
+                            }
+                        }

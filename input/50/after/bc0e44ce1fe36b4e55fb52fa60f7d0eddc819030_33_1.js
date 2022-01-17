@@ -1,0 +1,3 @@
+function() {
+      dispatched = arguments;
+    }

@@ -1,0 +1,1 @@
+function() {var f; return function _concat$r(){return f || (f = (function(_list){return _$r()((function(){return "concat"}))((function(){var $m; return (function(){return $m || ($m = (_cons()((function(){return "["}))((function(){var $m; return (function(){return $m || ($m = (_tail()(_list)))})})())))})})())(_$s);}));}}

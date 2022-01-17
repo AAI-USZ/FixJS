@@ -1,0 +1,3 @@
+function() {
+        cards.push(deal());
+    }

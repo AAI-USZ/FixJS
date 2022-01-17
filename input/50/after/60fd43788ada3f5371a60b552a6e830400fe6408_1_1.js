@@ -1,0 +1,1 @@
+function(row, col) { return 0; }

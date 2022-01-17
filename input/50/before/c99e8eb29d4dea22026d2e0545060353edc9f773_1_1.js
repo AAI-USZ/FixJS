@@ -1,0 +1,3 @@
+function(uuid) {
+        enableExtension(uuid);
+    }

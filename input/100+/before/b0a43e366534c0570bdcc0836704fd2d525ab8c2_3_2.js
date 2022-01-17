@@ -1,0 +1,1 @@
+function () { return didOpen && !gotError; }

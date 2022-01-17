@@ -1,0 +1,1 @@
+function(offset, line, column, t, ws) { return t + ws; }

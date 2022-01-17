@@ -1,0 +1,1 @@
+function(a){return"TML:LABEL"==a.nodeName?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP},!1);a.nextNode();)(new Tr8n.SDK.TML.Label(a.currentNode)).translate();this.submitMissingTranslationKeys()}},translateTextNode:function(a,b,c){var d=Tr8n.Utils.sanitizeString(c);if(!Tr8n.Utils.isNumber(d)&&!(null==d||0==d.length)){

@@ -1,0 +1,9 @@
+function(result,callback){
+        clearTimeout(showLoader);
+        $("#ajaxLoading").hide();
+        if(result.LoggedOut){
+            window.location.replace(result.RedirectUrl);
+            return;
+        }
+        callback(result);
+    }

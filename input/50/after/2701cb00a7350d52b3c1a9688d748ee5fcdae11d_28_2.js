@@ -1,0 +1,1 @@
+function(){clearTimeout(j.hideTimer);j.hideTimer=setTimeout(j.hideList,9)}

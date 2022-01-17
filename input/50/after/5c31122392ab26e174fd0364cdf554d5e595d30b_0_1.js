@@ -1,0 +1,3 @@
+function(request) {
+  return true;
+}

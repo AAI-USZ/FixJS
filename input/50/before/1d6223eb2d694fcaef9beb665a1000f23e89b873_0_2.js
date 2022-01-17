@@ -1,0 +1,1 @@
+function(){ target.detachEvent('on' + type, o.scopeFixer); }

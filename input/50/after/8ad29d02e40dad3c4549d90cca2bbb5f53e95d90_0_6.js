@@ -1,0 +1,3 @@
+function () {
+      setPollingPaused(editor, false);
+    }

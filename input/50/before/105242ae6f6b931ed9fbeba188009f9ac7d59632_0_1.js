@@ -1,0 +1,3 @@
+function Pause() {
+	animation = false;
+}

@@ -1,0 +1,1 @@
+function(t,t1){var title=t+(t1?t1:'');_r.rb_con.appframe.$titlebar.find('.report-title').html(title);set_title(title);}

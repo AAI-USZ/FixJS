@@ -1,0 +1,1 @@
+function(s, n) { return Sizzle(s, n)[0]; }

@@ -1,0 +1,1 @@
+function(){b.appendTo("body").hide()})):b=d.content;if(d.autoSize)c=e('<div class="fancybox-tmp"></div>').appendTo(e("body")).append(b),d.width=c.outerWidth(),d.height=c.outerHeight(!0),b=c.children().detach(),c.remove();break;case "image":b=d.tpl.image.replace("{url}",d.url);d.aspectRatio=!0;break;case "swf":b=d.tpl.swf.replace(/\{width\}/g,d.width).replace(/\{height\}

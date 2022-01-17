@@ -1,0 +1,5 @@
+function() {
+
+    led.stop().off();
+
+  }

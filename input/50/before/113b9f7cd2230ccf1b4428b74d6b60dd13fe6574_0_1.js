@@ -1,0 +1,3 @@
+function() {
+              currentLetterClassList.add("hide");
+            }

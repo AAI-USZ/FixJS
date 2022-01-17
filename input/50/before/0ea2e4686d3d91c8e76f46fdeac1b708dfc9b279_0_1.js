@@ -1,0 +1,1 @@
+function(){ return eval( '( function(){ return ' + config + '; }() );' ) }()[key] || {}

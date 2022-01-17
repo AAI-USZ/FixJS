@@ -1,0 +1,9 @@
+function () {
+      var $this = $(this)
+        , data = $this.data('modal')
+        , options = $.extend({}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option)
+      if (!data) $this.data('modal', (data = new Modal(this, options)))
+      else $.extend($this.data('modal').options, option)
+      if (typeof option == 'string') data[option]()
+      else if (options.show) data.show()
+    }

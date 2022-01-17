@@ -1,0 +1,1 @@
+function () { elements.title.find('.glimpse-url .loading').fadeOut(); }

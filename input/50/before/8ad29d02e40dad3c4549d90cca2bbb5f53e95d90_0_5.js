@@ -1,0 +1,3 @@
+function getSavedContent() {
+    return savedContent;
+  }

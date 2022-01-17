@@ -1,0 +1,3 @@
+function(pix) {
+        pixPerCell = pix;
+    }

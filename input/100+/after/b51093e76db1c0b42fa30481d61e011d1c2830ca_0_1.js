@@ -1,0 +1,1 @@
+function savePage(e){ $('button[id*="submit"]').trigger('click'); }

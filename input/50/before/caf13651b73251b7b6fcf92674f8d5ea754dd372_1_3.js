@@ -1,0 +1,1 @@
+function () { return window.navigator.plugins.length }

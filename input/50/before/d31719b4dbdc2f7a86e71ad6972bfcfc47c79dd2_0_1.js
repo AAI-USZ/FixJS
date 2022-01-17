@@ -1,0 +1,1 @@
+function Fun(formal, eformal, body) { this.formal = formal; this.eformal = eformal; this.body = body }

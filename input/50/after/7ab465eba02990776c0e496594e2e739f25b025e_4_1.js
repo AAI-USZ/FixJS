@@ -1,0 +1,4 @@
+function() {
+      contextMenu.hidePopup();
+      closeDebuggerAndFinish();
+    }

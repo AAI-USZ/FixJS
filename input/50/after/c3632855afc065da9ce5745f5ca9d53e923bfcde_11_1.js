@@ -1,0 +1,1 @@
+function addClickListeners(){$j("#listpage #header #gear").off().enableTap().click(function(a){a.preventDefault();SettingsManager.show()})}

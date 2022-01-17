@@ -1,0 +1,1 @@
+function(a,b,c){var d=a||window.event,c=c||d.target||d.srcElement;return c==document.body?null:(b.match(/^\./)?this.hasClassName(c,b.replace(/^\./,"")):c.tagName.toLowerCase()==b.toLowerCase())?c:this.findElement(a,b,c.parentNode)},cumulativeOffset:function(a){var b=0,c=0;do b+=a.offsetTop||0,c+=a.offsetLeft||0,a=a.offsetParent;while(a);return[c,b]}

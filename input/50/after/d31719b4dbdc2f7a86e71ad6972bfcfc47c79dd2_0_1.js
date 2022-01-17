@@ -1,0 +1,1 @@
+function KEval1(next, eform) { this.next = next; this.eform = eform }

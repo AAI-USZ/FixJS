@@ -1,0 +1,21 @@
+function parseLeftHandSideExpressionAllowCall() {
+        var useNew, expr;
+
+        useNew = matchKeyword('new');
+        expr = useNew ? parseNewExpression() : parsePrimaryExpression();
+
+        while (index < length) {
+            if (match('.')) {
+                lex();
+                expr = parseNonComputedMember(expr);
+            } else if (match('[')) {
+                expr = parseComputedMember(expr);
+            } else if (match('(')) {
+                expr = parseCallMember(expr);
+            } else {
+                break;
+            }
+        }
+
+        return expr;
+    }

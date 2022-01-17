@@ -1,0 +1,3 @@
+function(){
+            me._refreshLine();
+        }

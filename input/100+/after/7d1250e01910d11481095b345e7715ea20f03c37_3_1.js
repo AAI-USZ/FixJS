@@ -1,0 +1,20 @@
+function () {
+                    try {
+                        var json = eval('(' + this.responseText + ')');
+                        var results = json.results;
+                        for (var c = 0; c < tweets.length; c++) {
+                        	tweets.push({
+                        		title: results[c].text,
+                        		user: results[c].user.screen_name,
+                        		leftImage: results[c].user.profile_image_url,
+                        		hasChild: true
+                        	});
+                        }
+                        
+                        var tweetList = Ti.UI.createTableView({
+                        	data: tweets
+                        });
+                    } catch (e) {
+                        Ti.API.info(e);
+                    }
+                }

@@ -1,0 +1,3 @@
+function(index){var start=index*this.pageSize;var end=start+this.pageSize;if(end>this.getData().length)
+end=this.getData().length;if(start<0)
+start=0;return this.data.slice(start,end);},refresh:function(){},setPageSize:function(length){this.pageSize=length;return this;},getPageSze:function(){return this.pageSize;},load:function(data){this.data=data;this.changeEvent.fire(data);return this;},error:function(msg){this.errorEvent.fire(msg);}};joRecord=function(data){joDataSource.call(this,data||{});this.delegate={};};joRecord.extend(joDataSource,{link:function(p){return this.getDelegate(p);}

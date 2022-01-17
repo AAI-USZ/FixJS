@@ -1,0 +1,1 @@
+function() {var f = (Parse.setType(function(_yes){return function(_no){return _no();};}, 'none')); return function _none(){return f;}}

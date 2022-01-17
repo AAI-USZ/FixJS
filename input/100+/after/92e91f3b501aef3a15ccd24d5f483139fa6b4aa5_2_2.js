@@ -1,0 +1,12 @@
+function() {
+        expect( 1 );
+
+        var rotation = [this.math.TAU/2, this.math.TAU/3, this.math.TAU/4];
+        var transform = this.math.M4( this.math.matrix4.identity );
+        this.math.transform.rotate( rotation, transform );
+        var expected = [0, -1, 0, 0,
+                        1/2, 0, -Math.sqrt(3)/2, 0,
+                        Math.sqrt(3)/2, 0, 1/2, 0,
+                        0, 0, 0, 1];
+        ok( this.math.matrix4.equal( transform, expected ), "transform is correct" );
+      }

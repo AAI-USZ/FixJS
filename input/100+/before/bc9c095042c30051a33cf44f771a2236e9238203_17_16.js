@@ -1,0 +1,4 @@
+function() {
+                        doSearch();
+                        lastSearchVal = val;
+                    }

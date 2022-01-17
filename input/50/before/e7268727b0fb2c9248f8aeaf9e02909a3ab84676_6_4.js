@@ -1,0 +1,1 @@
+function(plugin) {return plugin ? "Masquer " + plugin : "Masquer le plugin";}

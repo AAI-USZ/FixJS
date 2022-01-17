@@ -1,0 +1,4 @@
+function(){
+						grabbingNode = true;
+						resetToDefaultState();
+					}

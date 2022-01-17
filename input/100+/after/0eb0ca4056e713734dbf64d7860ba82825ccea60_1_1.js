@@ -1,0 +1,1 @@
+function () { alert("Erro ao conectar o servidor") }

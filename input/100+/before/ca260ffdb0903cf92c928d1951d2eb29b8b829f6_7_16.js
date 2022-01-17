@@ -1,0 +1,2 @@
+function(data){this.data=data;this.refresh();return this;},getData:function(){return this.data;},refresh:function(){if(!this.container||typeof this.data=="undefined")
+return 0;this.container.innerHTML="";this.draw();this.changeEvent.fire(this.data);},draw:function(){this.container.innerHTML=this.data;},setStyle:function(style){joDOM.setStyle(this.container,style);return this;}

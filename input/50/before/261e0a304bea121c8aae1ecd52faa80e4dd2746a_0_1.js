@@ -1,0 +1,1 @@
+function(n){debugger; return n['@language']=='en';}

@@ -1,0 +1,1 @@
+function (left, up, right, down, cId) { }

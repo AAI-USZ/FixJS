@@ -1,0 +1,1 @@
+function(b){b.newValue||(h.detach("beforeCollapsedChange",arguments.callee),a.sync())});d.on("click",function(b){a.save(!1);b.halt()});p.call(a,d);b.get("textarea")[0].form&&function(){function c(){a.save(!0)}var e=b.get("textarea")[0].form;j.on(e,"submit",c);p.call(a,function(){j.remove(e,"submit",c)})}

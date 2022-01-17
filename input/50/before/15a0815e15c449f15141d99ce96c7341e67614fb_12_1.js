@@ -1,0 +1,1 @@
+function(c){if(window.jQuery)c(jQuery),c=jQuery.noop;"function"===typeof define&&define.amd&&define.amd.jQuery&&define("polyfiller",["jquery"],c)}

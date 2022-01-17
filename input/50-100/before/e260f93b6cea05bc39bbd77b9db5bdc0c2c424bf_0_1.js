@@ -1,0 +1,11 @@
+function(hiding){
+            if(hiding){
+                $clicky.html('<span>+</span>');
+                $handle.addClass('closed');
+                $handle.removeClass('open');
+            }else{
+                $clicky.html('<span>&minus;</span>');
+                $handle.addClass('open');
+                $handle.removeClass('closed');
+            }
+        }

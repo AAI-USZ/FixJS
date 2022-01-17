@@ -1,0 +1,1 @@
+function() { $.mobile.changePage("#settings", {transition: "slideup"}); }

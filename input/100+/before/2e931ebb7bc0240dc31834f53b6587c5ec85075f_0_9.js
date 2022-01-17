@@ -1,0 +1,1 @@
+function(a,b){return a.fulldate-b.fulldate});if(typeof a!="undefined"){for(b=c=0;b<t.length;b++)if(t[b].headline==a.headline&&t[b].provider==a.provider&&t[b].fulldate==a.fulldate){c=b;break}if(c>0)i.start_at_current_date=false;i.current_slide=c;B(c,true)}

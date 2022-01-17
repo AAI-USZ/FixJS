@@ -1,0 +1,3 @@
+function () {
+        getCookie($('#domain').val());
+    }

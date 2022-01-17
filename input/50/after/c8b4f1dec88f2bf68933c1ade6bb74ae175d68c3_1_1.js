@@ -1,0 +1,3 @@
+function permanentRef(id) {
+
+}

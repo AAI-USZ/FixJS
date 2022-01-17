@@ -1,0 +1,5 @@
+function OnExitGameOverState()
+{
+	hideSuccessUI();
+	hideOrderFailUI();
+}

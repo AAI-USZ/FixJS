@@ -1,0 +1,1 @@
+function() { bwg._loading.resolve({success: true}); }

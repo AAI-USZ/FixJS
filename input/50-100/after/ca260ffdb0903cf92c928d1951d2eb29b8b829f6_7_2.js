@@ -1,0 +1,2 @@
+function(style,oldnode){if(oldnode)
+document.body.removeChild(oldnode);var css=joDOM.create('jostyle');css.innerHTML='<style>'+style+'</style>';document.body.appendChild(css);return css;},removeCSS:function(node){document.body.removeChild(node);}

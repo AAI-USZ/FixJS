@@ -1,0 +1,1 @@
+function (e) {$(e.target).css('cursor', !!$.browser.mozilla ? '-moz-grab' : '-webkit-grab'); }

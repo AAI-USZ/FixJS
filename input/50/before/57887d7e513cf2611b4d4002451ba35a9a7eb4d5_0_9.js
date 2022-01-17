@@ -1,0 +1,7 @@
+function(ignoreCache, scriptToEvaluateOnLoad, opt_callback) {
+        var paramObject = {
+             'ignoreCache': ignoreCache,
+             'scriptToEvaluateOnLoad': scriptToEvaluateOnLoad,
+         };
+        chrome.devtools.remoteDebug.sendCommand('Page.reload', paramObject, opt_callback);
+    }

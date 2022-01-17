@@ -1,0 +1,1 @@
+function (resp) { tiers.install(resp, user, key); }

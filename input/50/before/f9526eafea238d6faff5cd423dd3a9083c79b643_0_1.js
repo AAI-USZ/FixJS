@@ -1,0 +1,1 @@
+function (part) { return part && part.length > 0}

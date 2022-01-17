@@ -1,0 +1,1 @@
+function(){$j("#photo_div img").enableTap().click(saveUserPic);if(typeof sforce.Client!="undefined")sforce.Client.prototype.addAttachment=function(a,b,c,d,e,f){var g=getBaseUrl()+"/services/apexrest/cvapi?action=insertSObject&sobject=Attachment";this.ajax("POST",g,{Name:a,ParentId:b,Body:c},d,e,f)}}

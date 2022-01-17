@@ -1,0 +1,6 @@
+function(e){
+    if(getpad.pen==1){  
+      getpos=posfn(e.changedTouches, getpad.pad);
+      getpad.drawLine(getpos);
+    }
+  }

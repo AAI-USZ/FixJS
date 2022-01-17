@@ -1,0 +1,1 @@
+function get_player() { return $("#player").get(0); }

@@ -1,0 +1,1 @@
+function() {$(o.s,o.c).cycle(options);}

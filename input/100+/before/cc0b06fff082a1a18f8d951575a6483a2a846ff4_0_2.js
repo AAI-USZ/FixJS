@@ -1,0 +1,1 @@
+function(){b.documentElement.doScroll("left");return d},function(){s(d)},{d:l}

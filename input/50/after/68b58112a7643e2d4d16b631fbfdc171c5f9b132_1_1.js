@@ -1,0 +1,1 @@
+function(){localyticsSession.init(localyticsAppId);localyticsSession.open();localyticsSession.upload();this.uploadTimer=setInterval(localyticsSession.upload,3E4)}

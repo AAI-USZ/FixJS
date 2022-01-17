@@ -1,0 +1,7 @@
+function sayA()
+
+{
+
+	alert('A');
+
+}

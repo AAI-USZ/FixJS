@@ -1,0 +1,61 @@
+function(a,culling) {
+	var side = 1;
+	var planes = this.planes;
+	var len = planes.length;
+	var minX = a.minX;
+	var minY = a.minY;
+	var minZ = a.minZ;
+	var maxX = a.maxX;
+	var maxY = a.maxY;
+	var maxZ = a.maxZ;
+	var rootCull = culling;
+	{
+		var _g = 0;
+		while(_g < len) {
+			var i = _g++;
+			var plane = planes[i];
+			if((culling & side) != 0) {
+				if(plane.x >= 0) {
+					if(plane.y >= 0) {
+						if(plane.z >= 0) {
+							if(maxX * plane.x + maxY * plane.y + maxZ * plane.z <= plane.w) return -1;
+							if(minX * plane.x + minY * plane.y + minZ * plane.z > plane.w) culling &= rootCull & ~side;
+						}
+						else {
+							if(maxX * plane.x + maxY * plane.y + minZ * plane.z <= plane.w) return -1;
+							if(minX * plane.x + minY * plane.y + maxZ * plane.z > plane.w) culling &= rootCull & ~side;
+						}
+					}
+					else if(plane.z >= 0) {
+						if(maxX * plane.x + minY * plane.y + maxZ * plane.z <= plane.w) return -1;
+						if(minX * plane.x + maxY * plane.y + minZ * plane.z > plane.w) culling &= rootCull & ~side;
+					}
+					else {
+						if(maxX * plane.x + minY * plane.y + minZ * plane.z <= plane.w) return -1;
+						if(minX * plane.x + maxY * plane.y + maxZ * plane.z > plane.w) culling &= rootCull & ~side;
+					}
+				}
+				else if(plane.y >= 0) {
+					if(plane.z >= 0) {
+						if(minX * plane.x + maxY * plane.y + maxZ * plane.z <= plane.w) return -1;
+						if(maxX * plane.x + minY * plane.y + minZ * plane.z > plane.w) culling &= rootCull & ~side;
+					}
+					else {
+						if(minX * plane.x + maxY * plane.y + minZ * plane.z <= plane.w) return -1;
+						if(maxX * plane.x + minY * plane.y + maxZ * plane.z > plane.w) culling &= rootCull & ~side;
+					}
+				}
+				else if(plane.z >= 0) {
+					if(minX * plane.x + minY * plane.y + maxZ * plane.z <= plane.w) return -1;
+					if(maxX * plane.x + maxY * plane.y + minZ * plane.z > plane.w) culling &= rootCull & ~side;
+				}
+				else {
+					if(minX * plane.x + minY * plane.y + minZ * plane.z <= plane.w) return -1;
+					if(maxX * plane.x + maxY * plane.y + maxZ * plane.z > plane.w) culling &= rootCull & ~side;
+				}
+			}
+			side <<= 1;
+		}
+	}
+	return culling;
+}

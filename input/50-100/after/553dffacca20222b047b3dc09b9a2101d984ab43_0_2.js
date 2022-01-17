@@ -1,0 +1,3 @@
+function() {
+        $("#providerId-autocomplete").val("");
+    }

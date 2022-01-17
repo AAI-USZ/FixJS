@@ -1,0 +1,3 @@
+function() {
+           o.fadeOut('slow');
+       }

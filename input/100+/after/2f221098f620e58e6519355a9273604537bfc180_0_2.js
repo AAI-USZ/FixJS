@@ -1,0 +1,22 @@
+function (gr, records)
+	{
+		var peminjaman	= this.getTrans_peminjaman ();
+		var	grid		= peminjaman.down ('#peminjaman_grid');
+		var grid_berkas	= peminjaman.down ('#berkas_pinjam_grid');
+		var b_edit		= grid.down ('#edit');
+		var b_del		= grid.down ('#del');
+		var b_back		= grid.down ('#pengembalian');
+
+		b_edit.setDisabled (! records.length);
+		b_del.setDisabled (! records.length);
+		b_back.setDisabled (! records.length);
+
+		if (records.length > 0) {
+			peminjaman.win.do_load (records[0]);
+			grid_berkas.getStore ().load ({
+				params	: {
+					peminjaman_id : records[0].get ('id')
+				}
+			});
+		}
+	}

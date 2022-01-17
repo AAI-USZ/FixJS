@@ -1,0 +1,1 @@
+function(d) { return obj.h - obj.y(d.values[i].user) - .5; }

@@ -1,0 +1,1 @@
+function (i) { if ($(this).attr("var").match(/^(fn|[^n][^i][^c][^k]name)$/gi) && sDone != true) { sDone = true; return $(this) } }

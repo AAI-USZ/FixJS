@@ -1,0 +1,1 @@
+function(s,i,a){return i==a.lastIndexOf(s)}

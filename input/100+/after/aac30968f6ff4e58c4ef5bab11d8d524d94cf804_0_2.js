@@ -1,0 +1,500 @@
+function(attrs, opts) {
+
+    attrs = (attrs)? attrs : {};
+    opts = (opts)? opts : {};
+
+    var self = this;
+
+    if (attrs['@type'] !== undefined) {
+        attrs['@type'] = (_.isArray(attrs['@type']))? attrs['@type'] : [ attrs['@type'] ];
+        attrs['@type'] = _.map(attrs['@type'], function(val){
+            if (!self.vie.types.get(val)) {
+                //if there is no such type -> add it and let it inherit from "owl:Thing"
+                self.vie.types.add(val).inherit("owl:Thing");
+            }
+            return self.vie.types.get(val).id;
+        });
+        attrs['@type'] = (attrs['@type'].length === 1)? attrs['@type'][0] : attrs['@type'];
+    } else {
+        // provide "owl:Thing" as the default type if none was given
+        attrs['@type'] = self.vie.types.get("owl:Thing").id;
+    }
+
+    //the following provides full seamless namespace support
+    //for attributes. It should not matter, if you
+    //query for `model.get('name')` or `model.get('foaf:name')`
+    //or even `model.get('http://xmlns.com/foaf/0.1/name');`
+    //However, if we just overwrite `set()` and `get()`, this
+    //raises a lot of side effects, so we need to expand
+    //the attributes before we create the model.
+    _.each (attrs, function (value, key) {
+        var newKey = VIE.Util.mapAttributeNS(key, this.namespaces);
+        if (key !== newKey) {
+            delete attrs[key];
+            attrs[newKey] = value;
+        }
+    }, self.vie);
+
+    var Model = Backbone.Model.extend({
+        idAttribute: '@subject',
+
+        initialize: function(attributes, options) {
+            if (attributes['@subject']) {
+                this.id = this['@subject'] = this.toReference(attributes['@subject']);
+            } else {
+                this.id = this['@subject'] = attributes['@subject'] = this.cid.replace('c', '_:bnode');
+            }
+            return this;
+        },
+
+        // ### Getter, Has, Setter
+        // #### `.get(attr)`
+        // To be able to communicate to a VIE Entity you can use a simple get(property)
+        // command as in `entity.get('rdfs:label')` which will give you one or more literals.
+        // If the property points to a collection, its entities can be browsed further.
+        get: function (attr) {
+            attr = VIE.Util.mapAttributeNS(attr, self.vie.namespaces);
+            var value = Backbone.Model.prototype.get.call(this, attr);
+            value = (_.isArray(value))? value : [ value ];
+
+            value = _.map(value, function(v) {
+                if (v !== undefined && attr === '@type' && self.vie.types.get(v)) {
+                    return self.vie.types.get(v);
+                } else if (v !== undefined && self.vie.entities.get(v)) {
+                    return self.vie.entities.get(v);
+                } else {
+                    return v;
+                }
+            }, this);
+            if(value.length === 0) {
+                return undefined;
+            }
+            // if there is only one element, just return that one
+            value = (value.length === 1)? value[0] : value;
+            return value;
+        },
+
+        // #### `.has(attr)`
+        // Sometimes you'd like to determine if a specific attribute is set 
+        // in an entity. For this reason you can call for example `person.has('friend')`
+        // to determine if a person entity has friends.
+        has: function(attr) {
+            attr = VIE.Util.mapAttributeNS(attr, self.vie.namespaces);
+            return Backbone.Model.prototype.has.call(this, attr);
+        },
+
+        // #### `.set(attrName, value, options)`,
+        // The `options` parameter always refers to a `Backbone.Model.set` `options` object.
+        //
+        // **`.set(attributes, options)`** is the most universal way of calling the
+        // `.set()` method. In this case the `attributes` object is a map of all
+        // attributes to be changed.
+        set : function(arg1, arg2, arg3){ // (
+                   var attrs = {}, options;
+            if (!arg1) {
+                return this;
+            }
+
+            if (arg1['@subject']) {
+                arg1['@subject'] = this.toReference(arg1['@subject']);
+            }
+
+            // Use **`.set(attrName, value, options)`** for setting or changing exactly one 
+            // entity attribute.
+            if (typeof arg1 === "string") {
+                attrs[arg1] = arg2;
+                options = arg3;
+                return this.set(attrs, options);
+            } else if(typeof arg1 === "object") {
+                options = arg2;
+                // **`.set(entity)`**: In case you'd pass a VIE entity,
+                // the passed entities attributes are being set for the entity.
+                if (arg1.attributes) {
+                    attrs = arg1.attributes;
+                } else {
+                    attrs = arg1;
+                }
+                var self = this;
+                // resolve shortened URIs like rdfs:label..
+                _.each(attrs, function (value, key) {
+                    var newKey = VIE.Util.mapAttributeNS(key, self.vie.namespaces);
+                    if (key !== newKey) {
+                        delete attrs[key];
+                        attrs[newKey] = value;
+                    }
+                }, this);
+                // Finally iterate through the *attributes* to be set and prepare
+                // them for the Backbone.Model.set method.
+                _.each(attrs, function (value, key) {
+                    if (!value) {
+                        return;
+                    }
+                    if (key.indexOf('@') === -1) {
+                        if (value.isCollection) {
+                            // ignore
+                            value.each(function (child) {
+                                self.vie.entities.addOrUpdate(child);
+                            });
+                        } else if (value.isEntity) {
+                            self.vie.entities.addOrUpdate(value);
+                            var coll = new self.vie.Collection();
+                            coll.vie = self.vie;
+                            coll.add(value);
+                            attrs[key] = coll;
+                        } else if (_.isArray(value)) {
+                            if (this.attributes[key] && this.attributes[key].isCollection) {
+                                var newEntities = this.attributes[key].addOrUpdate(value);
+                                attrs[key] = this.attributes[key];
+                                attrs[key].reset(newEntities);
+                            }
+                        } else if (value["@value"]) {
+                            // The value is a literal object, ignore
+                        } else if (typeof value == "object") {
+                            // The value is another VIE Entity
+                            var child = new self.vie.Entity(value, options);
+                            // which is being stored in `v.entities`
+                            self.vie.entities.addOrUpdate(child);
+                            // and set as VIE Collection attribute on the original entity
+                            var coll = new self.vie.Collection();
+                            coll.vie = self.vie;
+                            coll.add(value);
+                            attrs[key] = coll;
+                        } else {
+                            // ignore
+                        }
+                    }
+                }, this);
+                return Backbone.Model.prototype.set.call(this, attrs, options);
+            }
+        },
+
+        // **`.setOrAdd(arg1, arg2)`** similar to `.set(..)`, `.setOrAdd(..)` can
+        // be used for setting one or more attributes of an entity, but in
+        // this case it's a collection of values, not just one. That means, if the
+        // entity already has the attribute set, make the value to a VIE Collection
+        // and use the collection as value. The collection can contain entities
+        // or literals, but not both at the same time.
+        setOrAdd:function (arg1, arg2, options) {
+            var entity = this;
+            if (typeof arg1 === "string" && arg2) {
+                // calling entity.setOrAdd("rdfs:type", "example:Musician")
+                entity._setOrAddOne(arg1, arg2, options);
+            }
+            else if (typeof arg1 === "object") {
+                // calling entity.setOrAdd({"rdfs:type": "example:Musician", ...})
+                _(arg1).each(function (val, key) {
+                    entity._setOrAddOne(key, val, arg2);
+                });
+            }
+            return this;
+        },
+
+
+        /* attr is always of type string */
+        /* value can be of type: undefined,string,int,double,object,VIE.Entity,VIE.Collection */
+        /* depending on the type of value, different actions need to be made */
+        _setOrAddOne:function (attr, value, options) {
+            // attr or value not given, don't do anything
+            if (!attr || !value)
+                return;
+            options = (options) ? options : {};
+            // dereference attribute namespaces
+            attr = VIE.Util.mapAttributeNS(attr, self.vie.namespaces);
+
+            // if the value is an array, add them one by one using the same method (recursion)
+            if (_.isArray(value)) {
+                for (var v = 0; v < value.length; v++) {
+                    this._setOrAddOne(attr, value[v], options);
+                }
+            } else {
+                // in case of type definition, make sure we set the type id as value, not the type object.
+                if (attr === "@type" && value instanceof self.vie.Type) {
+                    value = value.id;
+                }
+
+                var obj = {};
+                // Lookup existing value for the attribute to make sure not to overwrite existing values here
+                var existing = Backbone.Model.prototype.get.call(this, attr);
+
+                if (!existing) {
+                    obj[attr] = value;
+                    // If there's no value set, simply set it.
+                    this.set(obj, options);
+                } else if (existing.isCollection) {
+                    // if the existing value is a Backbone collection, there are three cases: The new value can be a
+                    // - Backbone Collection
+                    // - Backbone Entity
+                    // - plain object
+                    if (value.isCollection) {
+                        // if it's a VIE (Backbone) Collection, use the .add() method for each new value models.
+                        value.each(function (model) {
+                            existing.add(model, options);
+                        });
+                    } else if (value.isEntity) {
+                        // if the value is a Backbone Entity, add it to the existing value collection
+                        existing.add(value);
+                    } else if (typeof value === "object") {
+                        // if the value is a plain object, create an Entity out of it and add it to the existing collection
+                        value = new this.vie.Entity(value);
+                        existing.add(value);
+                    } else {
+                        throw new Error("you cannot add a literal to a collection of entities!");
+                    }
+                    this.trigger('change:' + attr, this, value, {});
+                    this.change({});
+                // if the existing value is an array (with the new Literal API this should be impossible, get would always give back a Collection.)
+                } else if (_.isArray(existing)) {
+                    if (value.isCollection) {
+                        // ... and the newly added value is a Collection, use _setOrAddOne recursively to add the Model IDs
+                        for (var v = 0; v < value.size(); v++) {
+                            this._setOrAddOne(attr, value.at(v).getSubject(), options);
+                        }
+                    } else if (value.isEntity) {
+                        // ... and the new value is an Entity, use _setOrAddOne with the model's subject
+                        this._setOrAddOne(attr, value.getSubject(), options);
+                    } else if (typeof value === "object") {
+                        // ... and the new value is a plain object, create an Entity out of it and use _setOrAdd to add it.
+                        value = new this.vie.Entity(value);
+                        this._setOrAddOne(attr, value, options);
+                    } else {
+                        if(existing.indexOf(value) === -1){
+                            existing.push(value);
+                            obj[attr] = existing;
+                            this.set(obj, options);
+                        }
+                    }
+                } else {
+                    if(existing !== value){
+                        var arr = [ existing ];
+                        arr.push(value);
+                        obj[attr] = arr;
+                        this.set(obj, options);
+                    }
+                }
+            }
+            return this;
+        },
+
+        // **`.unset(attr, opts)` ** removes an attribute from the entity.
+        unset: function (attr, opts) {
+            attr = VIE.Util.mapAttributeNS(attr, self.vie.namespaces);
+            return Backbone.Model.prototype.unset.call(this, attr, opts);
+        },
+
+        isNew: function() {
+            if (this.getSubjectUri().substr(0, 7) === '_:bnode') {
+                return true;
+            }
+            return false;
+        },
+
+        hasChanged: function(attr) {
+            if (this.markedChanged) {
+                return true;
+            }
+
+            return Backbone.Model.prototype.hasChanged.call(this, attr);
+        },
+
+        // Force hasChanged to return true
+        forceChanged: function(changed) {
+            this.markedChanged = changed ? true : false;
+        },
+
+        // **`getSubject()`** is the getter for the entity identifier.
+        getSubject: function(){
+            if (typeof this.id === "undefined") {
+                this.id = this.attributes[this.idAttribute];
+            }
+            if (typeof this.id === 'string') {
+                if (this.id.substr(0, 7) === 'http://' || this.id.substr(0, 4) === 'urn:') {
+                    return this.toReference(this.id);
+                }
+                return this.id;
+            }
+            return this.cid.replace('c', '_:bnode');
+        },
+
+        // TODO describe
+        getSubjectUri: function(){
+            return this.fromReference(this.getSubject());
+        },
+
+        isReference: function(uri){
+            var matcher = new RegExp("^\\<([^\\>]*)\\>$");
+            if (matcher.exec(uri)) {
+                return true;
+            }
+            return false;
+        },
+
+        toReference: function(uri){
+            if (_.isArray(uri)) {
+              var self = this;
+              return _.map(uri, function(part) {
+                 return self.toReference(part);
+              });
+            }
+            var ns = this.vie.namespaces;
+            var ret = uri;
+            if (uri.substring(0, 2) === "_:") {
+                ret = uri;
+            }
+            else if (ns.isCurie(uri)) {
+                ret = ns.uri(uri);
+                if (ret === "<" + ns.base() + uri + ">") {
+                    /* no base namespace extension with IDs */
+                    ret = '<' + uri + '>';
+                }
+            } else if (!ns.isUri(uri)) {
+                ret = '<' + uri + '>';
+            }
+            return ret;
+        },
+
+        fromReference: function(uri){
+            var ns = this.vie.namespaces;
+            if (!ns.isUri(uri)) {
+                return uri;
+            }
+            return uri.substring(1, uri.length - 1);
+        },
+
+        as: function(encoding){
+            if (encoding === "JSON") {
+                return this.toJSON();
+            }
+            if (encoding === "JSONLD") {
+                return this.toJSONLD();
+            }
+            throw new Error("Unknown encoding " + encoding);
+        },
+
+        toJSONLD: function(){
+            var instanceLD = {};
+            var instance = this;
+            _.each(instance.attributes, function(value, name){
+                var entityValue = value; //instance.get(name);
+
+                if (value instanceof instance.vie.Collection) {
+                    entityValue = value.map(function(instance) {
+                        return instance.getSubject();
+                    });
+                }
+
+                // TODO: Handle collections separately
+                instanceLD[name] = entityValue;
+            });
+
+            instanceLD['@subject'] = instance.getSubject();
+
+            return instanceLD;
+        },
+
+        // **`.hasType(type)`** determines if the entity has the explicit `type` set.
+        hasType: function(type){
+            type = self.vie.types.get(type);
+            return this.hasPropertyValue("@type", type);
+        },
+
+        // TODO describe
+        hasPropertyValue: function(property, value) {
+            var t = this.get(property);
+            if (!(value instanceof Object)) {
+                value = self.vie.entities.get(value);
+            }
+            if (t instanceof Array) {
+                return t.indexOf(value) !== -1;
+            }
+            else {
+                return t === value;
+            }
+        },
+
+        // **`.isof(type)`** determines if the entity is of `type` by explicit or implicit 
+        // declaration. E.g. if Employee is a subtype of Person and e Entity has
+        // explicitly set type Employee, e.isof(Person) will evaluate to true.
+        isof: function (type) {
+            var types = this.get('@type');
+            
+            if (types === undefined) {
+                return false;
+            }
+            types = (_.isArray(types))? types : [ types ];
+            
+            type = (self.vie.types.get(type))? self.vie.types.get(type) : new self.vie.Type(type);
+            for (var t = 0; t < types.length; t++) {
+                if (self.vie.types.get(types[t])) {
+                    if (self.vie.types.get(types[t]).isof(type)) {
+                        return true;
+                    }
+                } else {
+                    var typeTmp = new self.vie.Type(types[t]);
+                    if (typeTmp.id === type.id) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        },
+        
+        // TODO describe
+        addTo : function (collection, update) {
+            var self = this;
+            if (collection instanceof self.vie.Collection) {
+                if (update) {
+                    collection.addOrUpdate(self);
+                } else {
+                    collection.add(self);
+                }
+                return this;
+            }
+            throw new Error("Please provide a proper collection of type VIE.Collection as argument!");
+        },
+        
+
+// ### toString(options)  
+// This method converts an entity into a string representation.  
+// If no options are set, it tries to guess the "name" of  
+// entity with a preference on the default given attributes:  
+// `["rdfs:label", "name", "schema:name", "foaf:name", "dcterms:identifier"]`  
+// and it tries to guess the language from the browser. However,  
+// you can also specify these options to be used directly (see  
+// code example below).  
+// **Parameters**:  
+// *{object}* **options** The options to be set. (optional)  
+// *{String|object}* **options.prop** Either a string or an array of strings. (optional) 
+// *{String|object}* **options.lang** Either a string or an array of strings. (optional)  
+// **Throws**:  
+// *nothing*  
+// **Returns**:  
+// *{string}* : The string representation of the entity, 
+//              based on the options/default values.    
+// **Example usage**:  
+//
+//    var entity = vie.entities.add({"name" : "Barack Obama"});
+//    entity.toString(); // <-- "Barack Obama"
+//    entity.toString({prop : ["name"], prop : ["en"]}); // <-- "Barack Obama"
+        toString: function (options) {
+            options = (options)? options : {};
+            options.prop = (options.prop)? 
+                    options.prop : 
+                    ["rdfs:label", "name", "schema:name", "foaf:name", "dcterms:identifier"];
+            var browserLang = "en";
+            if (navigator.userLanguage) // IE
+                browserLang = navigator.userLanguage;
+            else if (navigator.language) // FF
+                browserLang = navigator.language;
+            options.lang = (options.lang)? 
+                    options.lang : 
+                    [browserLang, "en", "de", "fi", "fr", "es", "ja", "zh-tw"];
+            return VIE.Util.getPreferredLangForPreferredProperty(this, options.prop, options.lang);
+        },
+        
+        isEntity: true,
+
+        vie: self.vie
+    });
+
+    return new Model(attrs, opts);
+}

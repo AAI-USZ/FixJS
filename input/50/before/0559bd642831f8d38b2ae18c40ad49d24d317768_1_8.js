@@ -1,0 +1,3 @@
+function(){
+        searchFieldCheck( elem );
+    }

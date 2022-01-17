@@ -1,0 +1,1 @@
+function getInfoLogMessagePrefix() { return 'INFO [' + new Date().toString() + '] CacheBlockFirstThenAsync: '; }

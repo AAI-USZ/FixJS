@@ -1,0 +1,1 @@
+function(method){console[method]=this.call(console[method],console);}

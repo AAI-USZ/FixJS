@@ -1,0 +1,3 @@
+function defaultaction(){self.hidePopup();if(callback){if(context)
+callback.call(context);else
+callback();}}}});joShim=function(){this.showEvent=new joSubject(this);this.hideEvent=new joSubject(this);this.selectEvent=new joSubject(this);joContainer.apply(this,arguments);};joShim.extend(joContainer,{tagName:"joshim",setEvents:function(){joEvent.on(this.container,"mousedown",this.onMouseDown,this);},onMouseDown:function(e){joEvent.stop(e);this.hide();},hide:function(){this.container.className='';joEvent.on(this.container,"webkitTransitionEnd",this.onHide,this);},show:function(){

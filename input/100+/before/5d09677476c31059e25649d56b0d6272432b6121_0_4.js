@@ -1,0 +1,1 @@
+function(){this.updated===true&&pulse.debug.manager.incrementDraws()}

@@ -1,0 +1,3 @@
+function(){return joPreference.get("joClipboardData")||this.data;},set:function(clip){this.data=clip;joPreference.set("joClipboardData");}};joDataSource=function(data){this.changeEvent=new joSubject(this);this.errorEvent=new joSubject(this);if(typeof data!=="undefined")
+this.setData(data);else
+this.data="";};joDataSource.prototype={autoSave:true,data:null,setQuery:function(query){this.query=query;return this;},setAutoSave:function(state){this.autoSave=state;return this;}

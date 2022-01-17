@@ -1,0 +1,1 @@
+function(){return new GLGE.Vec3(this.locX, this.locY, this.locZ);}

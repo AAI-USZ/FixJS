@@ -1,0 +1,3 @@
+function() {
+                                $newsharecontentContainer.jqmShow();
+                            }

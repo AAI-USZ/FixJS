@@ -1,0 +1,2 @@
+function(a){this.data=a;a.beat={permanence:0,confidence:0,missed:false,predicted:false,maybe:false,is:false,was:0,bpm:0};this.n=512;this.history=[[],[],[]];this.buffer=new Float32Array(this.n);this.spectrum=new Float32Array(this.n);this.fft=new FFT(this.n,44100);this.debouncePredict=this.debounceMaybe=this.measure=this.last=this.background=this.energy=this.sample=0;this.missed=3;this.decay=0;this.fMin=Math.floor(this.bpmToOffset(50));this.fMax=Math.ceil(this.bpmToOffset(400));
+this.histogram={};this.histogramSorted=[];this.beat=null}

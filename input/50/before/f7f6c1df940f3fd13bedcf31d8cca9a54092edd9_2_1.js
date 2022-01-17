@@ -1,0 +1,5 @@
+function(obj) {
+
+  this.selectSelf();
+
+}

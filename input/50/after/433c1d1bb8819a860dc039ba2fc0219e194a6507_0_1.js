@@ -1,0 +1,1 @@
+function(message) { this.say(channel, message); }

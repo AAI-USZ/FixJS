@@ -1,0 +1,1 @@
+function () { CallBack_OnClick_ItemSelected(objSelf, sItemID, sItemName) }

@@ -1,0 +1,4 @@
+function() {
+            if (!inCompostion)
+                sendText();
+        }

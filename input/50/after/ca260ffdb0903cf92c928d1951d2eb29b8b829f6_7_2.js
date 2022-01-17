@@ -1,0 +1,1 @@
+function(query,itemPath){joDataSource.call(this);this.setQuery(query);this.setItemPath(itemPath);}

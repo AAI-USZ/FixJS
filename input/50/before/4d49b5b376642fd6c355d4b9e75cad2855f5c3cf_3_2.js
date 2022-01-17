@@ -1,0 +1,1 @@
+function(field) { field.reqd = mandatory ? true : false; }

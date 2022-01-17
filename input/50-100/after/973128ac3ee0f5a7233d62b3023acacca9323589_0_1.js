@@ -1,0 +1,1 @@
+function(o) { return o.name + ": " + o.value; }

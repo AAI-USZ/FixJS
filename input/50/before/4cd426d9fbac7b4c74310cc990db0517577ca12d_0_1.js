@@ -1,0 +1,1 @@
+function toTuple(a) { return a.unshift("Tuple" + a.length); }

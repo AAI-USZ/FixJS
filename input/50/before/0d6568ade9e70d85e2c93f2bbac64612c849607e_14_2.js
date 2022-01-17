@@ -1,0 +1,1 @@
+function () { return savedInlineText !== null && savedHostText !== null; }

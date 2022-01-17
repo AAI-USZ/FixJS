@@ -1,0 +1,3 @@
+function() {
+    pages.first().show();
+  }

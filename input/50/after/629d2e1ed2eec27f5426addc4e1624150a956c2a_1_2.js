@@ -1,0 +1,1 @@
+function(){textStyle.formatCode.call(Kreator, $span);}

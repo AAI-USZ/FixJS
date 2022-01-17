@@ -1,0 +1,3 @@
+function(value,list){if(list){this.field.setData(value);this.close();}
+else{this.field.setData(value);}
+return this;},getValue:function(){return this.list.getValue();},setEvents:function(){joControl.prototype.setEvents.call(this);},onBlur:function(e){joEvent.stop(e);joDOM.removeCSSClass(this,"focus");this.close();}});joSelectTitle=function(){joExpandoTitle.apply(this,arguments);};joSelectTitle.extend(joExpandoTitle,{list:null,setList:function(list){this.list=list;return this;}

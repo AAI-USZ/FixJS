@@ -1,0 +1,37 @@
+function(id, type, from, to, generalType) {
+      this.id = id;
+      this.type = type;
+      this.from = parseInt(from);
+      this.to = parseInt(to);
+      this.totalDist = 0;
+      this.numArcs = 0;
+      this.generalType = generalType;
+      // this.chunk = undefined;
+      // this.marked = undefined;
+      // this.avgDist = undefined;
+      // this.curly = undefined;
+      // this.comment = undefined; // { type: undefined, text: undefined };
+      // this.annotatorNotes = undefined;
+      // this.drawCurly = undefined;
+      // this.glyphedLabelText = undefined;
+      // this.group = undefined;
+      // this.height = undefined;
+      // this.highlightPos = undefined;
+      // this.indexNumber = undefined;
+      // this.labelText = undefined;
+      // this.lineIndex = undefined;
+      // this.nestingDepth = undefined;
+      // this.nestingDepthLR = undefined;
+      // this.nestingDepthRL = undefined;
+      // this.nestingHeight = undefined;
+      // this.nestingHeightLR = undefined;
+      // this.nestingHeightRL = undefined;
+      // this.rect = undefined;
+      // this.rectBox = undefined;
+      // this.refedIndexSum = undefined;
+      // this.right = undefined;
+      // this.totaldist = undefined;
+      // this.towerId = undefined;
+      // this.width = undefined;
+      this.initContainers();
+    }

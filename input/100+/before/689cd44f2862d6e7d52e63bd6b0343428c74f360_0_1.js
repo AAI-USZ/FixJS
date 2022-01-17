@@ -1,0 +1,9 @@
+function(){
+	    	if($(this).closest('.carousel').hasClass('play')){
+	    		$(this).closest('.carousel').carousel('cycle').removeClass('play');
+	    		$(this).find('.icon-play').removeClass('icon-play').addClass('icon-pause');
+	    	}else{
+	    		$(this).closest('.carousel').carousel('pause').addClass('play');
+	    		$(this).find('.icon-pause').removeClass('icon-pause').addClass('icon-play');
+	    	}	    	
+	    }

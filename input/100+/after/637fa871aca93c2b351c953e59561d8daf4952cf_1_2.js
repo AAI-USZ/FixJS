@@ -1,0 +1,1 @@
+function(){};this.inStroke=!1;this._stroke=this._lastPoint=null;this.startStroke=function(a){if(a&&"number"==typeof a.x&&"number"==typeof a.y){this._stroke={x:[a.x],y:[a.y]};this.data.push(this._stroke);this._lastPoint=a;this.inStroke=!0;var d=this._stroke,c=this.startStrokeFn;setTimeout(function(){c(d)},3);return a}return null}

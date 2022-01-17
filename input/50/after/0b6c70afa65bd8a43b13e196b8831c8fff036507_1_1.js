@@ -1,0 +1,3 @@
+function (event) {
+            handleErrorOnDBDelete(event);
+        }

@@ -1,0 +1,19 @@
+function skipHidden(pos, oldLine, oldCh) {
+      function getNonHidden(dir) {
+        var lNo = pos.line + dir, end = dir == 1 ? doc.size : -1;
+        while (lNo != end) {
+          var line = getLine(lNo);
+          if (!line.hidden) {
+            var ch = pos.ch;
+            if (toEnd || ch > oldCh || ch > line.text.length) ch = line.text.length;
+            return {line: lNo, ch: ch};
+          }
+          lNo += dir;
+        }
+      }
+      var line = getLine(pos.line);
+      var toEnd = pos.ch == line.text.length && pos.ch != oldCh;
+      if (!line.hidden) return pos;
+      if (pos.line >= oldLine) return getNonHidden(1) || getNonHidden(-1);
+      else return getNonHidden(-1) || getNonHidden(1);
+    }

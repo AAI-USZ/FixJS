@@ -1,0 +1,3 @@
+function() {
+        task.emit('finished');
+    }

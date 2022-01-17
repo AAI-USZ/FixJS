@@ -1,0 +1,7 @@
+function clear() {
+
+            clearUrl();
+
+            clearView();
+
+        }

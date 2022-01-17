@@ -1,0 +1,1 @@
+function(){ location.href = $('#form_cancel').attr('href'); return false; }

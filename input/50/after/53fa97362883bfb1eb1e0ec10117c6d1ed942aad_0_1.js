@@ -1,0 +1,1 @@
+function(e){mouseIsDown = false; theScene.onmouseup(e);}
