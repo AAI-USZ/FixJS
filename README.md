@@ -7,7 +7,16 @@ This repository contains open science data used in the paper
 
 > V. Csuvik and L. Vidacs,  **FixJS: A Dataset of Bug-fixing JavaScript Commits**
 
-submitted at the Proceedings of the [19th International Conference on Mining Software Repositories (MSR '22)](https://conf.researchr.org/track/msr-2022/msr-2022-data-showcase).
+submitted at the Proceedings of the [19th International Conference on Mining Software Repositories (MSR '22)](https://conf.researchr.org/track/msr-2022/msr-2022-data-showcase). If you use FixJS for academic purposes, please cite the appropriate publication:
+```
+@inproceedings{csuvik:fixjs,
+ title = {FixJS: A Dataset of Bug-fixing JavaScript Commits},
+ author = {Csuvik, Viktor and Vidacs, Laszlo},
+ booktitle={2022 IEEE/ACM 19th International Conference on Mining Software Repositories (MSR)}
+ year = {2022},
+ doi = {TBA},
+}
+```
 
 FixJS contains both single- and multi-line bugs. Before- and after state of the mined functions are differentiated using their Abstract Syntax Tree, meaning that if only comments have changed the samples are filtered out.
 
