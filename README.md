@@ -24,7 +24,7 @@ git clone https://github.com/RGAI-USZ/FixJS.git
 cd FixJS/input/50/
 ```
 
-2. Load the before_ __rep__.txt and after_ __rep__.txt (where __rep__ can be [idiom, mapped, tokenized])
+2. Load the before_ _rep_.txt and after_ _rep_.txt (where _rep_ can be [idiom, mapped, tokenized])
 ```python
 from pathlib import Path
  
