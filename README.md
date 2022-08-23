@@ -14,7 +14,7 @@ submitted at the Proceedings of the [19th International Conference on Mining Sof
  author = {Csuvik, Viktor and Vidacs, Laszlo},
  booktitle={2022 IEEE/ACM 19th International Conference on Mining Software Repositories (MSR)}
  year = {2022},
- doi = {TBA},
+ doi = {10.1145/3524842.3528480},
 }
 ```
 
