@@ -36,6 +36,7 @@ cd FixJS/input/50/
 2. Load the before_ _rep_.txt and after_ _rep_.txt (where _rep_ can be [idiom, mapped, tokenized])
 ```python
 from pathlib import Path
+import numpy as np
  
 buggy_data = Path('./before_tokenized.txt').read_text(encoding='utf-8').splitlines()
 fixed_data = Path('./after_tokenized.txt').read_text(encoding='utf-8').splitlines()
